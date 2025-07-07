@@ -6,13 +6,15 @@ import EditorToolbar from './EditorToolbar';
 interface LivePreviewProps {
   htmlCode: string;
   onCodeChange: (newCode: string) => void;
+  previewWidth?: string;
 }
 
-const LivePreview = ({ htmlCode, onCodeChange }: LivePreviewProps) => {
+const LivePreview = ({ htmlCode, onCodeChange, previewWidth = '100%' }: LivePreviewProps) => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [selectedElement, setSelectedElement] = useState<Element | null>(null);
   const [selectedText, setSelectedText] = useState('');
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (iframeRef.current) {
@@ -54,6 +56,19 @@ const LivePreview = ({ htmlCode, onCodeChange }: LivePreviewProps) => {
       [contenteditable="true"] {
         min-height: 1em;
       }
+      .editable-selected::after {
+        content: 'Click to edit';
+        position: absolute;
+        top: -25px;
+        left: 0;
+        background: #4299e1;
+        color: white;
+        padding: 2px 6px;
+        font-size: 11px;
+        border-radius: 3px;
+        white-space: nowrap;
+        z-index: 1000;
+      }
     `;
     if (doc.head) {
       doc.head.appendChild(style);
@@ -89,6 +104,9 @@ const LivePreview = ({ htmlCode, onCodeChange }: LivePreviewProps) => {
         element.classList.remove('editable-hover');
         setSelectedElement(element);
         
+        // Focus on the element for immediate editing
+        (element as HTMLElement).focus();
+        
         // Update selected text
         const selection = doc.getSelection();
         if (selection && selection.toString()) {
@@ -96,17 +114,41 @@ const LivePreview = ({ htmlCode, onCodeChange }: LivePreviewProps) => {
         }
       });
       
-      // Handle content changes
-      element.addEventListener('input', () => {
+      // Handle content changes - Fix for deselection issue
+      let isComposing = false;
+      
+      element.addEventListener('compositionstart', () => {
+        isComposing = true;
+      });
+      
+      element.addEventListener('compositionend', () => {
+        isComposing = false;
         updateHtmlCodePrecisely(doc, element);
       });
       
-      // Handle text selection
-      element.addEventListener('mouseup', () => {
+      element.addEventListener('input', (e) => {
+        if (!isComposing) {
+          // Debounce the update to prevent constant re-rendering
+          clearTimeout((element as any).updateTimeout);
+          (element as any).updateTimeout = setTimeout(() => {
+            updateHtmlCodePrecisely(doc, element);
+          }, 300);
+        }
+      });
+      
+      // Handle text selection without triggering update
+      element.addEventListener('mouseup', (e) => {
+        e.stopPropagation();
         const selection = doc.getSelection();
         if (selection && selection.toString()) {
           setSelectedText(selection.toString());
         }
+      });
+      
+      // Prevent losing focus on keydown
+      element.addEventListener('keydown', (e) => {
+        e.stopPropagation();
+        // Allow normal text editing without interference
       });
     });
 
@@ -240,17 +282,48 @@ const LivePreview = ({ htmlCode, onCodeChange }: LivePreviewProps) => {
     setIsLoaded(true);
   };
 
+  const getDeviceFrame = (width: string) => {
+    if (width === '375px') {
+      return {
+        containerClass: 'mx-auto bg-black rounded-[2rem] p-2',
+        iframeClass: 'rounded-[1.5rem] bg-white',
+        style: { width: '380px', height: '670px' }
+      };
+    } else if (width === '768px') {
+      return {
+        containerClass: 'mx-auto bg-black rounded-[1.5rem] p-3',
+        iframeClass: 'rounded-[1rem] bg-white',
+        style: { width: '774px', height: '1000px' }
+      };
+    }
+    return {
+      containerClass: '',
+      iframeClass: 'bg-white rounded-lg border border-slate-200',
+      style: { width: '100%', height: '100%' }
+    };
+  };
+
+  const deviceFrame = getDeviceFrame(previewWidth);
+
   return (
     <div className="h-full flex flex-col">
       <EditorToolbar onInsertCode={handleToolbarInsert} selectedText={selectedText} />
       <div className="flex-1 p-4">
-        <div className="h-full bg-white rounded-lg border border-slate-200 overflow-hidden shadow-inner">
+        <div 
+          ref={containerRef}
+          className={`h-full overflow-auto ${deviceFrame.containerClass}`}
+          style={deviceFrame.style}
+        >
           <iframe
             ref={iframeRef}
             onLoad={handleLoad}
-            className="w-full h-full border-0"
+            className={`w-full h-full border-0 ${deviceFrame.iframeClass}`}
             title="Live Preview"
             sandbox="allow-scripts allow-same-origin"
+            style={{ 
+              width: previewWidth === '100%' ? '100%' : previewWidth,
+              minHeight: previewWidth === '100%' ? '100%' : '600px'
+            }}
           />
         </div>
         <div className="mt-2 text-xs text-slate-500 text-center">
