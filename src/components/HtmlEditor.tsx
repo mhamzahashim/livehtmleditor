@@ -2,7 +2,7 @@
 import { useState, useCallback } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Play, RotateCcw } from 'lucide-react';
+import { Play, RotateCcw, Github, Heart } from 'lucide-react';
 import CodeEditor from './CodeEditor';
 import LivePreview from './LivePreview';
 
@@ -99,40 +99,52 @@ const HtmlEditor = () => {
   };
 
   return (
-    <div className="h-screen flex flex-col bg-gradient-to-br from-slate-50 to-indigo-50">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
       {/* Header */}
-      <div className="flex items-center justify-between p-4 bg-white/70 backdrop-blur-sm border-b border-slate-200/50">
-        <h1 className="text-2xl font-light text-slate-700">HTML Editor</h1>
-        <div className="flex gap-2">
-          <Button
-            onClick={refreshPreview}
-            variant="outline"
-            size="sm"
-            className="text-slate-600 border-slate-300 hover:bg-slate-50"
-          >
-            <Play className="w-4 h-4 mr-1" />
-            Refresh
-          </Button>
-          <Button
-            onClick={resetCode}
-            variant="outline"
-            size="sm"
-            className="text-slate-600 border-slate-300 hover:bg-slate-50"
-          >
-            <RotateCcw className="w-4 h-4 mr-1" />
-            Reset
-          </Button>
+      <header className="bg-white/80 backdrop-blur-md border-b border-slate-200/60 shadow-sm">
+        <div className="max-w-7xl mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-sm">&lt;/&gt;</span>
+              </div>
+              <div>
+                <h1 className="text-2xl font-semibold text-slate-800 tracking-tight">HTML Editor</h1>
+                <p className="text-sm text-slate-500 mt-0.5">Create, edit, and preview HTML in real-time</p>
+              </div>
+            </div>
+            <div className="flex items-center space-x-3">
+              <Button
+                onClick={refreshPreview}
+                variant="outline"
+                size="sm"
+                className="text-slate-600 border-slate-300 hover:bg-slate-50 hover:border-slate-400 transition-all"
+              >
+                <Play className="w-4 h-4 mr-2" />
+                Refresh
+              </Button>
+              <Button
+                onClick={resetCode}
+                variant="outline"
+                size="sm"
+                className="text-slate-600 border-slate-300 hover:bg-slate-50 hover:border-slate-400 transition-all"
+              >
+                <RotateCcw className="w-4 h-4 mr-2" />
+                Reset
+              </Button>
+            </div>
+          </div>
         </div>
-      </div>
+      </header>
 
-      {/* Editor Layout */}
-      <div className="flex-1 flex gap-4 p-4">
+      {/* Main Editor Content */}
+      <main className="flex-1 flex gap-6 p-6">
         {/* Code Editor Side */}
-        <Card className="flex-1 bg-white/80 backdrop-blur-sm border-slate-200/50 shadow-lg">
+        <Card className="flex-1 bg-white/90 backdrop-blur-sm border-slate-200/60 shadow-xl">
           <div className="h-full flex flex-col">
-            <div className="p-4 border-b border-slate-200/50">
-              <h2 className="text-lg font-medium text-slate-700">HTML Code</h2>
-              <p className="text-sm text-slate-500 mt-1">Edit your HTML with the toolbar or type directly</p>
+            <div className="p-5 border-b border-slate-200/60 bg-gradient-to-r from-slate-50 to-blue-50">
+              <h2 className="text-lg font-semibold text-slate-800">HTML Code</h2>
+              <p className="text-sm text-slate-600 mt-1">Edit your HTML with syntax highlighting and live preview</p>
             </div>
             <div className="flex-1">
               <CodeEditor
@@ -144,11 +156,11 @@ const HtmlEditor = () => {
         </Card>
 
         {/* Live Preview Side */}
-        <Card className="flex-1 bg-white/80 backdrop-blur-sm border-slate-200/50 shadow-lg">
+        <Card className="flex-1 bg-white/90 backdrop-blur-sm border-slate-200/60 shadow-xl">
           <div className="h-full flex flex-col">
-            <div className="p-4 border-b border-slate-200/50">
-              <h2 className="text-lg font-medium text-slate-700">Live Preview</h2>
-              <p className="text-sm text-slate-500 mt-1">Click elements to edit • Use toolbar to format • Changes sync to code</p>
+            <div className="p-5 border-b border-slate-200/60 bg-gradient-to-r from-blue-50 to-indigo-50">
+              <h2 className="text-lg font-semibold text-slate-800">Live Preview</h2>
+              <p className="text-sm text-slate-600 mt-1">Click elements to edit • Use toolbar to format • Changes sync to code</p>
             </div>
             <div className="flex-1">
               <LivePreview
@@ -159,7 +171,42 @@ const HtmlEditor = () => {
             </div>
           </div>
         </Card>
-      </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-white/80 backdrop-blur-md border-t border-slate-200/60 mt-auto">
+        <div className="max-w-7xl mx-auto px-6 py-6">
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+            <div className="flex items-center space-x-6 text-sm text-slate-600">
+              <span className="flex items-center">
+                Made with <Heart className="w-4 h-4 mx-1 text-red-400" fill="currentColor" /> for developers
+              </span>
+              <span>•</span>
+              <span>Real-time HTML editing and preview</span>
+            </div>
+            <div className="flex items-center space-x-4">
+              <div className="text-xs text-slate-500">
+                <span>Keyboard shortcuts: </span>
+                <kbd className="px-2 py-1 bg-slate-100 rounded text-xs">Ctrl+S</kbd>
+                <span className="mx-1">to save</span>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-slate-500 hover:text-slate-700"
+                onClick={() => window.open('https://github.com', '_blank')}
+              >
+                <Github className="w-4 h-4" />
+              </Button>
+            </div>
+          </div>
+          <div className="mt-4 pt-4 border-t border-slate-200/60">
+            <p className="text-xs text-slate-500 text-center">
+              © 2024 HTML Editor. Built with React, TypeScript, and Tailwind CSS.
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
