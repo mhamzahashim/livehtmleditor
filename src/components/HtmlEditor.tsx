@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Play, RotateCcw } from 'lucide-react';
@@ -25,6 +25,12 @@ const HtmlEditor = () => {
             border-bottom: 2px solid #e2e8f0;
             padding-bottom: 10px;
         }
+        .introduction {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
         p {
             color: #2d3748;
             margin: 15px 0;
@@ -40,12 +46,24 @@ const HtmlEditor = () => {
 </head>
 <body>
     <h1>Welcome to HTML Editor</h1>
-    <p>This is a sample paragraph. You can edit this text directly in the preview!</p>
-    <p>Try using the toolbar above or editing content directly in the preview.</p>
+    <div class="introduction">
+        <h2>Introduction</h2>
+        <p>This is the introduction section. You can edit this text directly by clicking on it in the preview!</p>
+        <p>Try selecting text and using the toolbar to format it, or click on elements to edit them directly.</p>
+    </div>
+    <div class="content">
+        <h2>Main Content</h2>
+        <p>This is the main content area. Each section will update precisely in the code when you make changes.</p>
+        <p>The bidirectional sync ensures your changes in the preview are reflected exactly where they should be in the HTML code.</p>
+    </div>
 </body>
 </html>`);
 
   const [previewKey, setPreviewKey] = useState(0);
+
+  const handleCodeChange = useCallback((newCode: string) => {
+    setHtmlCode(newCode);
+  }, []);
 
   const refreshPreview = () => {
     setPreviewKey(prev => prev + 1);
@@ -119,7 +137,7 @@ const HtmlEditor = () => {
             <div className="flex-1">
               <CodeEditor
                 value={htmlCode}
-                onChange={setHtmlCode}
+                onChange={handleCodeChange}
               />
             </div>
           </div>
@@ -130,13 +148,13 @@ const HtmlEditor = () => {
           <div className="h-full flex flex-col">
             <div className="p-4 border-b border-slate-200/50">
               <h2 className="text-lg font-medium text-slate-700">Live Preview</h2>
-              <p className="text-sm text-slate-500 mt-1">Interactive preview - changes sync back to code</p>
+              <p className="text-sm text-slate-500 mt-1">Click elements to edit • Use toolbar to format • Changes sync to code</p>
             </div>
             <div className="flex-1">
               <LivePreview
                 key={previewKey}
                 htmlCode={htmlCode}
-                onCodeChange={setHtmlCode}
+                onCodeChange={handleCodeChange}
               />
             </div>
           </div>
