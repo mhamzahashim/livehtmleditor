@@ -12,108 +12,64 @@ const LivePreview = ({ htmlCode, onCodeChange }: LivePreviewProps) => {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    if (iframeRef.current && isLoaded) {
+    if (iframeRef.current) {
       const iframe = iframeRef.current;
       const doc = iframe.contentDocument || iframe.contentWindow?.document;
       
       if (doc) {
-        doc.open();
-        doc.write(htmlCode);
-        doc.close();
-        
-        // Add event listeners for content editing
-        setupContentEditing(doc);
-      }
-    }
-  }, [htmlCode, isLoaded]);
-
-  const setupContentEditing = (doc: Document) => {
-    // Make content editable
-    const body = doc.body;
-    if (body) {
-      body.contentEditable = 'true';
-      body.style.outline = 'none';
-      
-      // Add visual indicators for editable content
-      const style = doc.createElement('style');
-      style.textContent = `
-        *:hover {
-          outline: 1px dashed #4299e1 !important;
-          outline-offset: 2px !important;
-        }
-        *:focus {
-          outline: 2px solid #4299e1 !important;
-          outline-offset: 2px !important;
-        }
-      `;
-      doc.head.appendChild(style);
-
-      // Listen for content changes
-      body.addEventListener('input', () => {
-        setTimeout(() => {
-          updateHtmlCode(doc);
-        }, 100);
-      });
-
-      // Handle image uploads (simplified - would need more robust implementation)
-      body.addEventListener('paste', (e) => {
-        const items = e.clipboardData?.items;
-        if (items) {
-          for (let i = 0; i < items.length; i++) {
-            if (items[i].type.indexOf('image') !== -1) {
-              e.preventDefault();
-              toast({
-                title: "Image Upload",
-                description: "Image upload feature would be implemented here",
-              });
+        try {
+          doc.open();
+          doc.write(htmlCode || '<!DOCTYPE html><html><head></head><body></body></html>');
+          doc.close();
+          
+          // Add some basic styling to make content editable
+          const style = doc.createElement('style');
+          style.textContent = `
+            body {
+              margin: 20px;
+              font-family: Arial, sans-serif;
             }
+            *:hover {
+              outline: 1px dashed #4299e1;
+              outline-offset: 2px;
+            }
+            *:focus {
+              outline: 2px solid #4299e1;
+              outline-offset: 2px;
+            }
+          `;
+          if (doc.head) {
+            doc.head.appendChild(style);
           }
-        }
-      });
 
-      // Handle link creation
-      doc.addEventListener('keydown', (e) => {
-        if (e.ctrlKey && e.key === 'k') {
-          e.preventDefault();
-          createLink(doc);
+          // Make body editable
+          if (doc.body) {
+            doc.body.contentEditable = 'true';
+            doc.body.style.outline = 'none';
+            
+            // Listen for content changes
+            doc.body.addEventListener('input', () => {
+              setTimeout(() => {
+                updateHtmlCode(doc);
+              }, 300);
+            });
+          }
+        } catch (error) {
+          console.error('Error writing to iframe:', error);
         }
-      });
-    }
-  };
-
-  const createLink = (doc: Document) => {
-    const selection = doc.getSelection();
-    if (selection && selection.toString()) {
-      const url = prompt('Enter URL:');
-      if (url) {
-        doc.execCommand('createLink', false, url);
-        setTimeout(() => {
-          updateHtmlCode(doc);
-        }, 100);
       }
     }
-  };
+  }, [htmlCode]);
 
   const updateHtmlCode = (doc: Document) => {
     try {
-      // Get the updated HTML
       const updatedHtml = doc.documentElement.outerHTML;
-      
-      // Clean up the HTML (remove contenteditable attributes, etc.)
       const cleanedHtml = updatedHtml
         .replace(/contenteditable="true"/g, '')
-        .replace(/style="outline: none;"/g, '')
-        .replace(/\s+/g, ' ')
-        .trim();
+        .replace(/style="outline: none;"/g, '');
 
-      // Update the code if it's different
-      if (cleanedHtml !== htmlCode.replace(/\s+/g, ' ').trim()) {
-        onCodeChange(`<!DOCTYPE html>\n${cleanedHtml}`);
-        
-        toast({
-          title: "Code Updated",
-          description: "Your changes have been synced to the code editor",
-        });
+      if (cleanedHtml !== htmlCode) {
+        onCodeChange(cleanedHtml);
       }
     } catch (error) {
       console.error('Error updating HTML code:', error);
@@ -136,7 +92,7 @@ const LivePreview = ({ htmlCode, onCodeChange }: LivePreviewProps) => {
         />
       </div>
       <div className="mt-2 text-xs text-slate-500 text-center">
-        Click to edit content • Ctrl+K to add links
+        Live preview of your HTML • Content is editable
       </div>
     </div>
   );

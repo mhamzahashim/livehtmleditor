@@ -1,8 +1,8 @@
 
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Play, Save, RotateCcw } from 'lucide-react';
+import { Play, RotateCcw } from 'lucide-react';
 import CodeEditor from './CodeEditor';
 import LivePreview from './LivePreview';
 
@@ -41,7 +41,7 @@ const HtmlEditor = () => {
 <body>
     <h1>Welcome to HTML Editor</h1>
     <p>This is a sample paragraph. You can edit this text directly in the preview!</p>
-    <p>Try adding a <a href="https://example.com">link</a> or editing existing content.</p>
+    <p>Try using the toolbar above or editing content directly in the preview.</p>
 </body>
 </html>`);
 
@@ -114,7 +114,7 @@ const HtmlEditor = () => {
           <div className="h-full flex flex-col">
             <div className="p-4 border-b border-slate-200/50">
               <h2 className="text-lg font-medium text-slate-700">HTML Code</h2>
-              <p className="text-sm text-slate-500 mt-1">Edit your HTML, CSS, and JavaScript</p>
+              <p className="text-sm text-slate-500 mt-1">Edit your HTML with the toolbar or type directly</p>
             </div>
             <div className="flex-1">
               <CodeEditor
