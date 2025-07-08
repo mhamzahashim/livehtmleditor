@@ -298,7 +298,7 @@ const LivePreview = ({ htmlCode, onCodeChange, previewWidth = '100%' }: LivePrev
     }
     return {
       containerClass: 'w-full h-full',
-      iframeClass: 'bg-white rounded-lg border border-slate-200',
+      iframeClass: 'bg-white border-0',
       style: { width: '100%', height: '100%' }
     };
   };
@@ -308,10 +308,10 @@ const LivePreview = ({ htmlCode, onCodeChange, previewWidth = '100%' }: LivePrev
   return (
     <div className="h-full flex flex-col">
       <EditorToolbar onInsertCode={handleToolbarInsert} selectedText={selectedText} />
-      <div className="flex-1 p-4">
+      <div className={`flex-1 ${previewWidth === '100%' ? 'p-0' : 'p-4'}`}>
         <div 
           ref={containerRef}
-          className={`h-full overflow-auto ${deviceFrame.containerClass}`}
+          className={`h-full ${previewWidth === '100%' ? 'overflow-hidden' : 'overflow-auto'} ${deviceFrame.containerClass}`}
           style={deviceFrame.style}
         >
           <iframe
@@ -322,13 +322,15 @@ const LivePreview = ({ htmlCode, onCodeChange, previewWidth = '100%' }: LivePrev
             sandbox="allow-scripts allow-same-origin"
             style={{ 
               width: previewWidth === '100%' ? '100%' : previewWidth,
-              minHeight: previewWidth === '100%' ? '100%' : '600px'
+              height: previewWidth === '100%' ? '100%' : '600px'
             }}
           />
         </div>
-        <div className="mt-2 text-xs text-slate-500 text-center">
-          Live preview • Click elements to select and edit • Changes sync back to code
-        </div>
+        {previewWidth !== '100%' && (
+          <div className="mt-2 text-xs text-slate-500 text-center">
+            Live preview • Click elements to select and edit • Changes sync back to code
+          </div>
+        )}
       </div>
     </div>
   );
