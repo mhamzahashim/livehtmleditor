@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -14,11 +15,13 @@ import {
   ShoppingCart, CreditCard as CreditCardIcon, DollarSign, Tag,
   MessageCircle, Bell, Clock, MapPin, Bookmark, Share,
   FileText, Folder, Archive, Printer, Scissors, Clipboard,
-  Thermometer, Wifi, Battery, Signal, Bluetooth, Headphones
+  Thermometer, Wifi, Battery, Signal, Bluetooth, Headphones,
+  Github
 } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
 
 const ComponentLibrary = () => {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
@@ -692,7 +695,7 @@ const ComponentLibrary = () => {
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <Button variant="ghost" onClick={() => window.history.back()}>
+              <Button variant="ghost" onClick={() => navigate('/')}>
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back to Editor
               </Button>
@@ -805,6 +808,39 @@ const ComponentLibrary = () => {
           </div>
         )}
       </div>
+
+      {/* Footer */}
+      <footer className="bg-white/80 backdrop-blur-md border-t border-slate-200/60 mt-auto">
+        <div className="max-w-7xl mx-auto px-6 py-6">
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+            <div className="flex items-center space-x-6 text-sm text-slate-600">
+              <span className="flex items-center">
+                Made with <Heart className="w-4 h-4 mx-1 text-red-400" fill="currentColor" /> for developers
+              </span>
+              <span>•</span>
+              <span>100+ HTML, CSS & JavaScript components</span>
+            </div>
+            <div className="flex items-center space-x-4">
+              <div className="text-xs text-slate-500">
+                <span>Copy components • Paste in your HTML editor</span>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-slate-500 hover:text-slate-700"
+                onClick={() => window.open('https://github.com', '_blank')}
+              >
+                <Github className="w-4 h-4" />
+              </Button>
+            </div>
+          </div>
+          <div className="mt-4 pt-4 border-t border-slate-200/60">
+            <p className="text-xs text-slate-500 text-center">
+              © 2024 HTML Editor. Built with React, TypeScript, and Tailwind CSS.
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };

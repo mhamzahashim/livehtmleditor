@@ -282,8 +282,8 @@ console.log('Welcome to HTML Editor!');`;
                 <span className="text-white font-bold text-sm">&lt;/&gt;</span>
               </div>
               <div>
-                <h1 className={`text-2xl font-semibold ${darkMode ? 'text-foreground' : 'text-slate-800'} tracking-tight`}>HTML Editor</h1>
-                <p className={`text-sm ${darkMode ? 'text-muted-foreground' : 'text-slate-500'} mt-0.5`}>Create, edit, and preview HTML in real-time</p>
+                <h1 className={`text-xl font-semibold ${darkMode ? 'text-foreground' : 'text-slate-800'} tracking-tight`}>HTML Editor</h1>
+                <p className={`text-xs ${darkMode ? 'text-muted-foreground' : 'text-slate-500'} mt-0.5`}>Create, edit, and preview HTML in real-time</p>
               </div>
             </div>
             <div className="flex items-center space-x-3">

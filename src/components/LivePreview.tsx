@@ -312,17 +312,18 @@ const LivePreview = ({ htmlCode, onCodeChange, previewWidth = '100%' }: LivePrev
         <div 
           ref={containerRef}
           className={`h-full ${previewWidth === '100%' ? 'overflow-hidden' : 'overflow-auto'} ${deviceFrame.containerClass}`}
-          style={deviceFrame.style}
+          style={previewWidth === '100%' ? { width: '100%', height: '100%' } : deviceFrame.style}
         >
           <iframe
             ref={iframeRef}
             onLoad={handleLoad}
-            className={`w-full h-full border-0 ${deviceFrame.iframeClass}`}
+            className={`border-0 ${deviceFrame.iframeClass}`}
             title="Live Preview"
             sandbox="allow-scripts allow-same-origin"
             style={{ 
-              width: previewWidth === '100%' ? '100%' : previewWidth,
-              height: previewWidth === '100%' ? '100%' : '600px'
+              width: '100%',
+              height: '100%',
+              minHeight: previewWidth === '100%' ? '100vh' : '600px'
             }}
           />
         </div>
