@@ -2,7 +2,7 @@
 import { useState, useCallback } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Play, RotateCcw, Github, Heart, Monitor, Tablet, Smartphone, ZoomIn, ZoomOut, Download, Upload, Palette, Eye, EyeOff, Sun, Moon, Settings } from 'lucide-react';
+import { Play, RotateCcw, Github, Heart, Monitor, Tablet, Smartphone, ZoomIn, ZoomOut, Download, Upload, Palette, Eye, EyeOff, Sun, Moon, Settings, Layout } from 'lucide-react';
 import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from '@/components/ui/resizable';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -12,7 +12,6 @@ import LivePreview from './LivePreview';
 import CssEditor from './CssEditor';
 import JsEditor from './JsEditor';
 import DevTools from './DevTools';
-import ComponentLibrary from './ComponentLibrary';
 import ProjectTemplates from './ProjectTemplates';
 
 const HtmlEditor = () => {
@@ -273,9 +272,9 @@ console.log('Welcome to HTML Editor!');`;
   };
 
   return (
-    <div className={`min-h-screen flex flex-col ${darkMode ? 'dark bg-gray-900' : 'bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50'}`}>
+    <div className={`min-h-screen flex flex-col ${darkMode ? 'dark bg-background' : 'bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50'}`}>
       {/* Header */}
-      <header className={`${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white/80 backdrop-blur-md border-slate-200/60'} border-b shadow-sm`}>
+      <header className={`${darkMode ? 'bg-card border-border' : 'bg-white/80 backdrop-blur-md border-slate-200/60'} border-b shadow-sm`}>
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
@@ -283,8 +282,8 @@ console.log('Welcome to HTML Editor!');`;
                 <span className="text-white font-bold text-sm">&lt;/&gt;</span>
               </div>
               <div>
-                <h1 className={`text-2xl font-semibold ${darkMode ? 'text-white' : 'text-slate-800'} tracking-tight`}>HTML Editor</h1>
-                <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-slate-500'} mt-0.5`}>Create, edit, and preview HTML in real-time</p>
+                <h1 className={`text-2xl font-semibold ${darkMode ? 'text-foreground' : 'text-slate-800'} tracking-tight`}>HTML Editor</h1>
+                <p className={`text-sm ${darkMode ? 'text-muted-foreground' : 'text-slate-500'} mt-0.5`}>Create, edit, and preview HTML in real-time</p>
               </div>
             </div>
             <div className="flex items-center space-x-3">
@@ -356,6 +355,15 @@ console.log('Welcome to HTML Editor!');`;
               <Button onClick={handleExport} variant="outline" size="sm">
                 <Download className="w-4 h-4 mr-2" />
                 Export
+              </Button>
+
+              <Button 
+                onClick={() => window.open('/components', '_blank')} 
+                variant="outline" 
+                size="sm"
+              >
+                <Layout className="w-4 h-4 mr-2" />
+                Components
               </Button>
 
               <Button onClick={refreshPreview} variant="outline" size="sm">
@@ -438,32 +446,25 @@ console.log('Welcome to HTML Editor!');`;
 
             {/* Live Preview Side */}
             <ResizablePanel defaultSize={50} minSize={30}>
-              <div className="h-full flex flex-col gap-4">
-                <Card className="flex-1 bg-white/90 backdrop-blur-sm border-slate-200/60 shadow-xl">
-                  <div className="h-full flex flex-col">
-                    <div className="p-5 border-b border-slate-200/60 bg-gradient-to-r from-blue-50 to-indigo-50">
-                      <h2 className="text-lg font-semibold text-slate-800">Live Preview</h2>
-                      <p className="text-sm text-slate-600 mt-1">
-                        {previewMode.charAt(0).toUpperCase() + previewMode.slice(1)} view • 
-                        Click elements to edit • Changes sync to code
-                      </p>
-                    </div>
-                    <div className="flex-1" style={{ transform: `scale(${zoomLevel / 100})`, transformOrigin: 'top left' }}>
-                      <LivePreview
-                        key={previewKey}
-                        htmlCode={htmlCode}
-                        onCodeChange={handleCodeChange}
-                        previewWidth={getPreviewWidth()}
-                      />
-                    </div>
+              <Card className="flex-1 bg-white/90 backdrop-blur-sm border-slate-200/60 shadow-xl">
+                <div className="h-full flex flex-col">
+                  <div className="p-5 border-b border-slate-200/60 bg-gradient-to-r from-blue-50 to-indigo-50">
+                    <h2 className="text-lg font-semibold text-slate-800">Live Preview</h2>
+                    <p className="text-sm text-slate-600 mt-1">
+                      {previewMode.charAt(0).toUpperCase() + previewMode.slice(1)} view • 
+                      Click elements to edit • Changes sync to code
+                    </p>
                   </div>
-                </Card>
-
-                {/* Component Library */}
-                <Card className="h-48 bg-white/90 backdrop-blur-sm border-slate-200/60 shadow-xl">
-                  <ComponentLibrary onInsertComponent={handleCodeChange} />
-                </Card>
-              </div>
+                  <div className="flex-1" style={{ transform: `scale(${zoomLevel / 100})`, transformOrigin: 'top left' }}>
+                    <LivePreview
+                      key={previewKey}
+                      htmlCode={htmlCode}
+                      onCodeChange={handleCodeChange}
+                      previewWidth={getPreviewWidth()}
+                    />
+                  </div>
+                </div>
+              </Card>
             </ResizablePanel>
           </ResizablePanelGroup>
         )}
@@ -477,10 +478,10 @@ console.log('Welcome to HTML Editor!');`;
       </main>
 
       {/* Footer */}
-      <footer className={`${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white/80 backdrop-blur-md border-slate-200/60'} border-t mt-auto`}>
+      <footer className={`${darkMode ? 'bg-card border-border' : 'bg-white/80 backdrop-blur-md border-slate-200/60'} border-t mt-auto`}>
         <div className="max-w-7xl mx-auto px-6 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <div className={`flex items-center space-x-6 text-sm ${darkMode ? 'text-gray-400' : 'text-slate-600'}`}>
+            <div className={`flex items-center space-x-6 text-sm ${darkMode ? 'text-muted-foreground' : 'text-slate-600'}`}>
               <span className="flex items-center">
                 Made with <Heart className="w-4 h-4 mx-1 text-red-400" fill="currentColor" /> for developers
               </span>
@@ -488,23 +489,23 @@ console.log('Welcome to HTML Editor!');`;
               <span>Advanced HTML editing and preview</span>
             </div>
             <div className="flex items-center space-x-4">
-              <div className={`text-xs ${darkMode ? 'text-gray-500' : 'text-slate-500'}`}>
+              <div className={`text-xs ${darkMode ? 'text-muted-foreground' : 'text-slate-500'}`}>
                 <span>Keyboard shortcuts: </span>
-                <kbd className={`px-2 py-1 ${darkMode ? 'bg-gray-700' : 'bg-slate-100'} rounded text-xs`}>Ctrl+S</kbd>
+                <kbd className={`px-2 py-1 ${darkMode ? 'bg-muted' : 'bg-slate-100'} rounded text-xs`}>Ctrl+S</kbd>
                 <span className="mx-1">to save</span>
               </div>
               <Button
                 variant="ghost"
                 size="sm"
-                className={darkMode ? 'text-gray-400 hover:text-gray-200' : 'text-slate-500 hover:text-slate-700'}
+                className={darkMode ? 'text-muted-foreground hover:text-foreground' : 'text-slate-500 hover:text-slate-700'}
                 onClick={() => window.open('https://github.com', '_blank')}
               >
                 <Github className="w-4 h-4" />
               </Button>
             </div>
           </div>
-          <div className={`mt-4 pt-4 border-t ${darkMode ? 'border-gray-700' : 'border-slate-200/60'}`}>
-            <p className={`text-xs ${darkMode ? 'text-gray-500' : 'text-slate-500'} text-center`}>
+          <div className={`mt-4 pt-4 border-t ${darkMode ? 'border-border' : 'border-slate-200/60'}`}>
+            <p className={`text-xs ${darkMode ? 'text-muted-foreground' : 'text-slate-500'} text-center`}>
               © 2024 HTML Editor. Built with React, TypeScript, and Tailwind CSS.
             </p>
           </div>

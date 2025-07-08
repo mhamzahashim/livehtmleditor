@@ -61,6 +61,14 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				editor: {
+					bg: 'hsl(var(--editor-bg))',
+					foreground: 'hsl(var(--editor-foreground))',
+					'line-numbers-bg': 'hsl(var(--editor-line-numbers-bg))',
+					'line-numbers-text': 'hsl(var(--editor-line-numbers-text))',
+					'status-bg': 'hsl(var(--editor-status-bg))',
+					'status-text': 'hsl(var(--editor-status-text))'
 				}
 			},
 			borderRadius: {
