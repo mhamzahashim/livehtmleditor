@@ -307,6 +307,7 @@ const LivePreview = ({ htmlCode, onCodeChange, previewWidth = '100%' }: LivePrev
 
   return (
     <div className="h-full flex flex-col">
+      <EditorToolbar onInsertCode={handleToolbarInsert} selectedText={selectedText} />
       <div className="flex-1 p-4">
         <div 
           ref={containerRef}
