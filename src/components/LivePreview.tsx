@@ -7,9 +7,11 @@ interface LivePreviewProps {
   htmlCode: string;
   onCodeChange: (newCode: string) => void;
   previewWidth?: string;
+  cssCode?: string;
+  jsCode?: string;
 }
 
-const LivePreview = ({ htmlCode, onCodeChange, previewWidth = '100%' }: LivePreviewProps) => {
+const LivePreview = ({ htmlCode, onCodeChange, previewWidth = '100%', cssCode = '', jsCode = '' }: LivePreviewProps) => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [selectedElement, setSelectedElement] = useState<Element | null>(null);
@@ -24,7 +26,9 @@ const LivePreview = ({ htmlCode, onCodeChange, previewWidth = '100%' }: LivePrev
       if (doc) {
         try {
           doc.open();
-          doc.write(htmlCode || '<!DOCTYPE html><html><head></head><body></body></html>');
+          // Create a minimal HTML structure and inject the content, CSS, and JS
+          const fullHtml = `<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>${cssCode}</style><script>${jsCode}</script></head><body>${htmlCode || ''}</body></html>`;
+          doc.write(fullHtml);
           doc.close();
           
           setupPreviewInteractivity(doc);
@@ -33,7 +37,7 @@ const LivePreview = ({ htmlCode, onCodeChange, previewWidth = '100%' }: LivePrev
         }
       }
     }
-  }, [htmlCode]);
+  }, [htmlCode, cssCode, jsCode]);
 
   const setupPreviewInteractivity = (doc: Document) => {
     // Add styling for interactive elements
@@ -165,27 +169,12 @@ const LivePreview = ({ htmlCode, onCodeChange, previewWidth = '100%' }: LivePrev
 
   const updateHtmlCodePrecisely = (doc: Document, changedElement: Element) => {
     try {
-      // Create a temporary copy of the original HTML to work with
-      const parser = new DOMParser();
-      const originalDoc = parser.parseFromString(htmlCode, 'text/html');
+      // Only save the body content, not the full HTML structure
+      const bodyContent = doc.body.innerHTML;
+      const cleanedContent = cleanHtmlCode(bodyContent);
       
-      // Find the corresponding element in the original document
-      const elementPath = getElementPath(changedElement, doc.body);
-      const targetElement = getElementByPath(originalDoc.body, elementPath);
-      
-      if (targetElement && changedElement.textContent !== null) {
-        // Update the content while preserving structure
-        if (changedElement.innerHTML !== targetElement.innerHTML) {
-          targetElement.innerHTML = changedElement.innerHTML;
-          
-          // Get the updated HTML
-          const updatedHtml = originalDoc.documentElement.outerHTML;
-          const cleanedHtml = cleanHtmlCode(updatedHtml);
-          
-          if (cleanedHtml !== htmlCode) {
-            onCodeChange(cleanedHtml);
-          }
-        }
+      if (cleanedContent !== htmlCode) {
+        onCodeChange(cleanedContent);
       }
     } catch (error) {
       console.error('Error updating HTML code precisely:', error);

@@ -15,61 +15,17 @@ import DevTools from './DevTools';
 import ProjectTemplates from './ProjectTemplates';
 
 const HtmlEditor = () => {
-  const [htmlCode, setHtmlCode] = useState(`<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Document</title>
-    <style id="custom-styles">
-        body {
-            font-family: 'Georgia', serif;
-            line-height: 1.6;
-            margin: 40px;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        }
-        h1 {
-            color: #4a5568;
-            border-bottom: 2px solid #e2e8f0;
-            padding-bottom: 10px;
-        }
-        .introduction {
-            background: #f7fafc;
-            padding: 20px;
-            border-radius: 8px;
-            margin: 20px 0;
-        }
-        p {
-            color: #2d3748;
-            margin: 15px 0;
-        }
-        a {
-            color: #4299e1;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
-    <script id="custom-scripts">
-        // Add your JavaScript here
-        console.log('Welcome to HTML Editor!');
-    </script>
-</head>
-<body>
-    <h1>Welcome to HTML Editor</h1>
-    <div class="introduction">
-        <h2>Introduction</h2>
-        <p>This is the introduction section. You can edit this text directly by clicking on it in the preview!</p>
-        <p>Try selecting text and using the toolbar to format it, or click on elements to edit them directly.</p>
-    </div>
-    <div class="content">
-        <h2>Main Content</h2>
-        <p>This is the main content area. Each section will update precisely in the code when you make changes.</p>
-        <p>The bidirectional sync ensures your changes in the preview are reflected exactly where they should be in the HTML code.</p>
-    </div>
-</body>
-</html>`);
+  const [htmlCode, setHtmlCode] = useState(`<h1>Welcome to HTML Editor</h1>
+<div class="introduction">
+    <h2>Introduction</h2>
+    <p>This is the introduction section. You can edit this text directly by clicking on it in the preview!</p>
+    <p>Try selecting text and using the toolbar to format it, or click on elements to edit them directly.</p>
+</div>
+<div class="content">
+    <h2>Main Content</h2>
+    <p>This is the main content area. Each section will update precisely in the code when you make changes.</p>
+    <p>The bidirectional sync ensures your changes in the preview are reflected exactly where they should be in the HTML code.</p>
+</div>`);
 
   const [cssCode, setCssCode] = useState(`/* Add your custom CSS here */
 body {
@@ -132,77 +88,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
   const handleCodeChange = useCallback((newCode: string) => {
     setHtmlCode(newCode);
-    updateCombinedCode(newCode, cssCode, jsCode);
-  }, [cssCode, jsCode]);
+  }, []);
 
   const handleCssChange = useCallback((newCss: string) => {
     setCssCode(newCss);
-    updateCombinedCode(htmlCode, newCss, jsCode);
-  }, [htmlCode, jsCode]);
+  }, []);
 
   const handleJsChange = useCallback((newJs: string) => {
     setJsCode(newJs);
-    updateCombinedCode(htmlCode, cssCode, newJs);
-  }, [htmlCode, cssCode]);
-
-  const updateCombinedCode = (html: string, css: string, js: string) => {
-    // Inject CSS and JS into HTML
-    let updatedHtml = html;
-    
-    // Update or inject CSS
-    const styleRegex = /<style id="custom-styles">[\s\S]*?<\/style>/;
-    const newStyle = `<style id="custom-styles">\n${css}\n    </style>`;
-    if (styleRegex.test(updatedHtml)) {
-      updatedHtml = updatedHtml.replace(styleRegex, newStyle);
-    } else {
-      updatedHtml = updatedHtml.replace('</head>', `    ${newStyle}\n</head>`);
-    }
-    
-    // Update or inject JavaScript
-    const scriptRegex = /<script id="custom-scripts">[\s\S]*?<\/script>/;
-    const newScript = `<script id="custom-scripts">\n${js}\n    </script>`;
-    if (scriptRegex.test(updatedHtml)) {
-      updatedHtml = updatedHtml.replace(scriptRegex, newScript);
-    } else {
-      updatedHtml = updatedHtml.replace('</head>', `    ${newScript}\n</head>`);
-    }
-    
-    setHtmlCode(updatedHtml);
-  };
+  }, []);
 
   const refreshPreview = () => {
     setPreviewKey(prev => prev + 1);
   };
 
   const resetCode = () => {
-    const defaultHtml = `<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Document</title>
-    <style id="custom-styles">
-        body {
-            font-family: 'Georgia', serif;
-            line-height: 1.6;
-            margin: 40px;
-        }
-        h1 {
-            color: #4a5568;
-        }
-        p {
-            color: #2d3748;
-        }
-    </style>
-    <script id="custom-scripts">
-        console.log('Welcome to HTML Editor!');
-    </script>
-</head>
-<body>
-    <h1>Welcome to HTML Editor</h1>
-    <p>Start building your HTML content here!</p>
-</body>
-</html>`;
+    const defaultHtml = `<h1>Welcome to HTML Editor</h1>
+<p>Start building your HTML content here!</p>`;
     
     const defaultCss = `/* Add your custom CSS here */
 body {
@@ -394,6 +296,8 @@ console.log('Welcome to HTML Editor!');`;
                   htmlCode={htmlCode}
                   onCodeChange={handleCodeChange}
                   previewWidth="100%"
+                  cssCode={cssCode}
+                  jsCode={jsCode}
                 />
               </div>
             </div>
@@ -461,6 +365,8 @@ console.log('Welcome to HTML Editor!');`;
                       htmlCode={htmlCode}
                       onCodeChange={handleCodeChange}
                       previewWidth={getPreviewWidth()}
+                      cssCode={cssCode}
+                      jsCode={jsCode}
                     />
                   </div>
                 </div>
@@ -531,6 +437,8 @@ console.log('Welcome to HTML Editor!');`;
                   htmlCode={htmlCode}
                   onCodeChange={handleCodeChange}
                   previewWidth={getPreviewWidth()}
+                  cssCode={cssCode}
+                  jsCode={jsCode}
                 />
               </div>
             </div>
