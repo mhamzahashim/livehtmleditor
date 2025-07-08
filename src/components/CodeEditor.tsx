@@ -1,4 +1,3 @@
-
 import { useRef, useState, useEffect } from 'react';
 import { Textarea } from '@/components/ui/textarea';
 import EditorToolbar from './EditorToolbar';
