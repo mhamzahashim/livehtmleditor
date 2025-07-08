@@ -144,7 +144,7 @@ const CodeEditor = ({ value, onChange, language = 'html', darkMode = false }: Co
   const getHighlightedCode = (code: string) => {
     if (language === 'html') {
       return code
-        .replace(/(&lt;/?[^&gt;]+&gt;)/g, '<span class="text-blue-600">$1</span>')
+        .replace(/(<\/?[^>]+>)/g, '<span class="text-blue-600">$1</span>')
         .replace(/(\w+)=/g, '<span class="text-purple-600">$1</span>=')
         .replace(/"([^"]*)"/g, '"<span class="text-green-600">$1</span>"');
     }
