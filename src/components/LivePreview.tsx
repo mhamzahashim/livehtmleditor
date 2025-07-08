@@ -285,19 +285,19 @@ const LivePreview = ({ htmlCode, onCodeChange, previewWidth = '100%' }: LivePrev
   const getDeviceFrame = (width: string) => {
     if (width === '375px') {
       return {
-        containerClass: 'mx-auto bg-black rounded-[2rem] p-2',
+        containerClass: 'mx-auto bg-black rounded-[2rem] p-2 max-w-fit',
         iframeClass: 'rounded-[1.5rem] bg-white',
-        style: { width: '380px', height: '670px' }
+        style: { width: '375px', height: '667px' }
       };
     } else if (width === '768px') {
       return {
-        containerClass: 'mx-auto bg-black rounded-[1.5rem] p-3',
+        containerClass: 'mx-auto bg-black rounded-[1.5rem] p-3 max-w-fit',
         iframeClass: 'rounded-[1rem] bg-white',
-        style: { width: '774px', height: '1000px' }
+        style: { width: '768px', height: '1024px' }
       };
     }
     return {
-      containerClass: '',
+      containerClass: 'w-full h-full',
       iframeClass: 'bg-white rounded-lg border border-slate-200',
       style: { width: '100%', height: '100%' }
     };

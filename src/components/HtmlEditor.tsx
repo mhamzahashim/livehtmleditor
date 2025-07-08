@@ -381,11 +381,11 @@ console.log('Welcome to HTML Editor!');`;
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 flex gap-6 p-6">
+      <main className="flex-1 flex flex-col lg:flex-row gap-6 p-3 lg:p-6">
         {fullScreenPreview ? (
           <Card className="flex-1 bg-white/90 backdrop-blur-sm border-slate-200/60 shadow-xl">
             <div className="h-full flex flex-col">
-              <div className="p-5 border-b border-slate-200/60 bg-gradient-to-r from-blue-50 to-indigo-50">
+              <div className="p-3 lg:p-5 border-b border-slate-200/60 bg-gradient-to-r from-blue-50 to-indigo-50">
                 <h2 className="text-lg font-semibold text-slate-800">Full Screen Preview</h2>
               </div>
               <div className="flex-1" style={{ transform: `scale(${zoomLevel / 100})`, transformOrigin: 'top left' }}>
@@ -399,13 +399,13 @@ console.log('Welcome to HTML Editor!');`;
             </div>
           </Card>
         ) : (
-          <ResizablePanelGroup direction="horizontal" className="flex-1">
+          <ResizablePanelGroup direction="horizontal" className="flex-1 hidden lg:flex">
             {/* Code Editor Side */}
             <ResizablePanel defaultSize={50} minSize={30}>
               <Card className="h-full bg-white/90 backdrop-blur-sm border-slate-200/60 shadow-xl">
                 <div className="h-full flex flex-col">
                   <Tabs value={activeEditor} onValueChange={setActiveEditor} className="h-full flex flex-col">
-                    <div className="p-5 border-b border-slate-200/60 bg-gradient-to-r from-slate-50 to-blue-50">
+                    <div className="p-3 lg:p-5 border-b border-slate-200/60 bg-gradient-to-r from-slate-50 to-blue-50">
                       <TabsList className="grid w-full grid-cols-3">
                         <TabsTrigger value="html">HTML</TabsTrigger>
                         <TabsTrigger value="css">CSS</TabsTrigger>
@@ -446,9 +446,9 @@ console.log('Welcome to HTML Editor!');`;
 
             {/* Live Preview Side */}
             <ResizablePanel defaultSize={50} minSize={30}>
-              <Card className="flex-1 bg-white/90 backdrop-blur-sm border-slate-200/60 shadow-xl">
+              <Card className="h-full bg-white/90 backdrop-blur-sm border-slate-200/60 shadow-xl">
                 <div className="h-full flex flex-col">
-                  <div className="p-5 border-b border-slate-200/60 bg-gradient-to-r from-blue-50 to-indigo-50">
+                  <div className="p-3 lg:p-5 border-b border-slate-200/60 bg-gradient-to-r from-blue-50 to-indigo-50">
                     <h2 className="text-lg font-semibold text-slate-800">Live Preview</h2>
                     <p className="text-sm text-slate-600 mt-1">
                       {previewMode.charAt(0).toUpperCase() + previewMode.slice(1)} view • 
@@ -468,6 +468,74 @@ console.log('Welcome to HTML Editor!');`;
             </ResizablePanel>
           </ResizablePanelGroup>
         )}
+
+        {/* Mobile Layout */}
+        <div className="flex-1 lg:hidden space-y-4">
+          <Card className="bg-white/90 backdrop-blur-sm border-slate-200/60 shadow-xl">
+            <div className="flex flex-col">
+              <Tabs value={activeEditor} onValueChange={setActiveEditor} className="flex flex-col">
+                <div className="p-3 border-b border-slate-200/60 bg-gradient-to-r from-slate-50 to-blue-50">
+                  <TabsList className="grid w-full grid-cols-3">
+                    <TabsTrigger value="html">HTML</TabsTrigger>
+                    <TabsTrigger value="css">CSS</TabsTrigger>
+                    <TabsTrigger value="js">JavaScript</TabsTrigger>
+                  </TabsList>
+                </div>
+                
+                <TabsContent value="html" className="mt-0">
+                  <div className="h-64">
+                    <CodeEditor
+                      value={htmlCode}
+                      onChange={handleCodeChange}
+                      language="html"
+                      darkMode={darkMode}
+                    />
+                  </div>
+                </TabsContent>
+                
+                <TabsContent value="css" className="mt-0">
+                  <div className="h-64">
+                    <CssEditor
+                      value={cssCode}
+                      onChange={handleCssChange}
+                      darkMode={darkMode}
+                    />
+                  </div>
+                </TabsContent>
+                
+                <TabsContent value="js" className="mt-0">
+                  <div className="h-64">
+                    <JsEditor
+                      value={jsCode}
+                      onChange={handleJsChange}
+                      darkMode={darkMode}
+                    />
+                  </div>
+                </TabsContent>
+              </Tabs>
+            </div>
+          </Card>
+
+          <Card className="bg-white/90 backdrop-blur-sm border-slate-200/60 shadow-xl">
+            <div className="flex flex-col h-96">
+              <div className="p-3 border-b border-slate-200/60 bg-gradient-to-r from-blue-50 to-indigo-50">
+                <h2 className="text-lg font-semibold text-slate-800">Live Preview</h2>
+                <p className="text-sm text-slate-600 mt-1">
+                  {previewMode.charAt(0).toUpperCase() + previewMode.slice(1)} view • 
+                  Click elements to edit
+                </p>
+              </div>
+              <div className="flex-1" style={{ transform: `scale(${zoomLevel / 100})`, transformOrigin: 'top left' }}>
+                <LivePreview
+                  key={previewKey}
+                  htmlCode={htmlCode}
+                  onCodeChange={handleCodeChange}
+                  previewWidth={getPreviewWidth()}
+                />
+              </div>
+            </div>
+          </Card>
+        </div>
 
         {/* Dev Tools Sidebar */}
         {showDevTools && (
