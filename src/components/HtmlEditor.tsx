@@ -383,7 +383,7 @@ console.log('Welcome to HTML Editor!');`;
       {/* Main Content */}
       <main className="flex-1 flex flex-col lg:flex-row gap-6 p-3 lg:p-6">
         {fullScreenPreview ? (
-          <Card className="flex-1 bg-white/90 backdrop-blur-sm border-slate-200/60 shadow-xl">
+          <Card className="w-full h-full bg-white/90 backdrop-blur-sm border-slate-200/60 shadow-xl">
             <div className="h-full flex flex-col">
               <div className="p-3 lg:p-5 border-b border-slate-200/60 bg-gradient-to-r from-blue-50 to-indigo-50">
                 <h2 className="text-lg font-semibold text-slate-800">Full Screen Preview</h2>
@@ -393,7 +393,7 @@ console.log('Welcome to HTML Editor!');`;
                   key={previewKey}
                   htmlCode={htmlCode}
                   onCodeChange={handleCodeChange}
-                  previewWidth={getPreviewWidth()}
+                  previewWidth="100%"
                 />
               </div>
             </div>
