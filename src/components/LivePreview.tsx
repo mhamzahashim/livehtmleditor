@@ -274,13 +274,13 @@ const LivePreview = ({ htmlCode, onCodeChange, previewWidth = '100%', cssCode = 
       const doc = iframeRef.current?.contentDocument;
       if (!doc) return;
       
-      const bodyContent = doc.body.innerHTML;
-      const cleanedContent = cleanHtmlCode(bodyContent);
+      // Get the text content instead of HTML
+      const textContent = doc.body.innerText || doc.body.textContent || '';
       
-      await navigator.clipboard.writeText(cleanedContent);
+      await navigator.clipboard.writeText(textContent);
       toast({
         title: "Content copied!",
-        description: "HTML content has been copied to your clipboard.",
+        description: "Text content has been copied to your clipboard.",
       });
     } catch (error) {
       console.error('Failed to copy content:', error);
