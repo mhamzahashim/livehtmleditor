@@ -1,6 +1,8 @@
 
 import { useRef, useEffect, useState } from 'react';
 import { toast } from '@/components/ui/use-toast';
+import { Button } from '@/components/ui/button';
+import { Copy } from 'lucide-react';
 import EditorToolbar from './EditorToolbar';
 
 interface LivePreviewProps {
@@ -267,6 +269,29 @@ const LivePreview = ({ htmlCode, onCodeChange, previewWidth = '100%', cssCode = 
     }
   };
 
+  const handleCopyContent = async () => {
+    try {
+      const doc = iframeRef.current?.contentDocument;
+      if (!doc) return;
+      
+      const bodyContent = doc.body.innerHTML;
+      const cleanedContent = cleanHtmlCode(bodyContent);
+      
+      await navigator.clipboard.writeText(cleanedContent);
+      toast({
+        title: "Content copied!",
+        description: "HTML content has been copied to your clipboard.",
+      });
+    } catch (error) {
+      console.error('Failed to copy content:', error);
+      toast({
+        title: "Copy failed",
+        description: "Unable to copy content to clipboard.",
+        variant: "destructive",
+      });
+    }
+  };
+
   const handleLoad = () => {
     setIsLoaded(true);
   };
@@ -296,7 +321,20 @@ const LivePreview = ({ htmlCode, onCodeChange, previewWidth = '100%', cssCode = 
 
   return (
     <div className="h-full flex flex-col">
-      <EditorToolbar onInsertCode={handleToolbarInsert} selectedText={selectedText} />
+      <div className="flex items-center justify-between border-b border-slate-200 bg-gradient-to-r from-slate-50 to-blue-50 px-3 py-2">
+        <div className="flex-1">
+          <EditorToolbar onInsertCode={handleToolbarInsert} selectedText={selectedText} />
+        </div>
+        <Button
+          onClick={handleCopyContent}
+          variant="outline"
+          size="sm"
+          className="ml-2 gap-2"
+        >
+          <Copy className="w-4 h-4" />
+          Copy Output
+        </Button>
+      </div>
       <div className={`flex-1 ${previewWidth === '100%' ? 'p-0' : 'p-4'}`}>
         <div 
           ref={containerRef}
