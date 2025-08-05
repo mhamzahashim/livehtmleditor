@@ -274,7 +274,7 @@ const LivePreview = ({ htmlCode, onCodeChange, previewWidth = '100%', cssCode = 
       const doc = iframeRef.current?.contentDocument;
       if (!doc) return;
       
-      // Convert HTML to structured text format preserving headings and structure
+      // Convert HTML to formatted text preserving visual hierarchy and spacing
       const formatHtmlToText = (element: Element): string => {
         let result = '';
         
@@ -285,54 +285,53 @@ const LivePreview = ({ htmlCode, onCodeChange, previewWidth = '100%', cssCode = 
           if (textContent) {
             switch (tagName) {
               case 'h1':
-                result += `# ${textContent}\n\n`;
+                result += `${textContent.toUpperCase()}\n\n`;
                 break;
               case 'h2':
-                result += `## ${textContent}\n\n`;
+                result += `${textContent}\n\n`;
                 break;
               case 'h3':
-                result += `### ${textContent}\n\n`;
-                break;
               case 'h4':
-                result += `#### ${textContent}\n\n`;
-                break;
               case 'h5':
-                result += `##### ${textContent}\n\n`;
-                break;
               case 'h6':
-                result += `###### ${textContent}\n\n`;
+                result += `${textContent}\n\n`;
                 break;
               case 'p':
                 result += `${textContent}\n\n`;
                 break;
               case 'blockquote':
-                result += `> ${textContent}\n\n`;
+                result += `"${textContent}"\n\n`;
                 break;
               case 'ul':
               case 'ol':
                 const listItems = child.querySelectorAll('li');
-                listItems.forEach((li, index) => {
-                  const prefix = tagName === 'ul' ? '• ' : `${index + 1}. `;
+                listItems.forEach((li) => {
+                  const prefix = tagName === 'ul' ? '• ' : '- ';
                   result += `${prefix}${li.textContent?.trim() || ''}\n`;
                 });
                 result += '\n';
                 break;
               case 'table':
                 const rows = child.querySelectorAll('tr');
-                rows.forEach((row, rowIndex) => {
+                rows.forEach((row) => {
                   const cells = row.querySelectorAll('td, th');
                   const cellTexts = Array.from(cells).map(cell => cell.textContent?.trim() || '');
-                  result += cellTexts.join(' | ') + '\n';
-                  if (rowIndex === 0 && cells.length > 0) {
-                    result += cellTexts.map(() => '---').join(' | ') + '\n';
-                  }
+                  result += cellTexts.join('\t') + '\n';
                 });
                 result += '\n';
+                break;
+              case 'strong':
+              case 'b':
+                result += `${textContent}\n\n`;
+                break;
+              case 'em':
+              case 'i':
+                result += `${textContent}\n\n`;
                 break;
               default:
                 if (child.children.length > 0) {
                   result += formatHtmlToText(child);
-                } else {
+                } else if (textContent) {
                   result += `${textContent}\n\n`;
                 }
             }
@@ -344,10 +343,10 @@ const LivePreview = ({ htmlCode, onCodeChange, previewWidth = '100%', cssCode = 
       
       const formattedText = formatHtmlToText(doc.body);
       
-      await navigator.clipboard.writeText(formattedText);
+      await navigator.clipboard.writeText(formattedText.trim());
       toast({
         title: "Content copied!",
-        description: "Structured content has been copied to your clipboard.",
+        description: "Formatted content has been copied to your clipboard.",
       });
     } catch (error) {
       console.error('Failed to copy content:', error);
