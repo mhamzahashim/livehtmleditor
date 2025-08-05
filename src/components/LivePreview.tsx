@@ -274,87 +274,48 @@ const LivePreview = ({ htmlCode, onCodeChange, previewWidth = '100%', cssCode = 
       const doc = iframeRef.current?.contentDocument;
       if (!doc) return;
       
-      // Convert HTML to formatted text preserving visual hierarchy and spacing
-      const formatHtmlToText = (element: Element): string => {
-        let result = '';
-        
-        for (const child of Array.from(element.children)) {
-          const tagName = child.tagName.toLowerCase();
-          const textContent = child.textContent?.trim() || '';
-          
-          if (textContent) {
-            switch (tagName) {
-              case 'h1':
-                result += `${textContent.toUpperCase()}\n\n`;
-                break;
-              case 'h2':
-                result += `${textContent}\n\n`;
-                break;
-              case 'h3':
-              case 'h4':
-              case 'h5':
-              case 'h6':
-                result += `${textContent}\n\n`;
-                break;
-              case 'p':
-                result += `${textContent}\n\n`;
-                break;
-              case 'blockquote':
-                result += `"${textContent}"\n\n`;
-                break;
-              case 'ul':
-              case 'ol':
-                const listItems = child.querySelectorAll('li');
-                listItems.forEach((li) => {
-                  const prefix = tagName === 'ul' ? '• ' : '- ';
-                  result += `${prefix}${li.textContent?.trim() || ''}\n`;
-                });
-                result += '\n';
-                break;
-              case 'table':
-                const rows = child.querySelectorAll('tr');
-                rows.forEach((row) => {
-                  const cells = row.querySelectorAll('td, th');
-                  const cellTexts = Array.from(cells).map(cell => cell.textContent?.trim() || '');
-                  result += cellTexts.join('\t') + '\n';
-                });
-                result += '\n';
-                break;
-              case 'strong':
-              case 'b':
-                result += `${textContent}\n\n`;
-                break;
-              case 'em':
-              case 'i':
-                result += `${textContent}\n\n`;
-                break;
-              default:
-                if (child.children.length > 0) {
-                  result += formatHtmlToText(child);
-                } else if (textContent) {
-                  result += `${textContent}\n\n`;
-                }
-            }
-          }
-        }
-        
-        return result;
-      };
+      // Get the clean HTML content (without contenteditable attributes)
+      const bodyContent = doc.body.innerHTML;
+      const cleanedHtml = cleanHtmlCode(bodyContent);
       
-      const formattedText = formatHtmlToText(doc.body);
+      // Create a fallback plain text version
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = cleanedHtml;
+      const plainText = tempDiv.textContent || tempDiv.innerText || '';
       
-      await navigator.clipboard.writeText(formattedText.trim());
+      // Use the modern clipboard API to write both HTML and plain text
+      const clipboardItem = new ClipboardItem({
+        'text/html': new Blob([cleanedHtml], { type: 'text/html' }),
+        'text/plain': new Blob([plainText], { type: 'text/plain' })
+      });
+      
+      await navigator.clipboard.write([clipboardItem]);
+      
       toast({
         title: "Content copied!",
-        description: "Formatted content has been copied to your clipboard.",
+        description: "Rich text content has been copied with formatting preserved.",
       });
     } catch (error) {
       console.error('Failed to copy content:', error);
-      toast({
-        title: "Copy failed",
-        description: "Unable to copy content to clipboard.",
-        variant: "destructive",
-      });
+      
+      // Fallback to plain text if rich text copying fails
+      try {
+        const doc = iframeRef.current?.contentDocument;
+        if (doc) {
+          const plainText = doc.body.textContent || doc.body.innerText || '';
+          await navigator.clipboard.writeText(plainText);
+          toast({
+            title: "Content copied!",
+            description: "Content copied as plain text (formatting not preserved).",
+          });
+        }
+      } catch (fallbackError) {
+        toast({
+          title: "Copy failed",
+          description: "Unable to copy content to clipboard.",
+          variant: "destructive",
+        });
+      }
     }
   };
 
