@@ -35,7 +35,15 @@ const EditorFooter = ({ darkMode }: EditorFooterProps) => {
         </div>
         <div className={`mt-4 pt-4 border-t ${darkMode ? 'border-border' : 'border-slate-200/60'}`}>
           <p className={`text-xs ${darkMode ? 'text-muted-foreground' : 'text-slate-500'} text-center`}>
-            © 2024 HTML Editor. Built with React, TypeScript, and Tailwind CSS.
+            © 2024 HTML Editor. Built with React, TypeScript, and Tailwind CSS. Created by{' '}
+            <a 
+              href="https://serpnavigator.com/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className={`${darkMode ? 'text-primary hover:text-primary/80' : 'text-blue-600 hover:text-blue-800'} underline`}
+            >
+              SerpNavigator
+            </a>
           </p>
         </div>
       </div>

@@ -6,6 +6,7 @@ import LivePreview from '../LivePreview';
 import CssEditor from '../CssEditor';
 import JsEditor from '../JsEditor';
 import DevTools from '../DevTools';
+import WordCountDisplay from '../WordCountDisplay';
 
 interface EditorLayoutProps {
   fullScreenPreview: boolean;
@@ -73,13 +74,16 @@ const EditorLayout = ({
           <Card className="h-full bg-white/90 backdrop-blur-sm border-slate-200/60 shadow-xl">
             <div className="h-full flex flex-col">
               <Tabs value={activeEditor} onValueChange={onActiveEditorChange} className="h-full flex flex-col">
-                <div className="p-3 lg:p-5 border-b border-slate-200/60 bg-gradient-to-r from-slate-50 to-blue-50">
-                  <TabsList className="grid w-full grid-cols-3">
+              <div className="p-3 lg:p-5 border-b border-slate-200/60 bg-gradient-to-r from-slate-50 to-blue-50">
+                <div className="flex items-center justify-between mb-3">
+                  <TabsList className="grid w-full grid-cols-3 max-w-md">
                     <TabsTrigger value="html">HTML</TabsTrigger>
                     <TabsTrigger value="css">CSS</TabsTrigger>
                     <TabsTrigger value="js">JavaScript</TabsTrigger>
                   </TabsList>
+                  <WordCountDisplay htmlContent={htmlCode} darkMode={darkMode} />
                 </div>
+              </div>
                 
                 <TabsContent value="html" className="flex-1 mt-0">
                   <CodeEditor
@@ -117,11 +121,16 @@ const EditorLayout = ({
           <Card className="h-full bg-white/90 backdrop-blur-sm border-slate-200/60 shadow-xl">
             <div className="h-full flex flex-col">
               <div className="p-3 lg:p-5 border-b border-slate-200/60 bg-gradient-to-r from-blue-50 to-indigo-50">
-                <h2 className="text-lg font-semibold text-slate-800">Live Preview</h2>
-                <p className="text-sm text-slate-600 mt-1">
-                  {previewMode.charAt(0).toUpperCase() + previewMode.slice(1)} view • 
-                  Click elements to edit • Changes sync to code
-                </p>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h2 className="text-lg font-semibold text-slate-800">Live Preview</h2>
+                    <p className="text-sm text-slate-600 mt-1">
+                      {previewMode.charAt(0).toUpperCase() + previewMode.slice(1)} view • 
+                      Click elements to edit • Changes sync to code
+                    </p>
+                  </div>
+                  <WordCountDisplay htmlContent={htmlCode} darkMode={darkMode} />
+                </div>
               </div>
               <div className="flex-1" style={{ transform: `scale(${zoomLevel / 100})`, transformOrigin: 'top left' }}>
                 <LivePreview
@@ -144,11 +153,14 @@ const EditorLayout = ({
           <div className="flex flex-col">
             <Tabs value={activeEditor} onValueChange={onActiveEditorChange} className="flex flex-col">
               <div className="p-3 border-b border-slate-200/60 bg-gradient-to-r from-slate-50 to-blue-50">
-                <TabsList className="grid w-full grid-cols-3">
-                  <TabsTrigger value="html">HTML</TabsTrigger>
-                  <TabsTrigger value="css">CSS</TabsTrigger>
-                  <TabsTrigger value="js">JavaScript</TabsTrigger>
-                </TabsList>
+                <div className="flex items-center justify-between mb-3">
+                  <TabsList className="grid w-full grid-cols-3 max-w-md">
+                    <TabsTrigger value="html">HTML</TabsTrigger>
+                    <TabsTrigger value="css">CSS</TabsTrigger>
+                    <TabsTrigger value="js">JavaScript</TabsTrigger>
+                  </TabsList>
+                  <WordCountDisplay htmlContent={htmlCode} darkMode={darkMode} />
+                </div>
               </div>
               
               <TabsContent value="html" className="mt-0">
@@ -188,11 +200,16 @@ const EditorLayout = ({
         <Card className="bg-white/90 backdrop-blur-sm border-slate-200/60 shadow-xl">
           <div className="flex flex-col h-96">
             <div className="p-3 border-b border-slate-200/60 bg-gradient-to-r from-blue-50 to-indigo-50">
-              <h2 className="text-lg font-semibold text-slate-800">Live Preview</h2>
-              <p className="text-sm text-slate-600 mt-1">
-                {previewMode.charAt(0).toUpperCase() + previewMode.slice(1)} view • 
-                Click elements to edit
-              </p>
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-lg font-semibold text-slate-800">Live Preview</h2>
+                  <p className="text-sm text-slate-600 mt-1">
+                    {previewMode.charAt(0).toUpperCase() + previewMode.slice(1)} view • 
+                    Click elements to edit
+                  </p>
+                </div>
+                <WordCountDisplay htmlContent={htmlCode} darkMode={darkMode} />
+              </div>
             </div>
             <div className="flex-1" style={{ transform: `scale(${zoomLevel / 100})`, transformOrigin: 'top left' }}>
               <LivePreview

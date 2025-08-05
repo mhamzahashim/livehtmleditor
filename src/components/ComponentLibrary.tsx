@@ -603,6 +603,684 @@ const ComponentLibrary = ({ onInsertComponent }: ComponentLibraryProps) => {
       name: 'Chat Bubble',
       icon: <Quote className="w-4 h-4" />,
       code: `<div style="max-width: 70%; margin-bottom: 1rem;">
+  <div style="background: #4299e1; color: white; padding: 0.75rem 1rem; border-radius: 18px; border-bottom-right-radius: 4px; position: relative;">
+    Hey! How are you doing today?
+  </div>
+  <small style="color: #a0aec0; font-size: 0.8rem; margin-top: 0.25rem; display: block;">2:30 PM</small>
+</div>`
+    },
+    {
+      name: 'Chat Bubble Received',
+      icon: <Quote className="w-4 h-4" />,
+      code: `<div style="max-width: 70%; margin-bottom: 1rem; margin-left: auto; text-align: right;">
+  <div style="background: #e2e8f0; color: #2d3748; padding: 0.75rem 1rem; border-radius: 18px; border-bottom-left-radius: 4px;">
+    I'm doing great, thanks for asking!
+  </div>
+  <small style="color: #a0aec0; font-size: 0.8rem; margin-top: 0.25rem; display: block;">2:32 PM</small>
+</div>`
+    },
+    {
+      name: 'File Upload',
+      icon: <Type className="w-4 h-4" />,
+      code: `<div style="border: 2px dashed #cbd5e0; border-radius: 8px; padding: 3rem; text-align: center; background: #f7fafc; margin: 1rem 0;">
+  <div style="font-size: 3rem; color: #a0aec0; margin-bottom: 1rem;">📁</div>
+  <h3 style="margin: 0 0 0.5rem 0; color: #2d3748;">Drop files here</h3>
+  <p style="color: #718096; margin: 0 0 1rem 0;">or click to browse</p>
+  <button style="background: #4299e1; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer;">Browse Files</button>
+</div>`
+    },
+    {
+      name: 'Calendar Widget',
+      icon: <Calendar className="w-4 h-4" />,
+      code: `<div style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem; max-width: 280px;">
+  <div style="display: flex; justify-content: between; align-items: center; margin-bottom: 1rem;">
+    <button style="background: none; border: none; color: #4299e1; cursor: pointer;">‹</button>
+    <h3 style="margin: 0; color: #2d3748;">March 2024</h3>
+    <button style="background: none; border: none; color: #4299e1; cursor: pointer;">›</button>
+  </div>
+  <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.25rem; text-align: center; font-size: 0.8rem;">
+    <div style="color: #a0aec0; padding: 0.5rem;">S</div>
+    <div style="color: #a0aec0; padding: 0.5rem;">M</div>
+    <div style="color: #a0aec0; padding: 0.5rem;">T</div>
+    <div style="color: #a0aec0; padding: 0.5rem;">W</div>
+    <div style="color: #a0aec0; padding: 0.5rem;">T</div>
+    <div style="color: #a0aec0; padding: 0.5rem;">F</div>
+    <div style="color: #a0aec0; padding: 0.5rem;">S</div>
+    <div style="padding: 0.5rem;"></div>
+    <div style="padding: 0.5rem;"></div>
+    <div style="padding: 0.5rem;"></div>
+    <div style="padding: 0.5rem;"></div>
+    <div style="padding: 0.5rem;"></div>
+    <div style="padding: 0.5rem; color: #2d3748;">1</div>
+    <div style="padding: 0.5rem; color: #2d3748;">2</div>
+    <div style="padding: 0.5rem; color: #2d3748;">3</div>
+    <div style="padding: 0.5rem; color: #2d3748;">4</div>
+    <div style="padding: 0.5rem; color: #2d3748;">5</div>
+    <div style="padding: 0.5rem; color: #2d3748;">6</div>
+    <div style="padding: 0.5rem; color: #2d3748;">7</div>
+    <div style="padding: 0.5rem; color: #2d3748;">8</div>
+    <div style="padding: 0.5rem; color: #2d3748;">9</div>
+    <div style="padding: 0.5rem; background: #4299e1; color: white; border-radius: 4px;">15</div>
+  </div>
+</div>`
+    },
+    {
+      name: 'Rating Stars',
+      icon: <Star className="w-4 h-4" />,
+      code: `<div style="display: flex; align-items: center; gap: 0.5rem; margin: 1rem 0;">
+  <div style="display: flex; gap: 0.125rem;">
+    <span style="color: #fbd38d; font-size: 1.2rem;">★</span>
+    <span style="color: #fbd38d; font-size: 1.2rem;">★</span>
+    <span style="color: #fbd38d; font-size: 1.2rem;">★</span>
+    <span style="color: #fbd38d; font-size: 1.2rem;">★</span>
+    <span style="color: #e2e8f0; font-size: 1.2rem;">★</span>
+  </div>
+  <span style="color: #718096; font-size: 0.9rem;">(4.0)</span>
+  <span style="color: #a0aec0; font-size: 0.8rem;">256 reviews</span>
+</div>`
+    },
+    {
+      name: 'Video Player',
+      icon: <Layout className="w-4 h-4" />,
+      code: `<div style="position: relative; background: #000; border-radius: 8px; overflow: hidden; max-width: 500px;">
+  <div style="aspect-ratio: 16/9; background: linear-gradient(45deg, #2d3748, #4a5568); display: flex; align-items: center; justify-content: center; color: white;">
+    <div style="text-align: center;">
+      <div style="font-size: 4rem; margin-bottom: 1rem;">▶</div>
+      <p style="margin: 0; opacity: 0.8;">Click to play video</p>
+    </div>
+  </div>
+  <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.8)); color: white; padding: 1rem;">
+    <div style="display: flex; align-items: center; gap: 1rem;">
+      <button style="background: none; border: none; color: white; font-size: 1.2rem; cursor: pointer;">⏸</button>
+      <div style="flex: 1; background: rgba(255,255,255,0.3); height: 4px; border-radius: 2px; overflow: hidden;">
+        <div style="background: white; height: 100%; width: 30%;"></div>
+      </div>
+      <span style="font-size: 0.8rem;">2:30 / 8:45</span>
+    </div>
+  </div>
+</div>`
+    },
+    {
+      name: 'Code Block',
+      icon: <Type className="w-4 h-4" />,
+      code: `<div style="background: #2d3748; color: #e2e8f0; border-radius: 8px; overflow: hidden; margin: 1rem 0;">
+  <div style="background: #1a202c; padding: 0.75rem 1rem; border-bottom: 1px solid #4a5568; display: flex; justify-content: space-between; align-items: center;">
+    <span style="color: #a0aec0; font-size: 0.8rem;">JavaScript</span>
+    <button style="background: none; border: none; color: #a0aec0; cursor: pointer; font-size: 0.8rem;">Copy</button>
+  </div>
+  <pre style="margin: 0; padding: 1rem; overflow-x: auto; font-family: 'Courier New', monospace; font-size: 0.9rem; line-height: 1.4;"><code>function greetUser(name) {
+  console.log(\`Hello, \${name}!\`);
+  return \`Welcome, \${name}\`;
+}</code></pre>
+</div>`
+    },
+    {
+      name: 'Notification',
+      icon: <Layout className="w-4 h-4" />,
+      code: `<div style="position: fixed; top: 1rem; right: 1rem; background: white; border: 1px solid #e2e8f0; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); padding: 1rem; max-width: 300px; z-index: 1000;">
+  <div style="display: flex; align-items: start; gap: 0.75rem;">
+    <div style="background: #4299e1; color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; flex-shrink: 0;">i</div>
+    <div style="flex: 1;">
+      <h4 style="margin: 0 0 0.25rem 0; color: #2d3748; font-size: 0.9rem;">New Message</h4>
+      <p style="margin: 0; color: #718096; font-size: 0.8rem;">You have received a new message from John.</p>
+    </div>
+    <button style="background: none; border: none; color: #a0aec0; cursor: pointer; font-size: 1.2rem;">×</button>
+  </div>
+</div>`
+    },
+    {
+      name: 'Slider',
+      icon: <Layout className="w-4 h-4" />,
+      code: `<div style="margin: 2rem 0;">
+  <label style="display: block; margin-bottom: 0.5rem; color: #4a5568; font-weight: 500;">Volume: 75%</label>
+  <div style="position: relative; background: #e2e8f0; height: 6px; border-radius: 3px; cursor: pointer;">
+    <div style="background: #4299e1; height: 100%; width: 75%; border-radius: 3px; position: relative;">
+      <div style="position: absolute; right: -6px; top: 50%; transform: translateY(-50%); width: 18px; height: 18px; background: white; border: 2px solid #4299e1; border-radius: 50%; cursor: grab;"></div>
+    </div>
+  </div>
+</div>`
+    },
+    {
+      name: 'Toggle Switch',
+      icon: <Layout className="w-4 h-4" />,
+      code: `<label style="display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+  <div style="position: relative; width: 44px; height: 24px; background: #4299e1; border-radius: 12px; transition: background-color 0.3s;">
+    <div style="position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; background: white; border-radius: 50%; transition: transform 0.3s; transform: translateX(20px);"></div>
+  </div>
+  <span style="color: #2d3748; font-size: 0.9rem;">Enable notifications</span>
+</label>`
+    },
+    {
+      name: 'Radio Button Group',
+      icon: <Type className="w-4 h-4" />,
+      code: `<fieldset style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem; margin: 1rem 0;">
+  <legend style="color: #2d3748; font-weight: 500; padding: 0 0.5rem;">Choose a plan</legend>
+  <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+      <input type="radio" name="plan" value="basic" style="margin: 0;">
+      <span style="color: #2d3748;">Basic Plan - $9/month</span>
+    </label>
+    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+      <input type="radio" name="plan" value="pro" checked style="margin: 0;">
+      <span style="color: #2d3748;">Pro Plan - $19/month</span>
+    </label>
+    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+      <input type="radio" name="plan" value="enterprise" style="margin: 0;">
+      <span style="color: #2d3748;">Enterprise Plan - $49/month</span>
+    </label>
+  </div>
+</fieldset>`
+    },
+    {
+      name: 'Checkbox List',
+      icon: <List className="w-4 h-4" />,
+      code: `<div style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem;">
+  <h3 style="margin: 0 0 1rem 0; color: #2d3748;">Select features</h3>
+  <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+      <input type="checkbox" checked style="margin: 0;">
+      <span style="color: #2d3748;">Email notifications</span>
+    </label>
+    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+      <input type="checkbox" style="margin: 0;">
+      <span style="color: #2d3748;">SMS alerts</span>
+    </label>
+    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+      <input type="checkbox" checked style="margin: 0;">
+      <span style="color: #2d3748;">Push notifications</span>
+    </label>
+    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+      <input type="checkbox" style="margin: 0;">
+      <span style="color: #2d3748;">Weekly digest</span>
+    </label>
+  </div>
+</div>`
+    },
+    {
+      name: 'Dropdown Menu',
+      icon: <Navigation className="w-4 h-4" />,
+      code: `<div style="position: relative; display: inline-block;">
+  <button style="background: #4299e1; color: white; border: none; padding: 0.75rem 1rem; border-radius: 6px; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
+    Options <span style="font-size: 0.8rem;">▼</span>
+  </button>
+  <div style="position: absolute; top: 100%; left: 0; background: white; border: 1px solid #e2e8f0; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); min-width: 150px; z-index: 10; margin-top: 0.25rem;">
+    <a href="#" style="display: block; padding: 0.75rem 1rem; color: #2d3748; text-decoration: none; border-bottom: 1px solid #f7fafc;">Edit</a>
+    <a href="#" style="display: block; padding: 0.75rem 1rem; color: #2d3748; text-decoration: none; border-bottom: 1px solid #f7fafc;">Share</a>
+    <a href="#" style="display: block; padding: 0.75rem 1rem; color: #e53e3e; text-decoration: none;">Delete</a>
+  </div>
+</div>`
+    },
+    {
+      name: 'Loading Spinner',
+      icon: <Layout className="w-4 h-4" />,
+      code: `<div style="display: flex; align-items: center; justify-content: center; padding: 2rem;">
+  <div style="width: 40px; height: 40px; border: 4px solid #e2e8f0; border-top: 4px solid #4299e1; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+</div>
+<style>
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+</style>`
+    },
+    {
+      name: 'Empty State',
+      icon: <Layout className="w-4 h-4" />,
+      code: `<div style="text-align: center; padding: 4rem 2rem; color: #718096;">
+  <div style="font-size: 4rem; margin-bottom: 1rem; opacity: 0.5;">📭</div>
+  <h3 style="margin: 0 0 0.5rem 0; color: #2d3748;">No items found</h3>
+  <p style="margin: 0 0 2rem 0; max-width: 400px; margin-left: auto; margin-right: auto;">We couldn't find any items matching your criteria. Try adjusting your filters or search terms.</p>
+  <button style="background: #4299e1; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; cursor: pointer;">Add New Item</button>
+</div>`
+    },
+    {
+      name: 'Error State',
+      icon: <Layout className="w-4 h-4" />,
+      code: `<div style="text-align: center; padding: 4rem 2rem; color: #718096;">
+  <div style="font-size: 4rem; margin-bottom: 1rem; color: #e53e3e;">⚠️</div>
+  <h3 style="margin: 0 0 0.5rem 0; color: #2d3748;">Something went wrong</h3>
+  <p style="margin: 0 0 2rem 0; max-width: 400px; margin-left: auto; margin-right: auto;">We encountered an error while loading this content. Please try again later.</p>
+  <div style="display: flex; gap: 1rem; justify-content: center;">
+    <button style="background: #4299e1; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; cursor: pointer;">Try Again</button>
+    <button style="background: #e2e8f0; color: #4a5568; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; cursor: pointer;">Go Back</button>
+  </div>
+</div>`
+    },
+    {
+      name: 'Avatar Group',
+      icon: <CreditCard className="w-4 h-4" />,
+      code: `<div style="display: flex; align-items: center; gap: 1rem;">
+  <div style="display: flex;">
+    <img src="https://via.placeholder.com/40x40/4299e1/ffffff?text=A" alt="Avatar" style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid white; margin-left: -8px;">
+    <img src="https://via.placeholder.com/40x40/48bb78/ffffff?text=B" alt="Avatar" style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid white; margin-left: -8px;">
+    <img src="https://via.placeholder.com/40x40/ed8936/ffffff?text=C" alt="Avatar" style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid white; margin-left: -8px;">
+    <div style="width: 40px; height: 40px; border-radius: 50%; background: #e2e8f0; border: 2px solid white; margin-left: -8px; display: flex; align-items: center; justify-content: center; color: #4a5568; font-size: 0.8rem; font-weight: 500;">+5</div>
+  </div>
+  <span style="color: #718096; font-size: 0.9rem;">8 team members</span>
+</div>`
+    },
+    {
+      name: 'Breadcrumb Advanced',
+      icon: <Navigation className="w-4 h-4" />,
+      code: `<nav style="background: #f7fafc; border-radius: 8px; padding: 1rem; margin: 1rem 0;">
+  <ol style="display: flex; align-items: center; list-style: none; padding: 0; margin: 0; font-size: 0.9rem;">
+    <li style="display: flex; align-items: center;">
+      <a href="#" style="color: #4299e1; text-decoration: none; display: flex; align-items: center; gap: 0.25rem;">
+        🏠 Home
+      </a>
+    </li>
+    <li style="margin: 0 0.5rem; color: #a0aec0;">›</li>
+    <li style="display: flex; align-items: center;">
+      <a href="#" style="color: #4299e1; text-decoration: none;">Category</a>
+    </li>
+    <li style="margin: 0 0.5rem; color: #a0aec0;">›</li>
+    <li style="display: flex; align-items: center;">
+      <a href="#" style="color: #4299e1; text-decoration: none;">Subcategory</a>
+    </li>
+    <li style="margin: 0 0.5rem; color: #a0aec0;">›</li>
+    <li style="color: #2d3748; font-weight: 500;">Current Page</li>
+  </ol>
+</nav>`
+    },
+    {
+      name: 'Stepper',
+      icon: <Navigation className="w-4 h-4" />,
+      code: `<div style="display: flex; align-items: center; padding: 2rem 0;">
+  <div style="display: flex; align-items: center; flex: 1;">
+    <div style="display: flex; flex-direction: column; align-items: center;">
+      <div style="width: 32px; height: 32px; background: #4299e1; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">✓</div>
+      <span style="margin-top: 0.5rem; color: #2d3748; font-size: 0.8rem; text-align: center;">Personal Info</span>
+    </div>
+    <div style="flex: 1; height: 2px; background: #4299e1; margin: 0 1rem;"></div>
+    <div style="display: flex; flex-direction: column; align-items: center;">
+      <div style="width: 32px; height: 32px; background: #4299e1; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">2</div>
+      <span style="margin-top: 0.5rem; color: #2d3748; font-size: 0.8rem; text-align: center;">Payment</span>
+    </div>
+    <div style="flex: 1; height: 2px; background: #e2e8f0; margin: 0 1rem;"></div>
+    <div style="display: flex; flex-direction: column; align-items: center;">
+      <div style="width: 32px; height: 32px; background: #e2e8f0; color: #a0aec0; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem;">3</div>
+      <span style="margin-top: 0.5rem; color: #a0aec0; font-size: 0.8rem; text-align: center;">Confirmation</span>
+    </div>
+  </div>
+</div>`
+    },
+    {
+      name: 'Data Table',
+      icon: <Table className="w-4 h-4" />,
+      code: `<div style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden;">
+  <table style="width: 100%; border-collapse: collapse;">
+    <thead style="background: #f7fafc;">
+      <tr>
+        <th style="padding: 0.75rem 1rem; text-align: left; color: #4a5568; font-weight: 600; border-bottom: 1px solid #e2e8f0;">Name</th>
+        <th style="padding: 0.75rem 1rem; text-align: left; color: #4a5568; font-weight: 600; border-bottom: 1px solid #e2e8f0;">Email</th>
+        <th style="padding: 0.75rem 1rem; text-align: left; color: #4a5568; font-weight: 600; border-bottom: 1px solid #e2e8f0;">Role</th>
+        <th style="padding: 0.75rem 1rem; text-align: left; color: #4a5568; font-weight: 600; border-bottom: 1px solid #e2e8f0;">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="padding: 0.75rem 1rem; border-bottom: 1px solid #f7fafc; color: #2d3748;">John Doe</td>
+        <td style="padding: 0.75rem 1rem; border-bottom: 1px solid #f7fafc; color: #718096;">john@example.com</td>
+        <td style="padding: 0.75rem 1rem; border-bottom: 1px solid #f7fafc; color: #718096;">Admin</td>
+        <td style="padding: 0.75rem 1rem; border-bottom: 1px solid #f7fafc;"><span style="background: #f0fff4; color: #22543d; padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.8rem;">Active</span></td>
+      </tr>
+      <tr>
+        <td style="padding: 0.75rem 1rem; border-bottom: 1px solid #f7fafc; color: #2d3748;">Jane Smith</td>
+        <td style="padding: 0.75rem 1rem; border-bottom: 1px solid #f7fafc; color: #718096;">jane@example.com</td>
+        <td style="padding: 0.75rem 1rem; border-bottom: 1px solid #f7fafc; color: #718096;">User</td>
+        <td style="padding: 0.75rem 1rem; border-bottom: 1px solid #f7fafc;"><span style="background: #fff5f5; color: #742a2a; padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.8rem;">Inactive</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>`
+    },
+    {
+      name: 'Info Card',
+      icon: <CreditCard className="w-4 h-4" />,
+      code: `<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 12px; padding: 2rem; position: relative; overflow: hidden;">
+  <div style="position: absolute; top: -2rem; right: -2rem; width: 6rem; height: 6rem; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+  <div style="position: relative; z-index: 1;">
+    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+      <div style="background: rgba(255,255,255,0.2); width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">💰</div>
+      <div>
+        <h3 style="margin: 0; font-size: 1.1rem;">Total Revenue</h3>
+        <p style="margin: 0; opacity: 0.8; font-size: 0.9rem;">Last 30 days</p>
+      </div>
+    </div>
+    <div style="font-size: 2.5rem; font-weight: bold; margin-bottom: 0.5rem;">$48,294</div>
+    <div style="display: flex; align-items: center; gap: 0.5rem; opacity: 0.9;">
+      <span style="background: rgba(255,255,255,0.2); padding: 0.125rem 0.5rem; border-radius: 12px; font-size: 0.8rem;">+12.5%</span>
+      <span style="font-size: 0.9rem;">vs last month</span>
+    </div>
+  </div>
+</div>`
+    },
+    {
+      name: 'Quiz Card',
+      icon: <CreditCard className="w-4 h-4" />,
+      code: `<div style="background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 2rem; max-width: 500px;">
+  <div style="display: flex; justify-content: between; align-items: center; margin-bottom: 1.5rem;">
+    <span style="background: #edf2f7; color: #4a5568; padding: 0.25rem 0.75rem; border-radius: 16px; font-size: 0.8rem;">Question 3 of 10</span>
+    <span style="color: #718096; font-size: 0.9rem;">30 seconds</span>
+  </div>
+  <h3 style="margin: 0 0 1.5rem 0; color: #2d3748; line-height: 1.4;">What is the capital city of Australia?</h3>
+  <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+    <label style="display: flex; align-items: center; padding: 0.75rem; border: 2px solid #e2e8f0; border-radius: 8px; cursor: pointer; transition: all 0.2s;">
+      <input type="radio" name="answer" value="a" style="margin-right: 0.75rem;">
+      <span style="color: #2d3748;">Sydney</span>
+    </label>
+    <label style="display: flex; align-items: center; padding: 0.75rem; border: 2px solid #4299e1; background: #f0f8ff; border-radius: 8px; cursor: pointer;">
+      <input type="radio" name="answer" value="b" checked style="margin-right: 0.75rem;">
+      <span style="color: #2d3748;">Canberra</span>
+    </label>
+    <label style="display: flex; align-items: center; padding: 0.75rem; border: 2px solid #e2e8f0; border-radius: 8px; cursor: pointer;">
+      <input type="radio" name="answer" value="c" style="margin-right: 0.75rem;">
+      <span style="color: #2d3748;">Melbourne</span>
+    </label>
+  </div>
+  <button style="width: 100%; background: #4299e1; color: white; border: none; padding: 0.75rem; border-radius: 8px; margin-top: 1.5rem; cursor: pointer; font-weight: 500;">Next Question</button>
+</div>`
+    },
+    {
+      name: 'Event Card',
+      icon: <Calendar className="w-4 h-4" />,
+      code: `<div style="background: white; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; max-width: 350px;">
+  <div style="background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%); color: white; padding: 1.5rem; text-align: center;">
+    <div style="font-size: 2rem; font-weight: bold;">25</div>
+    <div style="font-size: 0.9rem; opacity: 0.9; margin-top: 0.25rem;">December 2024</div>
+  </div>
+  <div style="padding: 1.5rem;">
+    <h3 style="margin: 0 0 0.5rem 0; color: #2d3748;">Christmas Party 2024</h3>
+    <p style="color: #718096; margin: 0 0 1rem 0; font-size: 0.9rem;">Join us for a festive celebration with food, drinks, and entertainment.</p>
+    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; color: #718096; font-size: 0.9rem;">
+      <span>🕒</span>
+      <span>7:00 PM - 11:00 PM</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; color: #718096; font-size: 0.9rem;">
+      <span>📍</span>
+      <span>Grand Ballroom, Downtown Hotel</span>
+    </div>
+    <div style="display: flex; gap: 0.75rem;">
+      <button style="flex: 1; background: #4299e1; color: white; border: none; padding: 0.5rem; border-radius: 6px; cursor: pointer;">RSVP</button>
+      <button style="background: #f7fafc; color: #4a5568; border: 1px solid #e2e8f0; padding: 0.5rem; border-radius: 6px; cursor: pointer;">Share</button>
+    </div>
+  </div>
+</div>`
+    },
+    {
+      name: 'Recipe Card',
+      icon: <CreditCard className="w-4 h-4" />,
+      code: `<div style="background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); overflow: hidden; max-width: 320px;">
+  <img src="https://via.placeholder.com/320x200/48bb78/ffffff?text=Delicious+Recipe" alt="Recipe" style="width: 100%; height: 200px; object-fit: cover;">
+  <div style="padding: 1.5rem;">
+    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+      <span style="background: #fbd38d; color: #744210; padding: 0.125rem 0.5rem; border-radius: 12px; font-size: 0.7rem; font-weight: 500;">EASY</span>
+      <span style="color: #718096; font-size: 0.8rem;">🕒 30 mins</span>
+      <span style="color: #718096; font-size: 0.8rem;">👥 4 servings</span>
+    </div>
+    <h3 style="margin: 0 0 0.5rem 0; color: #2d3748;">Chicken Teriyaki</h3>
+    <p style="color: #718096; margin: 0 0 1rem 0; font-size: 0.9rem; line-height: 1.4;">Tender chicken glazed with homemade teriyaki sauce, served with steamed rice and vegetables.</p>
+    <div style="display: flex; align-items: center; justify-content: space-between;">
+      <div style="display: flex; gap: 0.125rem;">
+        <span style="color: #fbd38d;">★★★★★</span>
+        <span style="color: #718096; font-size: 0.8rem; margin-left: 0.25rem;">(4.8)</span>
+      </div>
+      <button style="background: #4299e1; color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-size: 0.9rem;">View Recipe</button>
+    </div>
+  </div>
+</div>`
+    },
+    {
+      name: 'Workout Card',
+      icon: <CreditCard className="w-4 h-4" />,
+      code: `<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 12px; padding: 2rem; max-width: 300px; position: relative; overflow: hidden;">
+  <div style="position: absolute; top: -1rem; right: -1rem; width: 4rem; height: 4rem; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+  <div style="position: relative;">
+    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+      <div style="background: rgba(255,255,255,0.2); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">💪</div>
+      <div>
+        <h3 style="margin: 0; font-size: 1.1rem;">Upper Body Blast</h3>
+        <p style="margin: 0; opacity: 0.8; font-size: 0.9rem;">Strength Training</p>
+      </div>
+    </div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+      <div style="text-align: center;">
+        <div style="font-size: 1.5rem; font-weight: bold;">45</div>
+        <div style="font-size: 0.8rem; opacity: 0.8;">Minutes</div>
+      </div>
+      <div style="text-align: center;">
+        <div style="font-size: 1.5rem; font-weight: bold;">8</div>
+        <div style="font-size: 0.8rem; opacity: 0.8;">Exercises</div>
+      </div>
+    </div>
+    <button style="width: 100%; background: rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.3); padding: 0.75rem; border-radius: 8px; cursor: pointer; font-weight: 500;">Start Workout</button>
+  </div>
+</div>`
+    },
+    {
+      name: 'Comment Thread',
+      icon: <Quote className="w-4 h-4" />,
+      code: `<div style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.5rem;">
+  <div style="display: flex; align-items: start; gap: 1rem;">
+    <img src="https://via.placeholder.com/40x40/4299e1/ffffff?text=JD" alt="Avatar" style="width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;">
+    <div style="flex: 1;">
+      <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+        <span style="font-weight: 600; color: #2d3748;">John Doe</span>
+        <span style="color: #a0aec0; font-size: 0.8rem;">2 hours ago</span>
+      </div>
+      <p style="color: #2d3748; margin: 0 0 0.75rem 0; line-height: 1.5;">This is such a great article! I learned a lot from your explanation. Looking forward to seeing more content like this.</p>
+      <div style="display: flex; align-items: center; gap: 1rem;">
+        <button style="background: none; border: none; color: #718096; font-size: 0.8rem; cursor: pointer; display: flex; align-items: center; gap: 0.25rem;">👍 12</button>
+        <button style="background: none; border: none; color: #718096; font-size: 0.8rem; cursor: pointer;">Reply</button>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top: 1rem; margin-left: 3rem; padding-left: 1rem; border-left: 2px solid #f7fafc;">
+    <div style="display: flex; align-items: start; gap: 1rem;">
+      <img src="https://via.placeholder.com/32x32/48bb78/ffffff?text=A" alt="Avatar" style="width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;">
+      <div style="flex: 1;">
+        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+          <span style="font-weight: 600; color: #2d3748; font-size: 0.9rem;">Author</span>
+          <span style="background: #4299e1; color: white; padding: 0.125rem 0.5rem; border-radius: 10px; font-size: 0.7rem;">OP</span>
+          <span style="color: #a0aec0; font-size: 0.8rem;">1 hour ago</span>
+        </div>
+        <p style="color: #2d3748; margin: 0; line-height: 1.5; font-size: 0.9rem;">Thank you so much! I'm glad you found it helpful. More content coming soon!</p>
+      </div>
+    </div>
+  </div>
+</div>`
+    },
+    {
+      name: 'Shopping Cart Item',
+      icon: <CreditCard className="w-4 h-4" />,
+      code: `<div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; border: 1px solid #e2e8f0; border-radius: 8px; background: white;">
+  <img src="https://via.placeholder.com/80x80/4299e1/ffffff?text=Product" alt="Product" style="width: 80px; height: 80px; border-radius: 6px; object-fit: cover; flex-shrink: 0;">
+  <div style="flex: 1;">
+    <h4 style="margin: 0 0 0.25rem 0; color: #2d3748; font-size: 1rem;">Wireless Headphones</h4>
+    <p style="color: #718096; margin: 0 0 0.5rem 0; font-size: 0.9rem;">Premium quality sound with noise cancellation</p>
+    <div style="display: flex; align-items: center; gap: 1rem;">
+      <div style="display: flex; align-items: center; border: 1px solid #e2e8f0; border-radius: 4px;">
+        <button style="background: none; border: none; padding: 0.5rem; color: #718096; cursor: pointer;">-</button>
+        <span style="padding: 0 0.75rem; color: #2d3748;">2</span>
+        <button style="background: none; border: none; padding: 0.5rem; color: #718096; cursor: pointer;">+</button>
+      </div>
+      <span style="font-weight: 600; color: #2d3748;">$99.99</span>
+    </div>
+  </div>
+  <button style="background: none; border: none; color: #e53e3e; cursor: pointer; font-size: 1.2rem; padding: 0.5rem;">🗑️</button>
+</div>`
+    },
+    {
+      name: 'Bookmark Card',
+      icon: <CreditCard className="w-4 h-4" />,
+      code: `<div style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; max-width: 400px; position: relative;">
+  <div style="position: absolute; top: 1rem; right: 1rem; background: rgba(255,255,255,0.9); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+    <span style="color: #e53e3e; font-size: 1.2rem;">♥</span>
+  </div>
+  <img src="https://via.placeholder.com/400x200/667eea/ffffff?text=Bookmarked+Article" alt="Article" style="width: 100%; height: 200px; object-fit: cover;">
+  <div style="padding: 1.5rem;">
+    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+      <span style="background: #edf2f7; color: #4a5568; padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.7rem;">DESIGN</span>
+      <span style="color: #a0aec0; font-size: 0.8rem;">5 min read</span>
+    </div>
+    <h3 style="margin: 0 0 0.5rem 0; color: #2d3748; line-height: 1.3;">The Future of Web Design Trends</h3>
+    <p style="color: #718096; margin: 0 0 1rem 0; font-size: 0.9rem; line-height: 1.5;">Exploring the latest design trends that will shape the web in 2025 and beyond.</p>
+    <div style="display: flex; align-items: center; justify-content: space-between;">
+      <div style="display: flex; align-items: center; gap: 0.5rem;">
+        <img src="https://via.placeholder.com/24x24/48bb78/ffffff?text=A" alt="Author" style="width: 24px; height: 24px; border-radius: 50%;">
+        <span style="color: #718096; font-size: 0.8rem;">Sarah Johnson</span>
+      </div>
+      <span style="color: #a0aec0; font-size: 0.8rem;">Dec 20, 2024</span>
+    </div>
+  </div>
+</div>`
+    },
+    {
+      name: 'Subscription Box',
+      icon: <CreditCard className="w-4 h-4" />,
+      code: `<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 16px; padding: 3rem 2rem; text-align: center; max-width: 400px; position: relative; overflow: hidden;">
+  <div style="position: absolute; top: -50px; right: -50px; width: 100px; height: 100px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+  <div style="position: absolute; bottom: -30px; left: -30px; width: 60px; height: 60px; background: rgba(255,255,255,0.1); border-radius: 50%;"></div>
+  <div style="position: relative; z-index: 1;">
+    <div style="font-size: 3rem; margin-bottom: 1rem;">📧</div>
+    <h2 style="margin: 0 0 0.5rem 0; font-size: 1.5rem;">Stay in the loop</h2>
+    <p style="margin: 0 0 2rem 0; opacity: 0.9; line-height: 1.5;">Get the latest updates, articles, and resources delivered straight to your inbox.</p>
+    <div style="background: rgba(255,255,255,0.15); border-radius: 50px; padding: 0.5rem; margin-bottom: 1rem;">
+      <div style="display: flex; gap: 0.5rem;">
+        <input type="email" placeholder="your@email.com" style="flex: 1; background: none; border: none; color: white; padding: 0.5rem 1rem; outline: none; font-size: 1rem; placeholder-color: rgba(255,255,255,0.7);">
+        <button style="background: rgba(255,255,255,0.2); color: white; border: none; padding: 0.5rem 1.5rem; border-radius: 25px; cursor: pointer; font-weight: 500;">Subscribe</button>
+      </div>
+    </div>
+    <p style="margin: 0; font-size: 0.8rem; opacity: 0.7;">No spam. Unsubscribe anytime.</p>
+  </div>
+</div>`
+    },
+    {
+      name: 'Feature Comparison',
+      icon: <Table className="w-4 h-4" />,
+      code: `<div style="background: white; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; max-width: 600px;">
+  <div style="background: #f7fafc; padding: 1.5rem; text-align: center; border-bottom: 1px solid #e2e8f0;">
+    <h3 style="margin: 0; color: #2d3748;">Feature Comparison</h3>
+  </div>
+  <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; text-align: center;">
+    <div style="padding: 1.5rem; border-right: 1px solid #f7fafc;">
+      <h4 style="margin: 0 0 1rem 0; color: #4a5568;">Basic</h4>
+      <div style="font-size: 2rem; font-weight: bold; color: #2d3748; margin-bottom: 0.5rem;">$9</div>
+      <div style="color: #718096; font-size: 0.9rem; margin-bottom: 1.5rem;">per month</div>
+      <div style="text-align: left; space-y: 0.5rem;">
+        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; color: #22543d;">
+          <span>✓</span> <span style="font-size: 0.9rem;">5 Projects</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; color: #22543d;">
+          <span>✓</span> <span style="font-size: 0.9rem;">Basic Support</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; color: #e53e3e;">
+          <span>✗</span> <span style="font-size: 0.9rem;">Priority Support</span>
+        </div>
+      </div>
+    </div>
+    <div style="padding: 1.5rem; border-right: 1px solid #f7fafc; background: #f0f8ff; position: relative;">
+      <div style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: #4299e1; color: white; padding: 0.25rem 1rem; border-radius: 12px; font-size: 0.8rem;">Popular</div>
+      <h4 style="margin: 0 0 1rem 0; color: #4a5568;">Pro</h4>
+      <div style="font-size: 2rem; font-weight: bold; color: #2d3748; margin-bottom: 0.5rem;">$29</div>
+      <div style="color: #718096; font-size: 0.9rem; margin-bottom: 1.5rem;">per month</div>
+      <div style="text-align: left;">
+        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; color: #22543d;">
+          <span>✓</span> <span style="font-size: 0.9rem;">Unlimited Projects</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; color: #22543d;">
+          <span>✓</span> <span style="font-size: 0.9rem;">Priority Support</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; color: #22543d;">
+          <span>✓</span> <span style="font-size: 0.9rem;">Advanced Features</span>
+        </div>
+      </div>
+    </div>
+    <div style="padding: 1.5rem;">
+      <h4 style="margin: 0 0 1rem 0; color: #4a5568;">Enterprise</h4>
+      <div style="font-size: 2rem; font-weight: bold; color: #2d3748; margin-bottom: 0.5rem;">$99</div>
+      <div style="color: #718096; font-size: 0.9rem; margin-bottom: 1.5rem;">per month</div>
+      <div style="text-align: left;">
+        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; color: #22543d;">
+          <span>✓</span> <span style="font-size: 0.9rem;">Everything in Pro</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; color: #22543d;">
+          <span>✓</span> <span style="font-size: 0.9rem;">24/7 Support</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; color: #22543d;">
+          <span>✓</span> <span style="font-size: 0.9rem;">Custom Integration</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>`
+    },
+    {
+      name: 'Course Card',
+      icon: <CreditCard className="w-4 h-4" />,
+      code: `<div style="background: white; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; max-width: 350px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+  <div style="position: relative;">
+    <img src="https://via.placeholder.com/350x200/667eea/ffffff?text=Course+Preview" alt="Course" style="width: 100%; height: 200px; object-fit: cover;">
+    <div style="position: absolute; top: 1rem; left: 1rem; background: rgba(0,0,0,0.7); color: white; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.8rem;">12 lessons</div>
+    <div style="position: absolute; bottom: 1rem; right: 1rem; background: rgba(0,0,0,0.7); color: white; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.8rem;">4h 30m</div>
+  </div>
+  <div style="padding: 1.5rem;">
+    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+      <span style="background: #e6fffa; color: #234e52; padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.7rem; font-weight: 500;">BEGINNER</span>
+      <div style="display: flex; gap: 0.125rem;">
+        <span style="color: #fbd38d;">★★★★★</span>
+      </div>
+      <span style="color: #718096; font-size: 0.8rem;">(4.9)</span>
+    </div>
+    <h3 style="margin: 0 0 0.5rem 0; color: #2d3748; line-height: 1.3;">Complete Web Development Bootcamp</h3>
+    <p style="color: #718096; margin: 0 0 1rem 0; font-size: 0.9rem; line-height: 1.4;">Learn HTML, CSS, JavaScript, React, and Node.js from scratch to build modern web applications.</p>
+    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+      <img src="https://via.placeholder.com/24x24/48bb78/ffffff?text=I" alt="Instructor" style="width: 24px; height: 24px; border-radius: 50%;">
+      <span style="color: #718096; font-size: 0.8rem;">by Dr. Angela Yu</span>
+    </div>
+    <div style="display: flex; align-items: center; justify-content: space-between;">
+      <div>
+        <span style="font-size: 1.5rem; font-weight: bold; color: #2d3748;">$79</span>
+        <span style="color: #a0aec0; font-size: 0.9rem; text-decoration: line-through; margin-left: 0.5rem;">$199</span>
+      </div>
+      <button style="background: #4299e1; color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-weight: 500;">Enroll Now</button>
+    </div>
+  </div>
+</div>`
+    },
+    {
+      name: 'Job Listing',
+      icon: <CreditCard className="w-4 h-4" />,
+      code: `<div style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.5rem; margin-bottom: 1rem;">
+  <div style="display: flex; align-items: start; gap: 1rem;">
+    <div style="background: #4299e1; color: white; width: 48px; height: 48px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.2rem; flex-shrink: 0;">T</div>
+    <div style="flex: 1;">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;">
+        <h3 style="margin: 0; color: #2d3748;">Senior Frontend Developer</h3>
+        <span style="background: #f0fff4; color: #22543d; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.8rem; font-weight: 500;">NEW</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.75rem; flex-wrap: wrap;">
+        <span style="color: #4a5568; font-weight: 500;">TechCorp Inc.</span>
+        <span style="color: #718096; font-size: 0.9rem;">📍 San Francisco, CA</span>
+        <span style="color: #718096; font-size: 0.9rem;">💼 Full-time</span>
+        <span style="color: #718096; font-size: 0.9rem;">💰 $120k - $160k</span>
+      </div>
+      <p style="color: #718096; margin: 0 0 1rem 0; line-height: 1.5;">We're looking for an experienced Frontend Developer to join our growing team. You'll work on cutting-edge projects using React, TypeScript, and modern web technologies.</p>
+      <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+        <span style="background: #edf2f7; color: #4a5568; padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.8rem;">React</span>
+        <span style="background: #edf2f7; color: #4a5568; padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.8rem;">TypeScript</span>
+        <span style="background: #edf2f7; color: #4a5568; padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.8rem;">Node.js</span>
+      </div>
+      <div style="display: flex; align-items: center; justify-content: space-between;">
+        <span style="color: #a0aec0; font-size: 0.8rem;">Posted 2 days ago</span>
+        <div style="display: flex; gap: 0.75rem;">
+          <button style="background: #f7fafc; color: #4a5568; border: 1px solid #e2e8f0; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer;">Save</button>
+          <button style="background: #4299e1; color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer;">Apply Now</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>`
   <div style="background: #4299e1; color: white; padding: 0.75rem 1rem; border-radius: 18px 18px 4px 18px; margin-bottom: 0.25rem;">
     Hey! How are you doing today?
   </div>
