@@ -157,7 +157,7 @@ const CodeEditor = ({ value, onChange, language = 'html', darkMode = false }: Co
       
       <div className="flex-1 flex">
         {/* Line Numbers */}
-        <div className={`w-12 ${darkMode ? 'bg-editor-line-numbers-bg text-editor-line-numbers-text' : 'bg-slate-100 text-slate-500'} border-r border-border font-mono text-sm py-4 px-2`}>
+        <div className="w-12 bg-slate-100 text-slate-500 border-r border-border font-mono text-sm py-4 px-2">
           {lineNumbers.map((num, index) => (
             <div key={index} className="text-right leading-6">
               {num}
@@ -175,11 +175,7 @@ const CodeEditor = ({ value, onChange, language = 'html', darkMode = false }: Co
             onMouseUp={handleSelection}
             onKeyUp={handleSelection}
             onKeyDown={handleKeyDown}
-            className={`h-full font-mono text-sm resize-none border-0 rounded-none ${
-              darkMode 
-                ? 'bg-editor-bg text-editor-foreground placeholder-muted-foreground' 
-                : 'bg-slate-50/50 text-slate-800 placeholder-gray-400'
-            } focus:ring-0 focus:border-0`}
+            className="h-full font-mono text-sm resize-none border-0 rounded-none bg-slate-50/50 text-slate-800 placeholder-gray-400 focus:ring-0 focus:border-0"
             placeholder={`Enter your ${language.toUpperCase()} code here...`}
             style={{ 
               minHeight: '100%',
@@ -190,9 +186,7 @@ const CodeEditor = ({ value, onChange, language = 'html', darkMode = false }: Co
           />
           
           {/* Status Bar */}
-          <div className={`absolute bottom-0 right-0 ${
-            darkMode ? 'bg-editor-status-bg text-editor-status-text' : 'bg-slate-200 text-slate-600'
-          } px-3 py-1 text-xs font-mono`}>
+          <div className="absolute bottom-0 right-0 bg-slate-200 text-slate-600 px-3 py-1 text-xs font-mono">
             Ln {cursorPosition.line}, Col {cursorPosition.column} • {language.toUpperCase()}
           </div>
         </div>

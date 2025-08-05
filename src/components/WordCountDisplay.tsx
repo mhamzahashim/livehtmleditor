@@ -13,7 +13,7 @@ const WordCountDisplay = ({ htmlContent, darkMode = false, className = '' }: Wor
   }, [htmlContent]);
 
   return (
-    <div className={`text-xs ${darkMode ? 'text-muted-foreground' : 'text-slate-500'} ${className}`}>
+    <div className={`text-xs text-slate-500 ${className}`}>
       <span className="font-medium">Words:</span> {formatWordCount(wordCount)}
     </div>
   );

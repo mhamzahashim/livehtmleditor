@@ -72,7 +72,6 @@ document.addEventListener('DOMContentLoaded', function() {
   const [activeEditor, setActiveEditor] = useState('html');
   const [previewMode, setPreviewMode] = useState('desktop');
   const [zoomLevel, setZoomLevel] = useState(100);
-  const [darkMode, setDarkMode] = useState(false);
   const [showDevTools, setShowDevTools] = useState(false);
   const [fullScreenPreview, setFullScreenPreview] = useState(false);
 
@@ -164,14 +163,12 @@ console.log('Welcome to HTML Editor!');`;
   };
 
   return (
-    <div className={`min-h-screen flex flex-col ${darkMode ? 'dark bg-background' : 'bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50'}`}>
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
       <EditorHeader
-        darkMode={darkMode}
         previewMode={previewMode}
         zoomLevel={zoomLevel}
         fullScreenPreview={fullScreenPreview}
         showDevTools={showDevTools}
-        onDarkModeToggle={() => setDarkMode(!darkMode)}
         onPreviewModeChange={setPreviewMode}
         onZoom={handleZoom}
         onFullScreenToggle={() => setFullScreenPreview(!fullScreenPreview)}
@@ -185,7 +182,6 @@ console.log('Welcome to HTML Editor!');`;
       <main className="flex-1 flex flex-col lg:flex-row gap-6 p-3 lg:p-6">
         <EditorLayout
           fullScreenPreview={fullScreenPreview}
-          darkMode={darkMode}
           activeEditor={activeEditor}
           previewKey={previewKey}
           previewMode={previewMode}
@@ -202,7 +198,7 @@ console.log('Welcome to HTML Editor!');`;
         />
       </main>
 
-      <EditorFooter darkMode={darkMode} />
+      <EditorFooter />
     </div>
   );
 };

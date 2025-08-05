@@ -163,7 +163,7 @@ if (element) {
   return (
     <div className="h-full flex flex-col">
       {/* JS Toolbar */}
-      <div className={`flex flex-wrap gap-2 p-3 ${darkMode ? 'bg-gray-800' : 'bg-slate-50'} border-b border-slate-200`}>
+      <div className="flex flex-wrap gap-2 p-3 bg-slate-50 border-b border-slate-200">
         {jsSnippets.map((snippet, index) => (
           <Button
             key={index}
@@ -181,7 +181,7 @@ if (element) {
       
       <div className="flex-1 flex">
         {/* Line Numbers */}
-        <div className={`w-12 ${darkMode ? 'bg-gray-800 text-gray-400' : 'bg-slate-100 text-slate-500'} border-r border-slate-200 font-mono text-sm py-4 px-2`}>
+        <div className="w-12 bg-slate-100 text-slate-500 border-r border-slate-200 font-mono text-sm py-4 px-2">
           {lineNumbers.map((num, index) => (
             <div key={index} className="text-right leading-6">
               {num}
@@ -199,11 +199,7 @@ if (element) {
             onMouseUp={handleSelection}
             onKeyUp={handleSelection}
             onKeyDown={handleKeyDown}
-            className={`h-full font-mono text-sm resize-none border-0 rounded-none ${
-              darkMode 
-                ? 'bg-gray-900 text-white placeholder-gray-500' 
-                : 'bg-slate-50/50 text-slate-800 placeholder-gray-400'
-            } focus:ring-0 focus:border-0`}
+            className="h-full font-mono text-sm resize-none border-0 rounded-none bg-slate-50/50 text-slate-800 placeholder-gray-400 focus:ring-0 focus:border-0"
             placeholder="// Add your JavaScript code here&#10;console.log('Hello World!');"
             style={{ 
               minHeight: '100%',

@@ -1,14 +1,12 @@
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Monitor, Tablet, Smartphone, ZoomIn, ZoomOut, Upload, Download, Layout, Play, RotateCcw, Settings, Eye, EyeOff, Sun, Moon } from 'lucide-react';
+import { Monitor, Tablet, Smartphone, ZoomIn, ZoomOut, Upload, Download, Layout, Play, RotateCcw, Settings, Eye, EyeOff } from 'lucide-react';
 
 interface EditorHeaderProps {
-  darkMode: boolean;
   previewMode: string;
   zoomLevel: number;
   fullScreenPreview: boolean;
   showDevTools: boolean;
-  onDarkModeToggle: () => void;
   onPreviewModeChange: (mode: string) => void;
   onZoom: (direction: 'in' | 'out') => void;
   onFullScreenToggle: () => void;
@@ -20,12 +18,10 @@ interface EditorHeaderProps {
 }
 
 const EditorHeader = ({
-  darkMode,
   previewMode,
   zoomLevel,
   fullScreenPreview,
   showDevTools,
-  onDarkModeToggle,
   onPreviewModeChange,
   onZoom,
   onFullScreenToggle,
@@ -36,7 +32,7 @@ const EditorHeader = ({
   onReset,
 }: EditorHeaderProps) => {
   return (
-    <header className={`${darkMode ? 'bg-card border-border' : 'bg-white/80 backdrop-blur-md border-slate-200/60'} border-b shadow-sm`}>
+    <header className="bg-white/80 backdrop-blur-md border-slate-200/60 border-b shadow-sm">
       <div className="max-w-7xl mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
@@ -44,8 +40,8 @@ const EditorHeader = ({
               <span className="text-white font-bold text-sm">&lt;/&gt;</span>
             </div>
             <div>
-              <h1 className={`text-xl font-semibold ${darkMode ? 'text-foreground' : 'text-slate-800'} tracking-tight`}>HTML Editor</h1>
-              <p className={`text-xs ${darkMode ? 'text-muted-foreground' : 'text-slate-500'} mt-0.5`}>Create, edit, and preview HTML in real-time</p>
+              <h1 className="text-xl font-semibold text-slate-800 tracking-tight">HTML Editor</h1>
+              <p className="text-xs text-slate-500 mt-0.5">Create, edit, and preview HTML in real-time</p>
             </div>
           </div>
           <div className="flex items-center space-x-3">
@@ -70,14 +66,6 @@ const EditorHeader = ({
               <ZoomIn className="w-4 h-4" />
             </Button>
 
-            {/* Theme Toggle */}
-            <Button
-              onClick={onDarkModeToggle}
-              variant="outline"
-              size="sm"
-            >
-              {darkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-            </Button>
 
             {/* Dev Tools Toggle */}
             <Button

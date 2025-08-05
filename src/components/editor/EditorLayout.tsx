@@ -10,7 +10,6 @@ import WordCountDisplay from '../WordCountDisplay';
 
 interface EditorLayoutProps {
   fullScreenPreview: boolean;
-  darkMode: boolean;
   activeEditor: string;
   previewKey: number;
   previewMode: string;
@@ -28,7 +27,6 @@ interface EditorLayoutProps {
 
 const EditorLayout = ({
   fullScreenPreview,
-  darkMode,
   activeEditor,
   previewKey,
   previewMode,
@@ -81,7 +79,7 @@ const EditorLayout = ({
                     <TabsTrigger value="css">CSS</TabsTrigger>
                     <TabsTrigger value="js">JavaScript</TabsTrigger>
                   </TabsList>
-                  <WordCountDisplay htmlContent={htmlCode} darkMode={darkMode} />
+                  <WordCountDisplay htmlContent={htmlCode} />
                 </div>
               </div>
                 
@@ -90,7 +88,6 @@ const EditorLayout = ({
                     value={htmlCode}
                     onChange={onCodeChange}
                     language="html"
-                    darkMode={darkMode}
                   />
                 </TabsContent>
                 
@@ -98,7 +95,6 @@ const EditorLayout = ({
                   <CssEditor
                     value={cssCode}
                     onChange={onCssChange}
-                    darkMode={darkMode}
                   />
                 </TabsContent>
                 
@@ -106,7 +102,6 @@ const EditorLayout = ({
                   <JsEditor
                     value={jsCode}
                     onChange={onJsChange}
-                    darkMode={darkMode}
                   />
                 </TabsContent>
               </Tabs>
@@ -129,7 +124,7 @@ const EditorLayout = ({
                       Click elements to edit • Changes sync to code
                     </p>
                   </div>
-                  <WordCountDisplay htmlContent={htmlCode} darkMode={darkMode} />
+                  <WordCountDisplay htmlContent={htmlCode} />
                 </div>
               </div>
               <div className="flex-1" style={{ transform: `scale(${zoomLevel / 100})`, transformOrigin: 'top left' }}>
@@ -159,7 +154,7 @@ const EditorLayout = ({
                     <TabsTrigger value="css">CSS</TabsTrigger>
                     <TabsTrigger value="js">JavaScript</TabsTrigger>
                   </TabsList>
-                  <WordCountDisplay htmlContent={htmlCode} darkMode={darkMode} />
+                  <WordCountDisplay htmlContent={htmlCode} />
                 </div>
               </div>
               
@@ -169,7 +164,6 @@ const EditorLayout = ({
                     value={htmlCode}
                     onChange={onCodeChange}
                     language="html"
-                    darkMode={darkMode}
                   />
                 </div>
               </TabsContent>
@@ -179,7 +173,6 @@ const EditorLayout = ({
                   <CssEditor
                     value={cssCode}
                     onChange={onCssChange}
-                    darkMode={darkMode}
                   />
                 </div>
               </TabsContent>
@@ -189,7 +182,6 @@ const EditorLayout = ({
                   <JsEditor
                     value={jsCode}
                     onChange={onJsChange}
-                    darkMode={darkMode}
                   />
                 </div>
               </TabsContent>
@@ -208,7 +200,7 @@ const EditorLayout = ({
                     Click elements to edit
                   </p>
                 </div>
-                <WordCountDisplay htmlContent={htmlCode} darkMode={darkMode} />
+                <WordCountDisplay htmlContent={htmlCode} />
               </div>
             </div>
             <div className="flex-1" style={{ transform: `scale(${zoomLevel / 100})`, transformOrigin: 'top left' }}>

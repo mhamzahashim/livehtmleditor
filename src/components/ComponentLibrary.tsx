@@ -1281,12 +1281,21 @@ const ComponentLibrary = ({ onInsertComponent }: ComponentLibraryProps) => {
     </div>
   </div>
 </div>`
+    },
+    {
+      name: 'Chat Bubble Sent',
+      icon: <Quote className="w-4 h-4" />,
+      code: `<div style="max-width: 70%; margin-bottom: 1rem;">
   <div style="background: #4299e1; color: white; padding: 0.75rem 1rem; border-radius: 18px 18px 4px 18px; margin-bottom: 0.25rem;">
     Hey! How are you doing today?
   </div>
   <div style="font-size: 0.8rem; color: #a0aec0; text-align: right;">2:30 PM</div>
-</div>
-<div style="max-width: 70%; margin-bottom: 1rem; margin-left: auto;">
+</div>`
+    },
+    {
+      name: 'Chat Bubble Received',
+      icon: <Quote className="w-4 h-4" />,
+      code: `<div style="max-width: 70%; margin-bottom: 1rem; margin-left: auto;">
   <div style="background: #e2e8f0; color: #2d3748; padding: 0.75rem 1rem; border-radius: 18px 18px 18px 4px; margin-bottom: 0.25rem;">
     I'm doing great! Thanks for asking. How about you?
   </div>
