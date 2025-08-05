@@ -4,7 +4,7 @@ import {
   Bold, Italic, Underline, Strikethrough, Link, Type, Image, 
   List, ListOrdered, AlignLeft, AlignCenter, AlignRight, AlignJustify,
   Quote, Code, Superscript, Subscript, Undo, Redo, Table,
-  Minus, Heading1, Heading2, Heading3, PaintBucket, Palette
+  Minus, Heading1, Heading2, Heading3, PaintBucket, Palette, Copy
 } from 'lucide-react';
 import { 
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue 
@@ -15,9 +15,10 @@ import { toast } from '@/components/ui/use-toast';
 interface EditorToolbarProps {
   onInsertCode: (code: string) => void;
   selectedText?: string;
+  onCopyContent?: () => void;
 }
 
-const EditorToolbar = ({ onInsertCode, selectedText }: EditorToolbarProps) => {
+const EditorToolbar = ({ onInsertCode, selectedText, onCopyContent }: EditorToolbarProps) => {
   const handleParagraphStyle = (style: string) => {
     const text = selectedText || 'Sample text';
     switch (style) {
@@ -495,6 +496,19 @@ const EditorToolbar = ({ onInsertCode, selectedText }: EditorToolbarProps) => {
         title="Horizontal Rule"
       >
         <Minus className="w-4 h-4" />
+      </Button>
+
+      <Separator orientation="vertical" className="h-6 mx-1" />
+
+      {/* Copy Content */}
+      <Button
+        onClick={onCopyContent}
+        variant="outline"
+        size="sm"
+        className="text-slate-600 hover:bg-slate-100"
+        title="Copy Content"
+      >
+        <Copy className="w-4 h-4" />
       </Button>
     </div>
   );
