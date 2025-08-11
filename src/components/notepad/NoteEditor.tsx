@@ -81,10 +81,11 @@ const NoteEditor = ({ value, onChange }: NoteEditorProps) => {
           aria-label="Note editor"
           contentEditable
           suppressContentEditableWarning
+          dir="ltr"
           onInput={handleInput}
           onKeyUp={updateSelectedFromWindow}
           onMouseUp={updateSelectedFromWindow}
-          style={{ direction: 'ltr', unicodeBidi: 'normal' }}
+          style={{ direction: 'ltr', unicodeBidi: 'isolate', textAlign: 'left' }}
           className="min-h-[60vh] rounded-md border border-slate-200 bg-white p-4 focus:outline-none focus:ring-2 focus:ring-ring"
           dangerouslySetInnerHTML={{ __html: value }}
         />
