@@ -7,6 +7,8 @@ import Index from "./pages/Index";
 import ComponentLibrary from "./pages/ComponentLibrary";
 import Notepad from "./pages/Notepad";
 import NotFound from "./pages/NotFound";
+import SiteHeader from "./components/layout/SiteHeader";
+import SiteFooter from "./components/layout/SiteFooter";
 
 const queryClient = new QueryClient();
 
@@ -16,13 +18,19 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/components" element={<ComponentLibrary />} />
-          <Route path="/notepad" element={<Notepad />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <div className="min-h-screen flex flex-col">
+          <SiteHeader />
+          <main className="flex-1">
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/components" element={<ComponentLibrary />} />
+              <Route path="/notepad" element={<Notepad />} />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </main>
+          <SiteFooter />
+        </div>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
