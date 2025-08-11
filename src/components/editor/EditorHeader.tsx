@@ -116,6 +116,15 @@ const EditorHeader = ({
               Components
             </Button>
 
+            <Button 
+              onClick={() => window.open('/notepad', '_blank')} 
+              variant="outline" 
+              size="sm"
+            >
+              <Layout className="w-4 h-4 mr-2" />
+              Notepad
+            </Button>
+
             <Button onClick={onRefresh} variant="outline" size="sm">
               <Play className="w-4 h-4 mr-2" />
               Refresh
