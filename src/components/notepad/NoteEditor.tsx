@@ -71,6 +71,7 @@ const NoteEditor = ({ value, onChange }: NoteEditorProps) => {
           <button onClick={() => insertTemplate('weekly')} className="px-2 py-1 text-xs rounded border border-slate-200 bg-slate-50 hover:bg-slate-100">Insert Weekly</button>
           <button onClick={() => insertTemplate('monthly')} className="px-2 py-1 text-xs rounded border border-slate-200 bg-slate-50 hover:bg-slate-100">Insert Monthly</button>
           <button onClick={() => insertTemplate('meeting')} className="px-2 py-1 text-xs rounded border border-slate-200 bg-slate-50 hover:bg-slate-100">Insert Meeting</button>
+          <button onClick={() => onInsertCode(`<ul>\n  <li><input type="checkbox" /> Task 1</li>\n  <li><input type="checkbox" /> Task 2</li>\n  <li><input type="checkbox" /> Task 3</li>\n</ul>`)} className="px-2 py-1 text-xs rounded border border-slate-200 bg-slate-50 hover:bg-slate-100">Insert Checklist</button>
           <div className="ml-auto"><WordCountDisplay htmlContent={wcHtml} /></div>
         </div>
       </section>
@@ -85,7 +86,7 @@ const NoteEditor = ({ value, onChange }: NoteEditorProps) => {
           onInput={handleInput}
           onKeyUp={updateSelectedFromWindow}
           onMouseUp={updateSelectedFromWindow}
-          style={{ direction: 'ltr', unicodeBidi: 'isolate', textAlign: 'left' }}
+          style={{ direction: 'ltr', unicodeBidi: 'bidi-override', textAlign: 'left' }}
           className="min-h-[60vh] rounded-md border border-slate-200 bg-white p-4 focus:outline-none focus:ring-2 focus:ring-ring"
           dangerouslySetInnerHTML={{ __html: value }}
         />
