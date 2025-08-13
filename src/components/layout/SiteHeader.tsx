@@ -27,6 +27,7 @@ const SiteHeader = () => {
             <NavLink to="/" end className={navLinkClass}>Editor</NavLink>
             <NavLink to="/components" className={navLinkClass}>Components</NavLink>
             <NavLink to="/notepad" className={navLinkClass}>Notepad</NavLink>
+            <NavLink to="/markdown" className={navLinkClass}>Markdown</NavLink>
           </nav>
 
           <div className="flex items-center gap-2">
