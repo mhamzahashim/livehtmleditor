@@ -4,6 +4,9 @@ export type Note = {
   content: string;
   createdAt: number;
   updatedAt: number;
+  tags?: string[];
+  pinned?: boolean;
+  folder?: string | null;
 };
 
 const NOTES_KEY = "notepadNotes:v1";

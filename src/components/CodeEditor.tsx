@@ -1,6 +1,13 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useMemo } from 'react';
 import { Textarea } from '@/components/ui/textarea';
 import EditorToolbar from './EditorToolbar';
+import { Button } from '@/components/ui/button';
+import prettier from 'prettier/standalone';
+import parserBabel from 'prettier/plugins/babel';
+import parserHtml from 'prettier/plugins/html';
+import parserPostcss from 'prettier/plugins/postcss';
+import parserTypescript from 'prettier/plugins/typescript';
+import parserMarkdown from 'prettier/plugins/markdown';
 
 interface CodeEditorProps {
   value: string;
@@ -14,6 +21,27 @@ const CodeEditor = ({ value, onChange, language = 'html', darkMode = false }: Co
   const [selectedText, setSelectedText] = useState('');
   const [lineNumbers, setLineNumbers] = useState<string[]>([]);
   const [cursorPosition, setCursorPosition] = useState({ line: 1, column: 1 });
+  const [lintMessage, setLintMessage] = useState<string | null>(null);
+
+  const prettierConfig = useMemo(() => ({ semi: true, singleQuote: false }), []);
+  const getParser = () => {
+    switch (language) {
+      case 'css':
+        return 'css';
+      case 'js':
+      case 'javascript':
+        return 'babel';
+      case 'ts':
+      case 'typescript':
+        return 'typescript';
+      case 'md':
+      case 'markdown':
+        return 'markdown';
+      default:
+        return 'html';
+    }
+  };
+  const plugins = useMemo(() => [parserBabel, parserHtml, parserPostcss, parserTypescript, parserMarkdown], []);
 
   // Calculate line numbers
   useEffect(() => {
@@ -141,6 +169,36 @@ const CodeEditor = ({ value, onChange, language = 'html', darkMode = false }: Co
     }
   };
 
+  const handleFormat = async () => {
+    try {
+      const formatted = await prettier.format(value, {
+        parser: getParser(),
+        plugins,
+        ...prettierConfig,
+      });
+      onChange(formatted);
+      setLintMessage(null);
+    } catch (e) {
+      console.error(e);
+      setLintMessage('Format error');
+    }
+  };
+
+  const handleLint = () => {
+    const issues: string[] = [];
+    const count = (s: string, ch: string) => (s.match(new RegExp(`\\${ch}`, 'g')) || []).length;
+    const lang = language.toLowerCase();
+    if (['js', 'javascript', 'ts', 'typescript'].includes(lang)) {
+      if (count(value, '{') !== count(value, '}')) issues.push('Unbalanced {}');
+      if (count(value, '(') !== count(value, ')')) issues.push('Unbalanced ()');
+      if (count(value, '[') !== count(value, ']')) issues.push('Unbalanced []');
+    }
+    if (lang === 'html') {
+      if (count(value, '<') !== count(value, '>')) issues.push('Possible unmatched <>');
+    }
+    setLintMessage(issues.length ? `${issues.length} issue(s): ${issues.join(', ')}` : 'No issues found');
+  };
+
   const getHighlightedCode = (code: string) => {
     if (language === 'html') {
       return code
@@ -154,6 +212,12 @@ const CodeEditor = ({ value, onChange, language = 'html', darkMode = false }: Co
   return (
     <div className="h-full flex flex-col">
       <EditorToolbar onInsertCode={handleInsertCode} selectedText={selectedText} />
+
+      <div className="flex items-center gap-2 px-3 py-2 bg-slate-50 border-b border-slate-200">
+        <Button size="sm" variant="outline" onClick={handleFormat}>Format</Button>
+        <Button size="sm" variant="outline" onClick={handleLint}>Lint</Button>
+        {lintMessage && <span className="text-xs text-slate-500">{lintMessage}</span>}
+      </div>
       
       <div className="flex-1 flex">
         {/* Line Numbers */}

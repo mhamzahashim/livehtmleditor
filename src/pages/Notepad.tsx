@@ -1,7 +1,8 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Note, deleteNote, loadNotes, saveNotes, upsertNote } from "@/utils/notepadStorage";
 import NoteEditor from "@/components/notepad/NoteEditor";
-import { Plus, Trash2, Save, Search, CheckCircle2, StickyNote } from "lucide-react";
+import { Plus, Trash2, Save, Search, CheckCircle2, StickyNote, Download, Upload, Pin } from "lucide-react";
+import TurndownService from "turndown";
 
 const createNote = (title?: string): Note => ({
   id: crypto.randomUUID(),
