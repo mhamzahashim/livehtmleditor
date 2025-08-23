@@ -86,9 +86,13 @@ const NoteEditor = ({ value, onChange }: NoteEditorProps) => {
           onInput={handleInput}
           onKeyUp={updateSelectedFromWindow}
           onMouseUp={updateSelectedFromWindow}
-          style={{ direction: 'ltr', unicodeBidi: 'isolate', textAlign: 'left' }}
+          style={{ 
+            direction: 'ltr', 
+            unicodeBidi: 'normal',
+            textAlign: 'left',
+            writingMode: 'horizontal-tb'
+          }}
           className="min-h-[60vh] rounded-md border border-slate-200 bg-white p-4 focus:outline-none focus:ring-2 focus:ring-ring"
-          dangerouslySetInnerHTML={{ __html: value }}
         />
       </section>
     </div>
