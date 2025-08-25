@@ -19,10 +19,13 @@ const PdfConverterEditor = ({ htmlContent, onContentChange }: PdfConverterEditor
   const { toast } = useToast();
 
   const handleConvertToPdf = async () => {
+    console.log('Starting PDF conversion...');
     setIsConverting(true);
     try {
+      console.log('Importing libraries...');
       const { default: jsPDF } = await import('jspdf');
       const { default: html2canvas } = await import('html2canvas');
+      console.log('Libraries imported successfully');
       
       // Create a temporary div with the HTML content
       const tempDiv = document.createElement('div');
