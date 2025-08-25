@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Textarea } from '@/components/ui/textarea';
-import { Code, FileDown, Loader2 } from 'lucide-react';
+import { Code, Eye, FileDown, Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 interface PdfConverterEditorProps {
@@ -12,6 +13,8 @@ interface PdfConverterEditorProps {
 
 const PdfConverterEditor = ({ htmlContent, onContentChange }: PdfConverterEditorProps) => {
   const [isConverting, setIsConverting] = useState(false);
+  const [activeTab, setActiveTab] = useState('html');
+  const previewRef = useRef<HTMLIFrameElement>(null);
   const { toast } = useToast();
 
   const handleConvertToPdf = async () => {
@@ -35,10 +38,16 @@ const PdfConverterEditor = ({ htmlContent, onContentChange }: PdfConverterEditor
       document.body.appendChild(tempDiv);
 
       const canvas = await html2canvas(tempDiv, {
-        scale: 2,
+        scale: 4,
         useCORS: true,
         allowTaint: true,
-        backgroundColor: '#ffffff'
+        backgroundColor: '#ffffff',
+        width: tempDiv.scrollWidth,
+        height: tempDiv.scrollHeight,
+        scrollX: 0,
+        scrollY: 0,
+        windowWidth: 1920,
+        windowHeight: 1080
       });
 
       document.body.removeChild(tempDiv);
@@ -80,6 +89,31 @@ const PdfConverterEditor = ({ htmlContent, onContentChange }: PdfConverterEditor
     }
   };
 
+  const updatePreview = () => {
+    if (previewRef.current) {
+      const doc = previewRef.current.contentDocument;
+      if (doc) {
+        doc.open();
+        doc.write(`
+          <!DOCTYPE html>
+          <html>
+            <head>
+              <meta charset="utf-8">
+              <style>
+                body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; color: black; background: white; }
+                * { box-sizing: border-box; }
+                h1, h2, h3, h4, h5, h6 { color: black; }
+                p { color: black; }
+              </style>
+            </head>
+            <body>${htmlContent}</body>
+          </html>
+        `);
+        doc.close();
+      }
+    }
+  };
+
   return (
     <Card className="h-full flex flex-col">
       <CardHeader className="pb-3">
@@ -102,13 +136,40 @@ const PdfConverterEditor = ({ htmlContent, onContentChange }: PdfConverterEditor
           </Button>
         </div>
       </CardHeader>
-      <CardContent className="flex-1 flex flex-col p-4">
-        <Textarea
-          value={htmlContent}
-          onChange={(e) => onContentChange(e.target.value)}
-          className="h-full min-h-[400px] font-mono text-sm resize-none"
-          placeholder="Enter your HTML content here..."
-        />
+      <CardContent className="flex-1 flex flex-col p-0">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col">
+          <TabsList className="grid w-full grid-cols-2 mx-4 mb-4">
+            <TabsTrigger value="html" className="flex items-center gap-2">
+              <Code className="h-4 w-4" />
+              HTML Code
+            </TabsTrigger>
+            <TabsTrigger value="preview" className="flex items-center gap-2">
+              <Eye className="h-4 w-4" />
+              Preview
+            </TabsTrigger>
+          </TabsList>
+          
+          <TabsContent value="html" className="flex-1 mx-4 mb-4">
+            <Textarea
+              value={htmlContent}
+              onChange={(e) => onContentChange(e.target.value)}
+              className="h-full min-h-[400px] font-mono text-sm resize-none"
+              placeholder="Enter your HTML content here..."
+            />
+          </TabsContent>
+          
+          <TabsContent value="preview" className="flex-1 mx-4 mb-4">
+            <div className="h-full border rounded-md">
+              <iframe
+                ref={previewRef}
+                className="w-full h-full rounded-md"
+                onLoad={updatePreview}
+                title="HTML Preview"
+                sandbox="allow-same-origin"
+              />
+            </div>
+          </TabsContent>
+        </Tabs>
       </CardContent>
     </Card>
   );

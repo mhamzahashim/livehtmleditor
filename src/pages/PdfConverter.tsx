@@ -3,7 +3,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from '@/components/ui/resizable';
 import PdfConverterEditor from '@/components/pdf/PdfConverterEditor';
-import PdfPreview from '@/components/pdf/PdfPreview';
 import PdfSettings from '@/components/pdf/PdfSettings';
 import TemplateLibrary from '@/components/pdf/TemplateLibrary';
 
@@ -110,7 +109,7 @@ const PdfConverter = () => {
 
           <TabsContent value="editor" className="space-y-6">
             <ResizablePanelGroup direction="horizontal" className="min-h-[600px] border rounded-lg">
-              <ResizablePanel defaultSize={25} minSize={20}>
+              <ResizablePanel defaultSize={30} minSize={25}>
                 <div className="h-full p-4">
                   <PdfSettings settings={settings} onSettingsChange={setSettings} />
                 </div>
@@ -118,22 +117,11 @@ const PdfConverter = () => {
               
               <ResizableHandle withHandle />
               
-              <ResizablePanel defaultSize={50} minSize={35}>
+              <ResizablePanel defaultSize={70} minSize={50}>
                 <div className="h-full">
                   <PdfConverterEditor
                     htmlContent={htmlContent}
                     onContentChange={setHtmlContent}
-                  />
-                </div>
-              </ResizablePanel>
-              
-              <ResizableHandle withHandle />
-              
-              <ResizablePanel defaultSize={25} minSize={20}>
-                <div className="h-full">
-                  <PdfPreview
-                    htmlContent={htmlContent}
-                    settings={settings}
                   />
                 </div>
               </ResizablePanel>
