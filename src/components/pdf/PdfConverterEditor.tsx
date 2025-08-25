@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import * as React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -28,17 +29,26 @@ const PdfConverterEditor = ({ htmlContent, onContentChange }: PdfConverterEditor
       tempDiv.innerHTML = htmlContent;
       tempDiv.style.position = 'absolute';
       tempDiv.style.left = '-9999px';
-      tempDiv.style.width = '210mm'; // A4 width
-      tempDiv.style.padding = '20mm';
+      tempDiv.style.width = '794px'; // A4 width in pixels at 96 DPI
+      tempDiv.style.padding = '40px';
       tempDiv.style.backgroundColor = 'white';
       tempDiv.style.fontFamily = 'Arial, sans-serif';
-      tempDiv.style.fontSize = '12pt';
+      tempDiv.style.fontSize = '14px';
       tempDiv.style.lineHeight = '1.6';
       tempDiv.style.color = 'black';
       document.body.appendChild(tempDiv);
 
+      // Wait for any images to load
+      const images = tempDiv.querySelectorAll('img');
+      await Promise.all(Array.from(images).map(img => {
+        if (img.complete) return Promise.resolve();
+        return new Promise(resolve => {
+          img.onload = img.onerror = resolve;
+        });
+      }));
+
       const canvas = await html2canvas(tempDiv, {
-        scale: 4,
+        scale: 2, // Reduced scale to prevent memory issues
         useCORS: true,
         allowTaint: true,
         backgroundColor: '#ffffff',
@@ -46,32 +56,35 @@ const PdfConverterEditor = ({ htmlContent, onContentChange }: PdfConverterEditor
         height: tempDiv.scrollHeight,
         scrollX: 0,
         scrollY: 0,
-        windowWidth: 1920,
-        windowHeight: 1080
+        logging: false // Disable logging to improve performance
       });
 
       document.body.removeChild(tempDiv);
 
-      const imgData = canvas.toDataURL('image/png');
+      // Convert to JPEG with compression to reduce size
+      const imgData = canvas.toDataURL('image/jpeg', 0.85);
       const pdf = new jsPDF('p', 'mm', 'a4');
-      const imgWidth = 210;
-      const pageHeight = 295;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = pdf.internal.pageSize.getHeight();
+      const imgWidth = pdfWidth;
+      const imgHeight = (canvas.height * pdfWidth) / canvas.width;
+      
       let heightLeft = imgHeight;
-
       let position = 0;
 
-      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
+      // Add first page
+      pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
+      heightLeft -= pdfHeight;
 
+      // Add additional pages if needed
       while (heightLeft >= 0) {
         position = heightLeft - imgHeight;
         pdf.addPage();
-        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
+        pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pdfHeight;
       }
 
-      pdf.save(`document-${Date.now()}.pdf`);
+      pdf.save(`html-to-pdf-${Date.now()}.pdf`);
       
       toast({
         title: "PDF Generated",
@@ -90,29 +103,36 @@ const PdfConverterEditor = ({ htmlContent, onContentChange }: PdfConverterEditor
   };
 
   const updatePreview = () => {
-    if (previewRef.current) {
+    if (previewRef.current && previewRef.current.contentDocument) {
       const doc = previewRef.current.contentDocument;
-      if (doc) {
-        doc.open();
-        doc.write(`
-          <!DOCTYPE html>
-          <html>
-            <head>
-              <meta charset="utf-8">
-              <style>
-                body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; color: black; background: white; }
-                * { box-sizing: border-box; }
-                h1, h2, h3, h4, h5, h6 { color: black; }
-                p { color: black; }
-              </style>
-            </head>
-            <body>${htmlContent}</body>
-          </html>
-        `);
-        doc.close();
-      }
+      doc.open();
+      doc.write(`
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <style>
+              body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; color: black; background: white; }
+              * { box-sizing: border-box; }
+              h1, h2, h3, h4, h5, h6 { color: black; }
+              p { color: black; }
+            </style>
+          </head>
+          <body>${htmlContent}</body>
+        </html>
+      `);
+      doc.close();
     }
   };
+
+  // Update preview when content changes
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      updatePreview();
+    }, 100);
+    return () => clearTimeout(timer);
+  }, [htmlContent]);
 
   return (
     <Card className="h-full flex flex-col">
@@ -165,7 +185,7 @@ const PdfConverterEditor = ({ htmlContent, onContentChange }: PdfConverterEditor
                 className="w-full h-full rounded-md"
                 onLoad={updatePreview}
                 title="HTML Preview"
-                sandbox="allow-same-origin"
+                sandbox="allow-same-origin allow-scripts"
               />
             </div>
           </TabsContent>
