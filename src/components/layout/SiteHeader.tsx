@@ -28,6 +28,7 @@ const SiteHeader = () => {
             <NavLink to="/components" className={navLinkClass}>Components</NavLink>
             <NavLink to="/notepad" className={navLinkClass}>Notepad</NavLink>
             <NavLink to="/markdown" className={navLinkClass}>Markdown</NavLink>
+            <NavLink to="/pdf-converter" className={navLinkClass}>PDF Converter</NavLink>
           </nav>
 
           <div className="flex items-center gap-2">
@@ -52,6 +53,8 @@ const SiteHeader = () => {
             <NavLink to="/" end className={navLinkClass} onClick={() => setOpen(false)}>Editor</NavLink>
             <NavLink to="/components" className={navLinkClass} onClick={() => setOpen(false)}>Components</NavLink>
             <NavLink to="/notepad" className={navLinkClass} onClick={() => setOpen(false)}>Notepad</NavLink>
+            <NavLink to="/markdown" className={navLinkClass} onClick={() => setOpen(false)}>Markdown</NavLink>
+            <NavLink to="/pdf-converter" className={navLinkClass} onClick={() => setOpen(false)}>PDF Converter</NavLink>
           </nav>
         </div>
       )}

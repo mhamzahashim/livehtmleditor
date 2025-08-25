@@ -13,7 +13,8 @@ async function prerender() {
     '/',
     '/components', 
     '/notepad',
-    '/markdown'
+    '/markdown',
+    '/pdf-converter'
   ]
   
   const template = fs.readFileSync(path.resolve(__dirname, 'dist/index.html'), 'utf-8')
