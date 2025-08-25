@@ -110,7 +110,7 @@ const PdfConverter = () => {
 
           <TabsContent value="editor" className="space-y-6">
             <ResizablePanelGroup direction="horizontal" className="min-h-[600px] border rounded-lg">
-              <ResizablePanel defaultSize={30} minSize={25}>
+              <ResizablePanel defaultSize={25} minSize={20}>
                 <div className="h-full p-4">
                   <PdfSettings settings={settings} onSettingsChange={setSettings} />
                 </div>
@@ -118,7 +118,7 @@ const PdfConverter = () => {
               
               <ResizableHandle withHandle />
               
-              <ResizablePanel defaultSize={40} minSize={30}>
+              <ResizablePanel defaultSize={50} minSize={35}>
                 <div className="h-full">
                   <PdfConverterEditor
                     htmlContent={htmlContent}
@@ -129,7 +129,7 @@ const PdfConverter = () => {
               
               <ResizableHandle withHandle />
               
-              <ResizablePanel defaultSize={30} minSize={25}>
+              <ResizablePanel defaultSize={25} minSize={20}>
                 <div className="h-full">
                   <PdfPreview
                     htmlContent={htmlContent}
