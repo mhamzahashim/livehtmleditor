@@ -3,7 +3,7 @@ import HtmlEditor from '@/components/HtmlEditor';
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-indigo-50">
+    <div className="min-h-screen ambient-bg dot-grid">
       <HtmlEditor />
     </div>
   );

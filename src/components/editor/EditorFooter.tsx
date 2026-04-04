@@ -1,49 +1,29 @@
-import { Button } from '@/components/ui/button';
-import { Heart, Github } from 'lucide-react';
-
-interface EditorFooterProps {
-}
+import { Github, Heart } from 'lucide-react';
 
 const EditorFooter = () => {
   return (
-    <footer className="bg-white/80 backdrop-blur-md border-slate-200/60 border-t mt-auto">
-      <div className="max-w-7xl mx-auto px-6 py-6">
-        <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-          <div className="flex items-center space-x-6 text-sm text-slate-600">
-            <span className="flex items-center">
-              Made with <Heart className="w-4 h-4 mx-1 text-red-400" fill="currentColor" /> for developers
+    <footer className="border-t border-white/[0.04] bg-[hsl(225,22%,5%)]/60 mt-auto">
+      <div className="max-w-[1600px] mx-auto px-4 py-3">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-2">
+          <div className="flex items-center gap-4 text-xs text-[#3A3F52]">
+            <span className="flex items-center gap-1">
+              Made with <Heart className="w-3 h-3 text-rose-500/60" fill="currentColor" /> for developers
             </span>
-            <span>•</span>
-            <span>Advanced HTML editing and preview</span>
+            <span className="hidden sm:inline">&middot;</span>
+            <span className="hidden sm:inline">HTML &middot; CSS &middot; JavaScript</span>
           </div>
-          <div className="flex items-center space-x-4">
-            <div className="text-xs text-slate-500">
-              <span>Keyboard shortcuts: </span>
-              <kbd className="px-2 py-1 bg-slate-100 rounded text-xs">Ctrl+S</kbd>
-              <span className="mx-1">to save</span>
+          <div className="flex items-center gap-4">
+            <div className="text-[11px] text-[#2E3345] font-mono">
+              <kbd className="px-1.5 py-0.5 rounded bg-white/[0.03] border border-white/[0.06] text-[#5C6178]">Ctrl+S</kbd>
+              <span className="ml-1.5">save</span>
             </div>
-            <Button
-              variant="ghost"
-              size="sm"
-              className="text-slate-500 hover:text-slate-700"
+            <button
               onClick={() => window.open('https://github.com/mhamzahashim', '_blank')}
+              className="text-[#3A3F52] hover:text-[#7A7F94] transition-colors"
             >
-              <Github className="w-4 h-4" />
-            </Button>
+              <Github className="w-3.5 h-3.5" />
+            </button>
           </div>
-        </div>
-        <div className="mt-4 pt-4 border-t border-slate-200/60">
-          <p className="text-xs text-slate-500 text-center">
-            © 2025 HTML Editor. Built with React, TypeScript, and Tailwind CSS. Created by{' '}
-            <a 
-              href="https://serpnavigator.com/" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-blue-600 hover:text-blue-800 underline"
-            >
-              SerpNavigator
-            </a>
-          </p>
         </div>
       </div>
     </footer>

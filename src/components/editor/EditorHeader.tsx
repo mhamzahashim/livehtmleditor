@@ -1,6 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Monitor, Tablet, Smartphone, ZoomIn, ZoomOut, Upload, Download, Layout, Play, RotateCcw, Settings, Eye, EyeOff } from 'lucide-react';
+import { Monitor, Tablet, Smartphone, ZoomIn, ZoomOut, Upload, Download, Play, RotateCcw, Settings, Eye, EyeOff, Layout, Columns2 } from 'lucide-react';
 
 interface EditorHeaderProps {
   previewMode: string;
@@ -17,6 +16,20 @@ interface EditorHeaderProps {
   onReset: () => void;
 }
 
+const DeviceBtn = ({ active, onClick, children, title }: { active: boolean; onClick: () => void; children: React.ReactNode; title: string }) => (
+  <button
+    onClick={onClick}
+    title={title}
+    className={`p-1.5 rounded-md transition-all duration-150 ${
+      active
+        ? 'bg-indigo-600/20 text-indigo-400 shadow-[0_0_8px_-2px_rgba(99,102,241,0.4)]'
+        : 'text-[#5C6178] hover:text-[#9DA3B4] hover:bg-white/[0.04]'
+    }`}
+  >
+    {children}
+  </button>
+);
+
 const EditorHeader = ({
   previewMode,
   zoomLevel,
@@ -32,107 +45,107 @@ const EditorHeader = ({
   onReset,
 }: EditorHeaderProps) => {
   return (
-    <header className="bg-white/80 backdrop-blur-md border-slate-200/60 border-b shadow-sm">
-      <div className="max-w-7xl mx-auto px-6 py-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">&lt;/&gt;</span>
-            </div>
-            <div>
-              <h1 className="text-xl font-semibold text-slate-800 tracking-tight">HTML Editor</h1>
-              <p className="text-xs text-slate-500 mt-0.5">Create, edit, and preview HTML in real-time</p>
+    <header className="glass border-b border-white/[0.06]">
+      <div className="max-w-[1600px] mx-auto px-4 py-2.5">
+        <div className="flex items-center justify-between gap-4">
+          {/* Left: Editor info */}
+          <div className="flex items-center gap-3 min-w-0">
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_6px_1px_rgba(52,211,153,0.5)]" />
+              <span className="text-xs font-medium text-[#9DA3B4] whitespace-nowrap">Live Editor</span>
             </div>
           </div>
-          <div className="flex items-center space-x-3">
-            {/* Preview Mode */}
-            <Select value={previewMode} onValueChange={onPreviewModeChange}>
-              <SelectTrigger className="w-32 h-8">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="desktop"><Monitor className="w-4 h-4 mr-2 inline" />Desktop</SelectItem>
-                <SelectItem value="tablet"><Tablet className="w-4 h-4 mr-2 inline" />Tablet</SelectItem>
-                <SelectItem value="mobile"><Smartphone className="w-4 h-4 mr-2 inline" />Mobile</SelectItem>
-              </SelectContent>
-            </Select>
 
-            {/* Zoom Controls */}
-            <Button onClick={() => onZoom('out')} variant="outline" size="sm">
-              <ZoomOut className="w-4 h-4" />
-            </Button>
-            <span className="text-sm font-mono">{zoomLevel}%</span>
-            <Button onClick={() => onZoom('in')} variant="outline" size="sm">
-              <ZoomIn className="w-4 h-4" />
-            </Button>
+          {/* Center: Controls */}
+          <div className="hidden md:flex items-center gap-1">
+            {/* Device toggles */}
+            <div className="flex items-center gap-0.5 p-1 rounded-lg bg-white/[0.03] border border-white/[0.06]">
+              <DeviceBtn active={previewMode === 'desktop'} onClick={() => onPreviewModeChange('desktop')} title="Desktop">
+                <Monitor className="w-3.5 h-3.5" />
+              </DeviceBtn>
+              <DeviceBtn active={previewMode === 'tablet'} onClick={() => onPreviewModeChange('tablet')} title="Tablet">
+                <Tablet className="w-3.5 h-3.5" />
+              </DeviceBtn>
+              <DeviceBtn active={previewMode === 'mobile'} onClick={() => onPreviewModeChange('mobile')} title="Mobile">
+                <Smartphone className="w-3.5 h-3.5" />
+              </DeviceBtn>
+            </div>
 
+            <div className="w-px h-5 bg-white/[0.06] mx-2" />
 
-            {/* Dev Tools Toggle */}
-            <Button
-              onClick={onDevToolsToggle}
-              variant="outline"
-              size="sm"
-            >
-              <Settings className="w-4 h-4" />
-            </Button>
+            {/* Zoom */}
+            <div className="flex items-center gap-1">
+              <button onClick={() => onZoom('out')} className="toolbar-btn p-1.5 rounded-md" title="Zoom out">
+                <ZoomOut className="w-3.5 h-3.5" />
+              </button>
+              <span className="text-[11px] font-mono text-[#5C6178] w-10 text-center tabular-nums">{zoomLevel}%</span>
+              <button onClick={() => onZoom('in')} className="toolbar-btn p-1.5 rounded-md" title="Zoom in">
+                <ZoomIn className="w-3.5 h-3.5" />
+              </button>
+            </div>
 
-            {/* Full Screen Toggle */}
-            <Button
-              onClick={onFullScreenToggle}
-              variant="outline"
-              size="sm"
-            >
-              {fullScreenPreview ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-            </Button>
+            <div className="w-px h-5 bg-white/[0.06] mx-2" />
 
-            {/* Import/Export */}
-            <input
-              type="file"
-              accept=".html"
-              onChange={onImport}
-              className="hidden"
-              id="import-file"
-            />
+            {/* View toggles */}
+            <button onClick={onDevToolsToggle} className={`toolbar-btn p-1.5 rounded-md ${showDevTools ? 'text-indigo-400 bg-indigo-600/10' : ''}`} title="Developer tools">
+              <Settings className="w-3.5 h-3.5" />
+            </button>
+            <button onClick={onFullScreenToggle} className={`toolbar-btn p-1.5 rounded-md ${fullScreenPreview ? 'text-indigo-400 bg-indigo-600/10' : ''}`} title="Full screen preview">
+              {fullScreenPreview ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
+            </button>
+          </div>
+
+          {/* Right: Actions */}
+          <div className="flex items-center gap-1.5">
+            <input type="file" accept=".html" onChange={onImport} className="hidden" id="import-file" />
+
             <Button
               onClick={() => document.getElementById('import-file')?.click()}
-              variant="outline"
+              variant="ghost"
               size="sm"
+              className="toolbar-btn h-7 px-2.5 text-xs gap-1.5"
             >
-              <Upload className="w-4 h-4 mr-2" />
-              Import
-            </Button>
-            
-            <Button onClick={onExport} variant="outline" size="sm">
-              <Download className="w-4 h-4 mr-2" />
-              Export
+              <Upload className="w-3.5 h-3.5" />
+              <span className="hidden lg:inline">Import</span>
             </Button>
 
-            <Button 
-              onClick={() => window.open('/components', '_blank')} 
-              variant="outline" 
-              size="sm"
-            >
-              <Layout className="w-4 h-4 mr-2" />
-              Components
+            <Button onClick={onExport} variant="ghost" size="sm" className="toolbar-btn h-7 px-2.5 text-xs gap-1.5">
+              <Download className="w-3.5 h-3.5" />
+              <span className="hidden lg:inline">Export</span>
             </Button>
 
-            <Button 
-              onClick={() => window.open('/notepad', '_blank')} 
-              variant="outline" 
+            <div className="w-px h-5 bg-white/[0.06] mx-0.5" />
+
+            <Button
+              onClick={() => window.open('/components', '_blank')}
+              variant="ghost"
               size="sm"
+              className="toolbar-btn h-7 px-2.5 text-xs gap-1.5"
             >
-              <Layout className="w-4 h-4 mr-2" />
-              Notepad
+              <Columns2 className="w-3.5 h-3.5" />
+              <span className="hidden xl:inline">Components</span>
             </Button>
 
-            <Button onClick={onRefresh} variant="outline" size="sm">
-              <Play className="w-4 h-4 mr-2" />
-              Refresh
+            <Button
+              onClick={() => window.open('/notepad', '_blank')}
+              variant="ghost"
+              size="sm"
+              className="toolbar-btn h-7 px-2.5 text-xs gap-1.5"
+            >
+              <Layout className="w-3.5 h-3.5" />
+              <span className="hidden xl:inline">Notepad</span>
             </Button>
-            
-            <Button onClick={onReset} variant="outline" size="sm">
-              <RotateCcw className="w-4 h-4 mr-2" />
-              Reset
+
+            <div className="w-px h-5 bg-white/[0.06] mx-0.5" />
+
+            <Button onClick={onRefresh} variant="ghost" size="sm" className="toolbar-btn h-7 px-2.5 text-xs gap-1.5 text-emerald-500 hover:text-emerald-400">
+              <Play className="w-3.5 h-3.5" />
+              <span className="hidden lg:inline">Run</span>
+            </Button>
+
+            <Button onClick={onReset} variant="ghost" size="sm" className="toolbar-btn h-7 px-2.5 text-xs gap-1.5">
+              <RotateCcw className="w-3.5 h-3.5" />
+              <span className="hidden lg:inline">Reset</span>
             </Button>
           </div>
         </div>

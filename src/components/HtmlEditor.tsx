@@ -58,7 +58,7 @@ console.log('Welcome to HTML Editor!');
 // Example: Add interactivity
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM loaded and ready!');
-    
+
     // Add click handlers or other interactive features
     const buttons = document.querySelectorAll('button');
     buttons.forEach(button => {
@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const resetCode = () => {
     const defaultHtml = `<h1>Welcome to HTML Editor</h1>
 <p>Start building your HTML content here!</p>`;
-    
+
     const defaultCss = `/* Add your custom CSS here */
 body {
     font-family: 'Georgia', serif;
@@ -136,10 +136,9 @@ console.log('Welcome to HTML Editor!');`;
       reader.onload = (e) => {
         const content = e.target?.result as string;
         setHtmlCode(content);
-        // Extract CSS and JS from imported HTML
         const cssMatch = content.match(/<style id="custom-styles">([\s\S]*?)<\/style>/);
         const jsMatch = content.match(/<script id="custom-scripts">([\s\S]*?)<\/script>/);
-        
+
         if (cssMatch) setCssCode(cssMatch[1].trim());
         if (jsMatch) setJsCode(jsMatch[1].trim());
       };
@@ -163,7 +162,7 @@ console.log('Welcome to HTML Editor!');`;
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+    <div className="relative z-10 min-h-screen flex flex-col">
       <EditorHeader
         previewMode={previewMode}
         zoomLevel={zoomLevel}
@@ -179,7 +178,7 @@ console.log('Welcome to HTML Editor!');`;
         onReset={resetCode}
       />
 
-      <main className="flex-1 flex flex-col lg:flex-row gap-6 p-3 lg:p-6">
+      <main className="flex-1 flex flex-col lg:flex-row gap-3 p-3 lg:p-4">
         <EditorLayout
           fullScreenPreview={fullScreenPreview}
           activeEditor={activeEditor}

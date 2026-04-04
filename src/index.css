@@ -2,113 +2,251 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* ═══════════════════════════════════════════
+   COSMOS STUDIO — Dark Design System
+   ═══════════════════════════════════════════ */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 228 25% 5%;
+    --foreground: 225 14% 92%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 225 22% 8%;
+    --card-foreground: 225 14% 92%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 225 22% 9%;
+    --popover-foreground: 225 14% 92%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 239 84% 67%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 225 18% 13%;
+    --secondary-foreground: 225 14% 78%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 225 16% 11%;
+    --muted-foreground: 225 10% 48%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 225 18% 13%;
+    --accent-foreground: 225 14% 92%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 225 12% 13%;
+    --input: 225 12% 15%;
+    --ring: 239 84% 67%;
 
-    --radius: 0.5rem;
+    --radius: 0.625rem;
 
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
-
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
-
-    --primary: 0 0% 98%;
-    --primary-foreground: 240 5.9% 10%;
-
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
-    
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-background: 225 22% 6%;
+    --sidebar-foreground: 225 10% 70%;
+    --sidebar-primary: 239 84% 67%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-accent: 225 18% 11%;
+    --sidebar-accent-foreground: 225 14% 92%;
+    --sidebar-border: 225 12% 13%;
+    --sidebar-ring: 239 84% 67%;
 
-    /* Editor specific dark mode colors */
-    --editor-bg: 240 10% 8%;
-    --editor-foreground: 0 0% 90%;
-    --editor-line-numbers-bg: 240 8% 12%;
-    --editor-line-numbers-text: 240 5% 50%;
-    --editor-status-bg: 240 6% 20%;
-    --editor-status-text: 240 5% 70%;
+    --editor-bg: 228 30% 4%;
+    --editor-foreground: 220 14% 82%;
+    --editor-line-numbers-bg: 225 22% 6%;
+    --editor-line-numbers-text: 225 10% 28%;
+    --editor-status-bg: 225 22% 9%;
+    --editor-status-text: 225 10% 45%;
+
+    --surface-0: 228 25% 4%;
+    --surface-1: 225 22% 8%;
+    --surface-2: 225 20% 11%;
+    --surface-3: 225 18% 15%;
   }
-}
 
-@layer base {
   * {
     @apply border-border;
   }
 
+  html {
+    font-family: 'Outfit', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    letter-spacing: -0.01em;
+  }
+
   body {
     @apply bg-background text-foreground;
+    background-color: hsl(var(--surface-0));
   }
+}
+
+/* ── Scrollbar ─────────────────────────── */
+
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: hsl(225 12% 18%);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(225 12% 26%);
+}
+
+/* ── Selection ─────────────────────────── */
+
+::selection {
+  background: hsla(239, 84%, 67%, 0.3);
+  color: #fff;
+}
+
+/* ── Glass Utilities ───────────────────── */
+
+@layer utilities {
+  .glass {
+    background: rgba(14, 17, 26, 0.78);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+  }
+
+  .glass-panel {
+    background: rgba(18, 22, 36, 0.55);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+}
+
+/* ── Ambient Background ────────────────── */
+
+.ambient-bg { position: relative; }
+.ambient-bg::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 40% at 10% 25%, hsla(239, 84%, 67%, 0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 50% at 90% 15%, hsla(187, 85%, 53%, 0.05) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 60% at 50% 95%, hsla(270, 70%, 55%, 0.035) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+  animation: ambient-shift 20s ease-in-out infinite alternate;
+}
+@keyframes ambient-shift {
+  0%   { opacity: 1; transform: scale(1); }
+  50%  { opacity: 0.75; transform: scale(1.02); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* ── Dot Grid Pattern ──────────────────── */
+
+.dot-grid {
+  background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.025) 1px, transparent 0);
+  background-size: 20px 20px;
+}
+
+/* ── Gradient Border ───────────────────── */
+
+.gradient-border { position: relative; }
+.gradient-border::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(99,102,241,0.3) 0%, rgba(34,211,238,0.08) 50%, transparent 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── Glow Pulse ────────────────────────── */
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 1; box-shadow: 0 0 8px 2px hsla(160, 84%, 50%, 0.4); }
+  50%      { opacity: 0.6; box-shadow: 0 0 4px 1px hsla(160, 84%, 50%, 0.2); }
+}
+.live-dot {
+  width: 6px; height: 6px;
+  border-radius: 9999px;
+  background: hsl(160, 84%, 50%);
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* ── Editor Textarea ───────────────────── */
+
+.editor-area {
+  background: hsl(var(--editor-bg)) !important;
+  color: hsl(var(--editor-foreground)) !important;
+  caret-color: hsl(239, 84%, 72%);
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 13px !important;
+  line-height: 1.65 !important;
+}
+.editor-area::placeholder {
+  color: hsl(225 10% 22%) !important;
+}
+.editor-area:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* ── Resizable Handle ──────────────────── */
+
+[data-panel-group-direction="horizontal"] > [data-resize-handle-id] {
+  width: 12px !important;
+  background: transparent !important;
+  transition: background 0.2s ease;
+}
+[data-panel-group-direction="horizontal"] > [data-resize-handle-id]:hover {
+  background: hsla(239, 84%, 67%, 0.08) !important;
+}
+[data-panel-group-direction="horizontal"] > [data-resize-handle-id] > div {
+  background: hsl(225 12% 18%) !important;
+  border-radius: 9999px;
+  transition: background 0.2s ease, width 0.2s ease;
+}
+[data-panel-group-direction="horizontal"] > [data-resize-handle-id]:hover > div {
+  background: hsl(239 84% 67%) !important;
+}
+
+/* ── Tab Overrides ─────────────────────── */
+
+.editor-tabs [role="tablist"] {
+  background: hsl(var(--surface-1));
+  border-radius: 8px;
+  padding: 3px;
+  border: 1px solid rgba(255,255,255,0.04);
+}
+.editor-tabs [role="tab"] {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.03em;
+  font-weight: 500;
+  text-transform: uppercase;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+.editor-tabs [role="tab"][data-state="active"] {
+  background: hsl(var(--surface-2)) !important;
+  color: hsl(239, 84%, 75%) !important;
+  box-shadow: 0 0 14px -5px hsla(239, 84%, 67%, 0.5), inset 0 1px 0 rgba(255,255,255,0.04);
+}
+
+/* ── Button group for toolbar ──────────── */
+
+.toolbar-btn {
+  color: hsl(225 10% 55%);
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.06);
+  transition: all 0.15s ease;
+}
+.toolbar-btn:hover {
+  color: hsl(225 14% 88%);
+  background: hsl(var(--surface-2));
+  border-color: rgba(255,255,255,0.1);
+}
+
+/* ── Smooth transitions ────────────────── */
+
+.transition-gpu {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, opacity;
 }

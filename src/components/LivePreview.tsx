@@ -1,7 +1,6 @@
 
 import { useRef, useEffect, useState } from 'react';
 import { toast } from '@/components/ui/use-toast';
-import { Button } from '@/components/ui/button';
 import { Copy } from 'lucide-react';
 import EditorToolbar from './EditorToolbar';
 
@@ -24,15 +23,13 @@ const LivePreview = ({ htmlCode, onCodeChange, previewWidth = '100%', cssCode = 
     if (iframeRef.current) {
       const iframe = iframeRef.current;
       const doc = iframe.contentDocument || iframe.contentWindow?.document;
-      
+
       if (doc) {
         try {
           doc.open();
-          // Create a minimal HTML structure and inject the content, CSS, and JS
           const fullHtml = `<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>${cssCode}</style><script>${jsCode}</script></head><body>${htmlCode || ''}</body></html>`;
           doc.write(fullHtml);
           doc.close();
-          
           setupPreviewInteractivity(doc);
         } catch (error) {
           console.error('Error writing to iframe:', error);
@@ -42,32 +39,26 @@ const LivePreview = ({ htmlCode, onCodeChange, previewWidth = '100%', cssCode = 
   }, [htmlCode, cssCode, jsCode]);
 
   const setupPreviewInteractivity = (doc: Document) => {
-    // Add styling for interactive elements
     const style = doc.createElement('style');
     style.textContent = `
-      body {
-        margin: 20px;
-        font-family: Arial, sans-serif;
-      }
+      body { margin: 20px; font-family: Arial, sans-serif; }
       .editable-selected {
-        outline: 2px solid #4299e1 !important;
+        outline: 2px solid #6366F1 !important;
         outline-offset: 2px;
         position: relative;
       }
       .editable-hover {
-        outline: 1px dashed #4299e1 !important;
+        outline: 1px dashed #6366F1 !important;
         outline-offset: 2px;
         cursor: pointer;
       }
-      [contenteditable="true"] {
-        min-height: 1em;
-      }
+      [contenteditable="true"] { min-height: 1em; }
       .editable-selected::after {
         content: 'Click to edit';
         position: absolute;
         top: -25px;
         left: 0;
-        background: #4299e1;
+        background: #6366F1;
         color: white;
         padding: 2px 6px;
         font-size: 11px;
@@ -76,89 +67,50 @@ const LivePreview = ({ htmlCode, onCodeChange, previewWidth = '100%', cssCode = 
         z-index: 1000;
       }
     `;
-    if (doc.head) {
-      doc.head.appendChild(style);
-    }
+    if (doc.head) doc.head.appendChild(style);
 
-    // Make all text elements editable and add event listeners
     const textElements = doc.querySelectorAll('p, h1, h2, h3, h4, h5, h6, span, div, li, td, th, blockquote');
     textElements.forEach((element) => {
       element.setAttribute('contenteditable', 'true');
-      
-      // Add hover effects
+
       element.addEventListener('mouseenter', () => {
-        if (element !== selectedElement) {
-          element.classList.add('editable-hover');
-        }
+        if (element !== selectedElement) element.classList.add('editable-hover');
       });
-      
       element.addEventListener('mouseleave', () => {
         element.classList.remove('editable-hover');
       });
-      
-      // Handle selection
+
       element.addEventListener('click', (e) => {
         e.stopPropagation();
-        
-        // Remove previous selection
-        if (selectedElement) {
-          selectedElement.classList.remove('editable-selected');
-        }
-        
-        // Add new selection
+        if (selectedElement) selectedElement.classList.remove('editable-selected');
         element.classList.add('editable-selected');
         element.classList.remove('editable-hover');
         setSelectedElement(element);
-        
-        // Focus on the element for immediate editing
         (element as HTMLElement).focus();
-        
-        // Update selected text
         const selection = doc.getSelection();
-        if (selection && selection.toString()) {
-          setSelectedText(selection.toString());
-        }
+        if (selection && selection.toString()) setSelectedText(selection.toString());
       });
-      
-      // Handle content changes - Fix for deselection issue
+
       let isComposing = false;
-      
-      element.addEventListener('compositionstart', () => {
-        isComposing = true;
-      });
-      
-      element.addEventListener('compositionend', () => {
-        isComposing = false;
-        updateHtmlCodePrecisely(doc, element);
-      });
-      
-      element.addEventListener('input', (e) => {
+      element.addEventListener('compositionstart', () => { isComposing = true; });
+      element.addEventListener('compositionend', () => { isComposing = false; updateHtmlCodePrecisely(doc, element); });
+
+      element.addEventListener('input', () => {
         if (!isComposing) {
-          // Debounce the update to prevent constant re-rendering
           clearTimeout((element as any).updateTimeout);
-          (element as any).updateTimeout = setTimeout(() => {
-            updateHtmlCodePrecisely(doc, element);
-          }, 300);
+          (element as any).updateTimeout = setTimeout(() => { updateHtmlCodePrecisely(doc, element); }, 300);
         }
       });
-      
-      // Handle text selection without triggering update
+
       element.addEventListener('mouseup', (e) => {
         e.stopPropagation();
         const selection = doc.getSelection();
-        if (selection && selection.toString()) {
-          setSelectedText(selection.toString());
-        }
+        if (selection && selection.toString()) setSelectedText(selection.toString());
       });
-      
-      // Prevent losing focus on keydown
-      element.addEventListener('keydown', (e) => {
-        e.stopPropagation();
-        // Allow normal text editing without interference
-      });
+
+      element.addEventListener('keydown', (e) => { e.stopPropagation(); });
     });
 
-    // Handle clicks outside elements to deselect
     doc.addEventListener('click', (e) => {
       if (!e.target || !(e.target as Element).closest('[contenteditable="true"]')) {
         if (selectedElement) {
@@ -171,43 +123,12 @@ const LivePreview = ({ htmlCode, onCodeChange, previewWidth = '100%', cssCode = 
 
   const updateHtmlCodePrecisely = (doc: Document, changedElement: Element) => {
     try {
-      // Only save the body content, not the full HTML structure
       const bodyContent = doc.body.innerHTML;
       const cleanedContent = cleanHtmlCode(bodyContent);
-      
-      if (cleanedContent !== htmlCode) {
-        onCodeChange(cleanedContent);
-      }
+      if (cleanedContent !== htmlCode) onCodeChange(cleanedContent);
     } catch (error) {
       console.error('Error updating HTML code precisely:', error);
     }
-  };
-
-  const getElementPath = (element: Element, root: Element | null): number[] => {
-    const path: number[] = [];
-    let current = element;
-    
-    while (current && current !== root && current.parentElement) {
-      const parent = current.parentElement;
-      const index = Array.from(parent.children).indexOf(current);
-      path.unshift(index);
-      current = parent;
-    }
-    
-    return path;
-  };
-
-  const getElementByPath = (root: Element | null, path: number[]): Element | null => {
-    let current = root;
-    
-    for (const index of path) {
-      if (!current || !current.children[index]) {
-        return null;
-      }
-      current = current.children[index];
-    }
-    
-    return current;
   };
 
   const cleanHtmlCode = (html: string): string => {
@@ -219,53 +140,32 @@ const LivePreview = ({ htmlCode, onCodeChange, previewWidth = '100%', cssCode = 
 
   const handleToolbarInsert = (code: string) => {
     if (!selectedElement) {
-      toast({
-        title: "No element selected",
-        description: "Please click on an element in the preview to select it first.",
-      });
+      toast({ title: "No element selected", description: "Click on an element in the preview first." });
       return;
     }
-
     const doc = iframeRef.current?.contentDocument;
     if (!doc) return;
-
     try {
-      // Handle different types of insertions based on the selected element
       if (selectedText) {
-        // Replace selected text
         const selection = doc.getSelection();
         if (selection && selection.rangeCount > 0) {
           const range = selection.getRangeAt(0);
           range.deleteContents();
-          
           const tempDiv = doc.createElement('div');
           tempDiv.innerHTML = code;
-          
-          while (tempDiv.firstChild) {
-            range.insertNode(tempDiv.firstChild);
-          }
-          
+          while (tempDiv.firstChild) range.insertNode(tempDiv.firstChild);
           selection.removeAllRanges();
         }
       } else {
-        // Insert at the end of the selected element
         const tempDiv = doc.createElement('div');
         tempDiv.innerHTML = code;
-        
-        while (tempDiv.firstChild) {
-          selectedElement.appendChild(tempDiv.firstChild);
-        }
+        while (tempDiv.firstChild) selectedElement.appendChild(tempDiv.firstChild);
       }
-      
-      // Update the HTML code
       updateHtmlCodePrecisely(doc, selectedElement);
       setSelectedText('');
     } catch (error) {
       console.error('Error inserting code:', error);
-      toast({
-        title: "Error",
-        description: "Failed to insert content. Please try again.",
-      });
+      toast({ title: "Error", description: "Failed to insert content." });
     }
   };
 
@@ -273,66 +173,43 @@ const LivePreview = ({ htmlCode, onCodeChange, previewWidth = '100%', cssCode = 
     try {
       const doc = iframeRef.current?.contentDocument;
       if (!doc) return;
-      
-      // Get the clean HTML content (without contenteditable attributes)
       const bodyContent = doc.body.innerHTML;
       const cleanedHtml = cleanHtmlCode(bodyContent);
-      
-      // Create a fallback plain text version
       const tempDiv = document.createElement('div');
       tempDiv.innerHTML = cleanedHtml;
       const plainText = tempDiv.textContent || tempDiv.innerText || '';
-      
-      // Use the modern clipboard API to write both HTML and plain text
       const clipboardItem = new ClipboardItem({
         'text/html': new Blob([cleanedHtml], { type: 'text/html' }),
         'text/plain': new Blob([plainText], { type: 'text/plain' })
       });
-      
       await navigator.clipboard.write([clipboardItem]);
-      
-      toast({
-        title: "Content copied!",
-        description: "Rich text content has been copied with formatting preserved.",
-      });
+      toast({ title: "Copied!", description: "Rich text copied with formatting." });
     } catch (error) {
-      console.error('Failed to copy content:', error);
-      
-      // Fallback to plain text if rich text copying fails
       try {
         const doc = iframeRef.current?.contentDocument;
         if (doc) {
           const plainText = doc.body.textContent || doc.body.innerText || '';
           await navigator.clipboard.writeText(plainText);
-          toast({
-            title: "Content copied!",
-            description: "Content copied as plain text (formatting not preserved).",
-          });
+          toast({ title: "Copied!", description: "Content copied as plain text." });
         }
-      } catch (fallbackError) {
-        toast({
-          title: "Copy failed",
-          description: "Unable to copy content to clipboard.",
-          variant: "destructive",
-        });
+      } catch {
+        toast({ title: "Copy failed", description: "Unable to copy to clipboard.", variant: "destructive" });
       }
     }
   };
 
-  const handleLoad = () => {
-    setIsLoaded(true);
-  };
+  const handleLoad = () => setIsLoaded(true);
 
   const getDeviceFrame = (width: string) => {
     if (width === '375px') {
       return {
-        containerClass: 'mx-auto bg-black rounded-[2rem] p-2 max-w-fit',
+        containerClass: 'mx-auto bg-[#1A1E2E] rounded-[2rem] p-2.5 max-w-fit shadow-2xl shadow-black/30',
         iframeClass: 'rounded-[1.5rem] bg-white',
         style: { width: '375px', height: '667px' }
       };
     } else if (width === '768px') {
       return {
-        containerClass: 'mx-auto bg-black rounded-[1.5rem] p-3 max-w-fit',
+        containerClass: 'mx-auto bg-[#1A1E2E] rounded-[1.5rem] p-3 max-w-fit shadow-2xl shadow-black/30',
         iframeClass: 'rounded-[1rem] bg-white',
         style: { width: '768px', height: '1024px' }
       };
@@ -348,15 +225,15 @@ const LivePreview = ({ htmlCode, onCodeChange, previewWidth = '100%', cssCode = 
 
   return (
     <div className="h-full flex flex-col">
-      <div className="border-b border-slate-200 bg-gradient-to-r from-slate-50 to-blue-50">
-        <EditorToolbar 
-          onInsertCode={handleToolbarInsert} 
-          selectedText={selectedText} 
+      <div className="border-b border-white/[0.04] bg-surface-2/40">
+        <EditorToolbar
+          onInsertCode={handleToolbarInsert}
+          selectedText={selectedText}
           onCopyContent={handleCopyContent}
         />
       </div>
-      <div className={`flex-1 ${previewWidth === '100%' ? 'p-0' : 'p-4'}`}>
-        <div 
+      <div className={`flex-1 ${previewWidth === '100%' ? 'p-0' : 'p-4 bg-surface-0/50'}`}>
+        <div
           ref={containerRef}
           className={`h-full ${previewWidth === '100%' ? 'overflow-hidden' : 'overflow-auto'} ${deviceFrame.containerClass}`}
           style={previewWidth === '100%' ? { width: '100%', height: '100%' } : deviceFrame.style}
@@ -367,7 +244,7 @@ const LivePreview = ({ htmlCode, onCodeChange, previewWidth = '100%', cssCode = 
             className={`border-0 ${deviceFrame.iframeClass}`}
             title="Live Preview"
             sandbox="allow-scripts allow-same-origin"
-            style={{ 
+            style={{
               width: '100%',
               height: '100%',
               minHeight: previewWidth === '100%' ? '100vh' : '600px'
@@ -375,8 +252,8 @@ const LivePreview = ({ htmlCode, onCodeChange, previewWidth = '100%', cssCode = 
           />
         </div>
         {previewWidth !== '100%' && (
-          <div className="mt-2 text-xs text-slate-500 text-center">
-            Live preview • Click elements to select and edit • Changes sync back to code
+          <div className="mt-2 text-[11px] text-[#3A3F52] text-center font-mono">
+            Live preview &middot; Click to select &middot; Changes sync to code
           </div>
         )}
       </div>

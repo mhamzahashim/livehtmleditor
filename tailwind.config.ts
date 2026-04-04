@@ -17,8 +17,18 @@ export default {
 				'2xl': '1400px'
 			}
 		},
+		fontFamily: {
+			sans: ['Outfit', 'system-ui', '-apple-system', 'sans-serif'],
+			mono: ['JetBrains Mono', 'monospace'],
+		},
 		extend: {
 			colors: {
+				surface: {
+					DEFAULT: 'hsl(var(--surface-1))',
+					0: 'hsl(var(--surface-0))',
+					2: 'hsl(var(--surface-2))',
+					3: 'hsl(var(--surface-3))',
+				},
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',

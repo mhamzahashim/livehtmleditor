@@ -7,14 +7,12 @@ interface WordCountDisplayProps {
   className?: string;
 }
 
-const WordCountDisplay = ({ htmlContent, darkMode = false, className = '' }: WordCountDisplayProps) => {
-  const wordCount = useMemo(() => {
-    return countWordsInHtml(htmlContent);
-  }, [htmlContent]);
+const WordCountDisplay = ({ htmlContent, className = '' }: WordCountDisplayProps) => {
+  const wordCount = useMemo(() => countWordsInHtml(htmlContent), [htmlContent]);
 
   return (
-    <div className={`text-xs text-slate-500 ${className}`}>
-      <span className="font-medium">Words:</span> {formatWordCount(wordCount)}
+    <div className={`text-[11px] text-[#5C6178] font-mono ${className}`}>
+      <span className="text-[#3A3F52]">Words:</span> {formatWordCount(wordCount)}
     </div>
   );
 };
