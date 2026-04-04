@@ -5,27 +5,23 @@ import HtmlEditor from '@/components/HtmlEditor';
 
 const Index = () => {
   return (
-    <div className="min-h-screen">
-      {/* Landing sections */}
-      <div className="ambient-bg dot-grid">
-        <Hero />
-        <Features />
+    <div className="min-h-screen dot-grid">
+      <Hero />
+      <Features />
 
-        {/* Editor section header */}
-        <section className="relative z-10 pb-6 pt-8 text-center">
-          <div className="mx-auto max-w-2xl px-6">
-            <h2 className="text-2xl font-semibold tracking-tight text-white md:text-3xl">
-              Try it yourself
-            </h2>
-            <p className="mt-2 text-sm text-[#7A7F94]">
-              Write HTML, CSS &amp; JavaScript below and see the result in real time.
-            </p>
-          </div>
-        </section>
-      </div>
+      {/* Editor section */}
+      <section className="pb-4 pt-8 text-center">
+        <div className="mx-auto max-w-2xl px-6">
+          <h2 className="text-2xl font-bold tracking-tight text-foreground md:text-3xl" style={{ letterSpacing: '-0.02em' }}>
+            Try it yourself
+          </h2>
+          <p className="mt-2 text-sm text-muted-foreground">
+            Write HTML, CSS & JavaScript below and see the result in real time.
+          </p>
+        </div>
+      </section>
 
-      {/* Editor */}
-      <div id="editor" className="ambient-bg dot-grid">
+      <div id="editor">
         <HtmlEditor />
       </div>
     </div>

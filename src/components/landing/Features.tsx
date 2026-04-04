@@ -4,17 +4,17 @@ const features = [
   {
     icon: Eye,
     title: 'Live Preview',
-    description: 'See your changes instantly. Click elements in the preview to edit them directly.',
+    description: 'See changes instantly. Click any element in the preview to edit it directly in the code.',
   },
   {
     icon: Code2,
     title: 'HTML, CSS & JS',
-    description: 'Full support for HTML, CSS, and JavaScript with syntax-aware editing and auto-indent.',
+    description: 'Full support for all three languages with auto-indent, bracket matching, and formatting.',
   },
   {
     icon: Layout,
     title: 'Component Library',
-    description: '100+ ready-to-use components. Copy and paste navbars, heroes, cards, forms, and more.',
+    description: '100+ ready-to-use components: navbars, heroes, cards, forms, tables, and more.',
   },
   {
     icon: Settings2,
@@ -24,46 +24,52 @@ const features = [
   {
     icon: Download,
     title: 'Import & Export',
-    description: 'Import existing HTML files or export your work as clean, standalone HTML documents.',
+    description: 'Import existing HTML files or export your project as a clean, standalone document.',
   },
   {
     icon: Smartphone,
     title: 'Responsive Preview',
-    description: 'Test your designs on desktop, tablet, and mobile viewports with one click.',
+    description: 'Preview on desktop, tablet, and mobile viewports with a single click.',
   },
 ];
 
 const Features = () => {
   return (
-    <section className="py-20 md:py-28">
+    <section className="py-16 md:py-24">
       <div className="mx-auto max-w-5xl px-6">
-        {/* Header */}
-        <div className="mx-auto max-w-xl space-y-4 text-center">
-          <h2 className="text-balance text-3xl font-semibold tracking-tight text-white md:text-4xl lg:text-5xl">
+        {/* Section header */}
+        <div className="mx-auto max-w-xl space-y-3 text-center">
+          <h2 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl" style={{ letterSpacing: '-0.02em' }}>
             Everything you need to build
           </h2>
-          <p className="text-[#7A7F94] text-base md:text-lg">
-            A complete toolkit for writing, previewing, and shipping HTML. No setup required.
+          <p className="text-muted-foreground text-base">
+            A complete toolkit for writing, previewing, and shipping HTML. No setup, no account needed.
           </p>
         </div>
 
-        {/* Grid - inspired by 21st.dev Features 4 pattern */}
-        <div className="mx-auto mt-12 grid max-w-4xl grid-cols-1 divide-y divide-white/[0.06] border border-white/[0.06] rounded-2xl overflow-hidden sm:grid-cols-2 sm:divide-x lg:grid-cols-3 lg:[&>*:nth-child(n+4)]:border-t lg:[&>*:nth-child(n+4)]:border-white/[0.06]">
+        {/* Feature grid with border dividers */}
+        <div className="mx-auto mt-12 grid max-w-4xl grid-cols-1 overflow-hidden rounded-2xl border border-border bg-white shadow-warm-sm sm:grid-cols-2 lg:grid-cols-3">
           {features.map((feature, i) => {
             const Icon = feature.icon;
             return (
               <div
                 key={feature.title}
-                className="group relative space-y-3 p-8 transition-colors hover:bg-white/[0.02] sm:[&:nth-child(odd)]:border-r-0 lg:[&:nth-child(3n)]:border-r-0"
+                className={[
+                  'group relative p-8 transition-colors hover:bg-background',
+                  // Right borders (not on last column)
+                  i % 3 !== 2 ? 'lg:border-r lg:border-border' : '',
+                  i % 2 !== 1 ? 'sm:max-lg:border-r sm:max-lg:border-border' : '',
+                  // Bottom borders (not on last row)
+                  i < 3 ? 'lg:border-b lg:border-border' : '',
+                  i < 4 ? 'sm:max-lg:border-b sm:max-lg:border-border' : '',
+                  i < 5 ? 'max-sm:border-b max-sm:border-border' : '',
+                ].join(' ')}
               >
-                {/* Hover glow */}
-                <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity group-hover:opacity-100 bg-[radial-gradient(circle_at_50%_0%,hsla(239,84%,67%,0.06)_0%,transparent_60%)]" />
-
-                <div className="relative flex items-center gap-2.5">
-                  <Icon className="h-4 w-4 text-indigo-400" />
-                  <h3 className="text-sm font-medium text-white">{feature.title}</h3>
+                <div className="flex items-center gap-2.5">
+                  <Icon className="h-4 w-4 text-amber-600" />
+                  <h3 className="text-sm font-semibold text-foreground">{feature.title}</h3>
                 </div>
-                <p className="relative text-sm leading-relaxed text-[#7A7F94]">
+                <p className="mt-2.5 text-[13px] leading-relaxed text-muted-foreground">
                   {feature.description}
                 </p>
               </div>

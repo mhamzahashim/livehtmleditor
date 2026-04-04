@@ -689,19 +689,19 @@ const ComponentLibrary = () => {
   };
 
   return (
-    <div className="min-h-screen ambient-bg dot-grid">
+    <div className="min-h-screen dot-grid">
       {/* Header */}
-      <header className="glass border-b border-white/[0.06] sticky top-0 z-50">
-        <div className="max-w-[1600px] mx-auto px-6 py-3">
+      <header className="border-b border-border bg-white shadow-warm-sm sticky top-0 z-50">
+        <div className="max-w-[1400px] mx-auto px-6 py-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <Button variant="ghost" onClick={() => navigate('/')} className="toolbar-btn">
+              <Button variant="ghost" onClick={() => navigate('/')}>
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back to Editor
               </Button>
               <div>
-                <h1 className="text-2xl font-semibold text-white tracking-tight">Component Library</h1>
-                <p className="text-sm text-[#7A7F94] mt-0.5">100+ HTML, CSS & JavaScript components ready to use</p>
+                <h1 className="text-2xl font-bold text-foreground tracking-tight" style={{ letterSpacing: '-0.02em' }}>Component Library</h1>
+                <p className="text-sm text-muted-foreground mt-0.5">100+ HTML, CSS & JavaScript components ready to use</p>
               </div>
             </div>
             <Badge variant="secondary" className="font-mono">
@@ -711,16 +711,16 @@ const ComponentLibrary = () => {
         </div>
       </header>
 
-      <div className="relative z-10 max-w-[1600px] mx-auto px-6 py-8">
+      <div className="max-w-[1400px] mx-auto px-6 py-8">
         {/* Search and Filter */}
         <div className="mb-8 space-y-4">
           <div className="relative max-w-md">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-[#5C6178]" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <Input
               placeholder="Search components..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 bg-surface border-white/[0.08] text-white placeholder-[#5C6178]"
+              className="pl-10"
             />
           </div>
           
@@ -742,11 +742,11 @@ const ComponentLibrary = () => {
               <div className="p-6">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 bg-indigo-500/10 rounded-lg flex items-center justify-center text-indigo-400">
+                    <div className="w-8 h-8 bg-amber-50 rounded-lg flex items-center justify-center text-amber-600">
                       {component.icon}
                     </div>
                     <div>
-                      <h3 className="font-semibold text-white">{component.name}</h3>
+                      <h3 className="font-semibold text-foreground">{component.name}</h3>
                       <Badge variant="outline" className="text-xs capitalize mt-1">
                         {component.category}
                       </Badge>
@@ -767,8 +767,8 @@ const ComponentLibrary = () => {
                 </div>
                 
                 {/* Code Preview */}
-                <div className="bg-surface-0 rounded-lg p-4 mb-4 max-h-32 overflow-hidden border border-white/[0.04]">
-                  <pre className="text-xs text-[#5C6178] font-mono">
+                <div className="bg-muted rounded-lg p-4 mb-4 max-h-32 overflow-hidden">
+                  <pre className="text-xs text-muted-foreground font-mono">
                     {component.code.length > 150 
                       ? component.code.substring(0, 150) + '...'
                       : component.code
@@ -800,44 +800,33 @@ const ComponentLibrary = () => {
 
         {filteredComponents.length === 0 && (
           <div className="text-center py-12">
-            <div className="w-16 h-16 bg-surface-2 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Search className="w-8 h-8 text-[#5C6178]" />
+            <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
+              <Search className="w-8 h-8 text-muted-foreground" />
             </div>
-            <h3 className="text-lg font-semibold text-white mb-2">No components found</h3>
-            <p className="text-[#7A7F94]">Try adjusting your search terms or category filter.</p>
+            <h3 className="text-lg font-semibold text-foreground mb-2">No components found</h3>
+            <p className="text-muted-foreground">Try adjusting your search terms or category filter.</p>
           </div>
         )}
       </div>
 
       {/* Footer */}
-      <footer className="relative z-10 border-t border-white/[0.04] bg-[hsl(225,22%,5%)]/60 mt-auto">
-        <div className="max-w-[1600px] mx-auto px-6 py-6">
+      <footer className="border-t border-border bg-white mt-auto">
+        <div className="max-w-[1400px] mx-auto px-6 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <div className="flex items-center space-x-6 text-sm text-[#3A3F52]">
+            <div className="flex items-center space-x-6 text-sm text-muted-foreground">
               <span className="flex items-center">
-                Made with <Heart className="w-4 h-4 mx-1 text-rose-500/60" fill="currentColor" /> for developers
+                Made with <Heart className="w-4 h-4 mx-1 text-red-400" fill="currentColor" /> for developers
               </span>
               <span>&middot;</span>
               <span>100+ HTML, CSS & JavaScript components</span>
             </div>
             <div className="flex items-center space-x-4">
-              <div className="text-xs text-[#2E3345]">
-                <span>Copy components &middot; Paste in your HTML editor</span>
-              </div>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="text-[#3A3F52] hover:text-[#7A7F94]"
-                onClick={() => window.open('https://github.com/mhamzahashim', '_blank')}
-              >
-                <Github className="w-4 h-4" />
-              </Button>
+              <div className="text-xs text-muted-foreground">Copy components &middot; Paste in editor</div>
+              <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground" onClick={() => window.open('https://github.com/mhamzahashim', '_blank')}><Github className="w-4 h-4" /></Button>
             </div>
           </div>
-          <div className="mt-4 pt-4 border-t border-white/[0.04]">
-            <p className="text-xs text-[#2E3345] text-center">
-              &copy; {new Date().getFullYear()} LiveHTML Editor. Built with React, TypeScript & Tailwind CSS.
-            </p>
+          <div className="mt-4 pt-4 border-t border-border">
+            <p className="text-xs text-muted-foreground text-center">&copy; {new Date().getFullYear()} LiveHTML Editor.</p>
           </div>
         </div>
       </footer>

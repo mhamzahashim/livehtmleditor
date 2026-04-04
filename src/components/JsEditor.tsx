@@ -4,132 +4,39 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Zap } from 'lucide-react';
 
-interface JsEditorProps {
-  value: string;
-  onChange: (value: string) => void;
-  darkMode?: boolean;
-}
+interface JsEditorProps { value: string; onChange: (value: string) => void; darkMode?: boolean; }
 
 const JsEditor = ({ value, onChange }: JsEditorProps) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const [selectedText, setSelectedText] = useState('');
   const [lineNumbers, setLineNumbers] = useState<string[]>([]);
-
-  useEffect(() => {
-    const lines = value.split('\n');
-    setLineNumbers(lines.map((_, index) => (index + 1).toString()));
-  }, [value]);
-
-  const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    onChange(e.target.value);
-  };
-
-  const handleSelection = () => {
-    if (textareaRef.current) {
-      const start = textareaRef.current.selectionStart;
-      const end = textareaRef.current.selectionEnd;
-      setSelectedText(value.substring(start, end));
-    }
-  };
+  useEffect(() => { setLineNumbers(value.split('\n').map((_, i) => (i + 1).toString())); }, [value]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    const textarea = e.target as HTMLTextAreaElement;
-
-    if (e.key === 'Enter') {
-      const start = textarea.selectionStart;
-      const lineStart = value.lastIndexOf('\n', start - 1) + 1;
-      const lineText = value.substring(lineStart, start);
-      const indent = lineText.match(/^\s*/)?.[0] || '';
-      let extraIndent = '';
-      if (lineText.trim().endsWith('{')) extraIndent = '  ';
-      e.preventDefault();
-      const newValue = value.substring(0, start) + '\n' + indent + extraIndent + value.substring(textarea.selectionEnd);
-      onChange(newValue);
-      setTimeout(() => { if (textarea) { const p = start + 1 + indent.length + extraIndent.length; textarea.setSelectionRange(p, p); } }, 0);
-    }
-
-    const autoCloseChars: { [key: string]: string } = { '(': ')', '[': ']', '{': '}', '"': '"', "'": "'" };
-    if (autoCloseChars[e.key]) {
-      const start = textarea.selectionStart;
-      const end = textarea.selectionEnd;
-      e.preventDefault();
-      let closing = autoCloseChars[e.key];
-      if (e.key === '{') closing = '\n}';
-      const newValue = value.substring(0, start) + e.key + (end > start ? value.substring(start, end) : '') + closing + value.substring(end);
-      onChange(newValue);
-      setTimeout(() => { if (textarea) { const p = e.key === '{' ? start + 1 : start + 1; textarea.setSelectionRange(p, p); } }, 0);
-    }
-
-    if (e.key === 'Tab') {
-      e.preventDefault();
-      const start = textarea.selectionStart;
-      const end = textarea.selectionEnd;
-      const newValue = value.substring(0, start) + '  ' + value.substring(end);
-      onChange(newValue);
-      setTimeout(() => { if (textarea) textarea.setSelectionRange(start + 2, start + 2); }, 0);
-    }
+    const ta = e.target as HTMLTextAreaElement;
+    if (e.key === 'Enter') { const s = ta.selectionStart; const ls = value.lastIndexOf('\n', s - 1) + 1; const lt = value.substring(ls, s); const ind = lt.match(/^\s*/)?.[0] || ''; let ex = ''; if (lt.trim().endsWith('{')) ex = '  '; e.preventDefault(); onChange(value.substring(0, s) + '\n' + ind + ex + value.substring(ta.selectionEnd)); setTimeout(() => { if (ta) { const p = s + 1 + ind.length + ex.length; ta.setSelectionRange(p, p); } }, 0); }
+    const auto: Record<string, string> = { '(': ')', '[': ']', '{': '}', '"': '"', "'": "'" };
+    if (auto[e.key]) { const s = ta.selectionStart; const end = ta.selectionEnd; e.preventDefault(); let cl = auto[e.key]; if (e.key === '{') cl = '\n}'; onChange(value.substring(0, s) + e.key + (end > s ? value.substring(s, end) : '') + cl + value.substring(end)); setTimeout(() => { if (ta) ta.setSelectionRange(s + 1, s + 1); }, 0); }
+    if (e.key === 'Tab') { e.preventDefault(); const s = ta.selectionStart; onChange(value.substring(0, s) + '  ' + value.substring(ta.selectionEnd)); setTimeout(() => { if (ta) ta.setSelectionRange(s + 2, s + 2); }, 0); }
   };
 
-  const insertJsSnippet = (snippet: string) => {
-    if (textareaRef.current) {
-      const textarea = textareaRef.current;
-      const start = textarea.selectionStart;
-      const end = textarea.selectionEnd;
-      const newValue = value.substring(0, start) + snippet + value.substring(end);
-      onChange(newValue);
-      setTimeout(() => { if (textarea) { textarea.focus(); textarea.setSelectionRange(start + snippet.length, start + snippet.length); } }, 0);
-    }
-  };
-
-  const jsSnippets = [
+  const insertSnippet = (code: string) => { if (textareaRef.current) { const ta = textareaRef.current; const s = ta.selectionStart; onChange(value.substring(0, s) + code + value.substring(ta.selectionEnd)); setTimeout(() => { if (ta) { ta.focus(); ta.setSelectionRange(s + code.length, s + code.length); } }, 0); } };
+  const snippets = [
     { name: 'Event Listener', code: `document.addEventListener('DOMContentLoaded', function() {\n  // Your code here\n});` },
-    { name: 'Async Fetch', code: `async function fetchData() {\n  try {\n    const response = await fetch('your-url');\n    const data = await response.json();\n    return data;\n  } catch (error) {\n    console.error('Error:', error);\n  }\n}` },
+    { name: 'Async Fetch', code: `async function fetchData() {\n  try {\n    const response = await fetch('your-url');\n    return await response.json();\n  } catch (error) {\n    console.error('Error:', error);\n  }\n}` },
     { name: 'forEach', code: `items.forEach((item, index) => {\n  console.log(item, index);\n});` },
-    { name: 'querySelector', code: `const element = document.querySelector('.your-selector');\nif (element) {\n  element.addEventListener('click', function() {\n    // Handle click\n  });\n}` }
+    { name: 'querySelector', code: `const el = document.querySelector('.selector');\nif (el) {\n  el.addEventListener('click', () => {\n    // Handle click\n  });\n}` }
   ];
 
   return (
     <div className="h-full flex flex-col">
-      {/* JS Toolbar */}
-      <div className="flex flex-wrap gap-1.5 p-2.5 bg-surface-2/60 border-b border-white/[0.04]">
-        {jsSnippets.map((snippet, index) => (
-          <Button
-            key={index}
-            onClick={() => insertJsSnippet(snippet.code)}
-            variant="ghost"
-            size="sm"
-            className="toolbar-btn h-7 px-2.5 text-xs gap-1.5"
-          >
-            <Zap className="w-3.5 h-3.5" />
-            {snippet.name}
-          </Button>
-        ))}
+      <div className="flex flex-wrap gap-1.5 p-2.5 bg-background border-b border-border">
+        {snippets.map((s, i) => <Button key={i} onClick={() => insertSnippet(s.code)} variant="ghost" size="sm" className="toolbar-btn h-7 px-2.5 text-xs gap-1.5"><Zap className="w-3.5 h-3.5" />{s.name}</Button>)}
       </div>
-
       <div className="flex-1 flex">
-        {/* Line Numbers */}
-        <div className="w-12 bg-[hsl(var(--editor-line-numbers-bg))] text-[hsl(var(--editor-line-numbers-text))] border-r border-white/[0.04] font-mono text-[12px] py-3 px-2 select-none">
-          {lineNumbers.map((num, index) => (
-            <div key={index} className="text-right" style={{ lineHeight: '1.65' }}>{num}</div>
-          ))}
+        <div className="w-12 bg-[hsl(var(--editor-line-numbers-bg))] text-[hsl(var(--editor-line-numbers-text))] border-r border-white/[0.06] font-mono text-[12px] py-3 px-2 select-none">
+          {lineNumbers.map((n, i) => <div key={i} className="text-right" style={{ lineHeight: '1.65' }}>{n}</div>)}
         </div>
-
-        {/* JS Editor */}
-        <div className="flex-1 relative">
-          <Textarea
-            ref={textareaRef}
-            value={value}
-            onChange={handleTextareaChange}
-            onSelect={handleSelection}
-            onMouseUp={handleSelection}
-            onKeyUp={handleSelection}
-            onKeyDown={handleKeyDown}
-            className="editor-area h-full resize-none border-0 rounded-none p-3 focus-visible:ring-0"
-            placeholder="// Add your JavaScript code here"
-            style={{ minHeight: '100%', tabSize: 2 }}
-            spellCheck={false}
-          />
-        </div>
+        <div className="flex-1"><Textarea ref={textareaRef} value={value} onChange={e => onChange(e.target.value)} onKeyDown={handleKeyDown} className="editor-area h-full resize-none border-0 rounded-none p-3 focus-visible:ring-0" placeholder="// JavaScript" style={{ minHeight: '100%', tabSize: 2 }} spellCheck={false} /></div>
       </div>
     </div>
   );

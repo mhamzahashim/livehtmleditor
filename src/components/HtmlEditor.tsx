@@ -59,7 +59,6 @@ console.log('Welcome to HTML Editor!');
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM loaded and ready!');
 
-    // Add click handlers or other interactive features
     const buttons = document.querySelectorAll('button');
     buttons.forEach(button => {
         button.addEventListener('click', function() {
@@ -75,47 +74,15 @@ document.addEventListener('DOMContentLoaded', function() {
   const [showDevTools, setShowDevTools] = useState(false);
   const [fullScreenPreview, setFullScreenPreview] = useState(false);
 
-  const handleCodeChange = useCallback((newCode: string) => {
-    setHtmlCode(newCode);
-  }, []);
-
-  const handleCssChange = useCallback((newCss: string) => {
-    setCssCode(newCss);
-  }, []);
-
-  const handleJsChange = useCallback((newJs: string) => {
-    setJsCode(newJs);
-  }, []);
-
-  const refreshPreview = () => {
-    setPreviewKey(prev => prev + 1);
-  };
+  const handleCodeChange = useCallback((newCode: string) => setHtmlCode(newCode), []);
+  const handleCssChange = useCallback((newCss: string) => setCssCode(newCss), []);
+  const handleJsChange = useCallback((newJs: string) => setJsCode(newJs), []);
+  const refreshPreview = () => setPreviewKey(prev => prev + 1);
 
   const resetCode = () => {
-    const defaultHtml = `<h1>Welcome to HTML Editor</h1>
-<p>Start building your HTML content here!</p>`;
-
-    const defaultCss = `/* Add your custom CSS here */
-body {
-    font-family: 'Georgia', serif;
-    line-height: 1.6;
-    margin: 40px;
-}
-
-h1 {
-    color: #4a5568;
-}
-
-p {
-    color: #2d3748;
-}`;
-
-    const defaultJs = `// Add your JavaScript here
-console.log('Welcome to HTML Editor!');`;
-
-    setHtmlCode(defaultHtml);
-    setCssCode(defaultCss);
-    setJsCode(defaultJs);
+    setHtmlCode(`<h1>Welcome to HTML Editor</h1>\n<p>Start building your HTML content here!</p>`);
+    setCssCode(`/* Add your custom CSS here */\nbody {\n    font-family: 'Georgia', serif;\n    line-height: 1.6;\n    margin: 40px;\n}\n\nh1 {\n    color: #4a5568;\n}\n\np {\n    color: #2d3748;\n}`);
+    setJsCode(`// Add your JavaScript here\nconsole.log('Welcome to HTML Editor!');`);
     refreshPreview();
   };
 
@@ -123,9 +90,7 @@ console.log('Welcome to HTML Editor!');`;
     const blob = new Blob([htmlCode], { type: 'text/html' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href = url;
-    a.download = 'project.html';
-    a.click();
+    a.href = url; a.download = 'project.html'; a.click();
     URL.revokeObjectURL(url);
   };
 
@@ -138,7 +103,6 @@ console.log('Welcome to HTML Editor!');`;
         setHtmlCode(content);
         const cssMatch = content.match(/<style id="custom-styles">([\s\S]*?)<\/style>/);
         const jsMatch = content.match(/<script id="custom-scripts">([\s\S]*?)<\/script>/);
-
         if (cssMatch) setCssCode(cssMatch[1].trim());
         if (jsMatch) setJsCode(jsMatch[1].trim());
       };
@@ -147,10 +111,7 @@ console.log('Welcome to HTML Editor!');`;
   };
 
   const handleZoom = (direction: 'in' | 'out') => {
-    setZoomLevel(prev => {
-      if (direction === 'in') return Math.min(200, prev + 25);
-      return Math.max(25, prev - 25);
-    });
+    setZoomLevel(prev => direction === 'in' ? Math.min(200, prev + 25) : Math.max(25, prev - 25));
   };
 
   const getPreviewWidth = () => {
@@ -162,41 +123,23 @@ console.log('Welcome to HTML Editor!');`;
   };
 
   return (
-    <div className="relative z-10 min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col">
       <EditorHeader
-        previewMode={previewMode}
-        zoomLevel={zoomLevel}
-        fullScreenPreview={fullScreenPreview}
-        showDevTools={showDevTools}
-        onPreviewModeChange={setPreviewMode}
-        onZoom={handleZoom}
+        previewMode={previewMode} zoomLevel={zoomLevel} fullScreenPreview={fullScreenPreview}
+        showDevTools={showDevTools} onPreviewModeChange={setPreviewMode} onZoom={handleZoom}
         onFullScreenToggle={() => setFullScreenPreview(!fullScreenPreview)}
         onDevToolsToggle={() => setShowDevTools(!showDevTools)}
-        onImport={handleImport}
-        onExport={handleExport}
-        onRefresh={refreshPreview}
-        onReset={resetCode}
+        onImport={handleImport} onExport={handleExport} onRefresh={refreshPreview} onReset={resetCode}
       />
-
-      <main className="flex-1 flex flex-col lg:flex-row gap-3 p-3 lg:p-4">
+      <main className="flex-1 flex flex-col lg:flex-row gap-4 p-3 lg:p-5">
         <EditorLayout
-          fullScreenPreview={fullScreenPreview}
-          activeEditor={activeEditor}
-          previewKey={previewKey}
-          previewMode={previewMode}
-          zoomLevel={zoomLevel}
-          showDevTools={showDevTools}
-          htmlCode={htmlCode}
-          cssCode={cssCode}
-          jsCode={jsCode}
-          onActiveEditorChange={setActiveEditor}
-          onCodeChange={handleCodeChange}
-          onCssChange={handleCssChange}
-          onJsChange={handleJsChange}
-          getPreviewWidth={getPreviewWidth}
+          fullScreenPreview={fullScreenPreview} activeEditor={activeEditor} previewKey={previewKey}
+          previewMode={previewMode} zoomLevel={zoomLevel} showDevTools={showDevTools}
+          htmlCode={htmlCode} cssCode={cssCode} jsCode={jsCode}
+          onActiveEditorChange={setActiveEditor} onCodeChange={handleCodeChange}
+          onCssChange={handleCssChange} onJsChange={handleJsChange} getPreviewWidth={getPreviewWidth}
         />
       </main>
-
       <EditorFooter />
     </div>
   );

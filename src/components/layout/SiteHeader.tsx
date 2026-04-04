@@ -1,57 +1,57 @@
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Code2, Menu, X, Sparkles } from "lucide-react";
+import { Code2, Menu, X, ArrowRight } from "lucide-react";
 
 const navLinkClass = ({ isActive }: { isActive: boolean }) =>
   [
-    "relative py-1 text-sm transition-colors duration-200",
+    "text-[13px] font-medium transition-colors duration-200 px-3 py-1.5 rounded-lg",
     isActive
-      ? "text-white font-medium"
-      : "text-[#7A7F94] hover:text-white"
+      ? "text-white bg-white/[0.1]"
+      : "text-stone-400 hover:text-white hover:bg-white/[0.06]"
   ].join(" ");
 
 const SiteHeader = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 glass border-b border-white/[0.06]">
-      <div className="mx-auto max-w-[1600px] px-4 sm:px-6">
-        <div className="flex h-14 items-center justify-between">
+    <header className="sticky top-0 z-50 px-4 py-3">
+      <nav className="nav-glass mx-auto max-w-5xl rounded-2xl px-4 py-2.5 shadow-warm-lg">
+        <div className="flex items-center justify-between">
           {/* Brand */}
           <Link to="/" className="flex items-center gap-2.5 group">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-cyan-400 flex items-center justify-center shadow-lg shadow-indigo-500/20 group-hover:shadow-indigo-500/40 transition-shadow duration-300">
-              <Code2 className="h-4 w-4 text-white" strokeWidth={2.5} />
+            <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center shadow-md">
+              <Code2 className="h-3.5 w-3.5 text-white" strokeWidth={2.5} />
             </div>
-            <span className="text-sm font-bold tracking-tight text-white">
-              LiveHTML<span className="text-indigo-400 font-normal">.editor</span>
+            <span className="text-[13px] font-bold tracking-tight text-white">
+              LiveHTML<span className="text-amber-400 font-normal">.editor</span>
             </span>
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-7" aria-label="Primary">
+          <div className="hidden md:flex items-center gap-1">
             <NavLink to="/" end className={navLinkClass}>Editor</NavLink>
             <NavLink to="/components" className={navLinkClass}>Components</NavLink>
             <NavLink to="/notepad" className={navLinkClass}>Notepad</NavLink>
             <NavLink to="/markdown" className={navLinkClass}>Markdown</NavLink>
             <NavLink to="/pdf-converter" className={navLinkClass}>PDF Tools</NavLink>
-          </nav>
+          </div>
 
           {/* Actions */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             <Button
               asChild
               size="sm"
-              className="bg-indigo-600 hover:bg-indigo-500 text-white border-0 shadow-lg shadow-indigo-600/20 hover:shadow-indigo-500/30 transition-all duration-200 text-xs font-semibold h-8 px-3.5"
+              className="hidden sm:inline-flex h-8 rounded-lg bg-amber-600 hover:bg-amber-500 text-white border-0 text-xs font-semibold px-4 transition-all cta-glow"
             >
               <Link to="/notepad">
-                <Sparkles className="h-3.5 w-3.5 mr-1.5" />
                 Open Notepad
+                <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
               </Link>
             </Button>
 
             <button
-              className="md:hidden inline-flex items-center justify-center rounded-lg border border-white/[0.08] w-9 h-9 text-[#7A7F94] hover:bg-white/[0.05] hover:text-white transition-colors"
+              className="md:hidden inline-flex items-center justify-center rounded-lg w-8 h-8 text-stone-400 hover:bg-white/[0.06] hover:text-white transition-colors"
               onClick={() => setOpen((v) => !v)}
               aria-expanded={open}
               aria-label="Toggle menu"
@@ -60,20 +60,20 @@ const SiteHeader = () => {
             </button>
           </div>
         </div>
-      </div>
 
-      {/* Mobile Nav */}
-      {open && (
-        <div className="md:hidden border-t border-white/[0.06] bg-[hsl(225,22%,7%)]/95 backdrop-blur-xl">
-          <nav className="mx-auto max-w-[1600px] px-4 sm:px-6 py-3 grid gap-2" aria-label="Mobile">
-            <NavLink to="/" end className={navLinkClass} onClick={() => setOpen(false)}>Editor</NavLink>
-            <NavLink to="/components" className={navLinkClass} onClick={() => setOpen(false)}>Components</NavLink>
-            <NavLink to="/notepad" className={navLinkClass} onClick={() => setOpen(false)}>Notepad</NavLink>
-            <NavLink to="/markdown" className={navLinkClass} onClick={() => setOpen(false)}>Markdown</NavLink>
-            <NavLink to="/pdf-converter" className={navLinkClass} onClick={() => setOpen(false)}>PDF Tools</NavLink>
-          </nav>
-        </div>
-      )}
+        {/* Mobile Nav */}
+        {open && (
+          <div className="md:hidden mt-2 pt-2 border-t border-white/[0.08]">
+            <div className="grid gap-1 py-2">
+              <NavLink to="/" end className={navLinkClass} onClick={() => setOpen(false)}>Editor</NavLink>
+              <NavLink to="/components" className={navLinkClass} onClick={() => setOpen(false)}>Components</NavLink>
+              <NavLink to="/notepad" className={navLinkClass} onClick={() => setOpen(false)}>Notepad</NavLink>
+              <NavLink to="/markdown" className={navLinkClass} onClick={() => setOpen(false)}>Markdown</NavLink>
+              <NavLink to="/pdf-converter" className={navLinkClass} onClick={() => setOpen(false)}>PDF Tools</NavLink>
+            </div>
+          </div>
+        )}
+      </nav>
     </header>
   );
 };
