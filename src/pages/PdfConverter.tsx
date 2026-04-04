@@ -38,13 +38,13 @@ const PdfConverter = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800">
-      <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen ambient-bg dot-grid">
+      <div className="relative z-10 container mx-auto px-4 py-8">
         <div className="mb-8 text-center">
-          <h1 className="text-4xl font-bold tracking-tight text-foreground mb-4">
+          <h1 className="text-4xl font-bold tracking-tight text-white mb-4">
             HTML to PDF Converter
           </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-lg text-[#7A7F94] max-w-2xl mx-auto">
             Convert your HTML content to high-quality PDF documents with customizable settings and live preview.
           </p>
         </div>
@@ -70,8 +70,8 @@ const PdfConverter = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-8 text-center">
-                  <p className="text-muted-foreground">Drag & drop HTML files here or click to browse</p>
+                <div className="border-2 border-dashed border-white/[0.08] rounded-lg p-8 text-center">
+                  <p className="text-[#7A7F94]">Drag & drop HTML files here or click to browse</p>
                   <input
                     type="file"
                     accept=".html,.htm"
@@ -102,21 +102,21 @@ const PdfConverter = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground">URL conversion feature coming soon...</p>
+                <p className="text-[#7A7F94]">URL conversion feature coming soon...</p>
               </CardContent>
             </Card>
           </TabsContent>
 
           <TabsContent value="editor" className="space-y-6">
-            <ResizablePanelGroup direction="horizontal" className="min-h-[600px] border rounded-lg">
+            <ResizablePanelGroup direction="horizontal" className="min-h-[600px] rounded-xl border border-white/[0.06]">
               <ResizablePanel defaultSize={30} minSize={25}>
                 <div className="h-full p-4">
                   <PdfSettings settings={settings} onSettingsChange={setSettings} />
                 </div>
               </ResizablePanel>
-              
+
               <ResizableHandle withHandle />
-              
+
               <ResizablePanel defaultSize={70} minSize={50}>
                 <div className="h-full">
                   <PdfConverterEditor

@@ -64,14 +64,14 @@ const NoteEditor = ({ value, onChange }: NoteEditorProps) => {
 
   return (
     <div>
-      <section aria-label="Editor toolbar" className="rounded-md border border-slate-200 bg-slate-50">
+      <section aria-label="Editor toolbar" className="rounded-xl border border-white/[0.06] bg-surface overflow-hidden">
         <EditorToolbar onInsertCode={onInsertCode} selectedText={selectedText} onCopyContent={onCopyContent} />
-        <div className="flex flex-wrap gap-2 p-3 border-t border-slate-200 bg-white">
-          <button onClick={() => insertTemplate('daily')} className="px-2 py-1 text-xs rounded border border-slate-200 bg-slate-50 hover:bg-slate-100">Insert Daily</button>
-          <button onClick={() => insertTemplate('weekly')} className="px-2 py-1 text-xs rounded border border-slate-200 bg-slate-50 hover:bg-slate-100">Insert Weekly</button>
-          <button onClick={() => insertTemplate('monthly')} className="px-2 py-1 text-xs rounded border border-slate-200 bg-slate-50 hover:bg-slate-100">Insert Monthly</button>
-          <button onClick={() => insertTemplate('meeting')} className="px-2 py-1 text-xs rounded border border-slate-200 bg-slate-50 hover:bg-slate-100">Insert Meeting</button>
-          <button onClick={() => onInsertCode(`<ul>\n  <li><input type="checkbox" /> Task 1</li>\n  <li><input type="checkbox" /> Task 2</li>\n  <li><input type="checkbox" /> Task 3</li>\n</ul>`)} className="px-2 py-1 text-xs rounded border border-slate-200 bg-slate-50 hover:bg-slate-100">Insert Checklist</button>
+        <div className="flex flex-wrap gap-1.5 p-2.5 border-t border-white/[0.04] bg-surface-2/60">
+          <button onClick={() => insertTemplate('daily')} className="toolbar-btn px-2 py-1 text-xs rounded-md border border-white/[0.06]">Insert Daily</button>
+          <button onClick={() => insertTemplate('weekly')} className="toolbar-btn px-2 py-1 text-xs rounded-md border border-white/[0.06]">Insert Weekly</button>
+          <button onClick={() => insertTemplate('monthly')} className="toolbar-btn px-2 py-1 text-xs rounded-md border border-white/[0.06]">Insert Monthly</button>
+          <button onClick={() => insertTemplate('meeting')} className="toolbar-btn px-2 py-1 text-xs rounded-md border border-white/[0.06]">Insert Meeting</button>
+          <button onClick={() => onInsertCode(`<ul>\n  <li><input type="checkbox" /> Task 1</li>\n  <li><input type="checkbox" /> Task 2</li>\n  <li><input type="checkbox" /> Task 3</li>\n</ul>`)} className="toolbar-btn px-2 py-1 text-xs rounded-md border border-white/[0.06]">Insert Checklist</button>
           <div className="ml-auto"><WordCountDisplay htmlContent={wcHtml} /></div>
         </div>
       </section>
@@ -86,13 +86,13 @@ const NoteEditor = ({ value, onChange }: NoteEditorProps) => {
           onInput={handleInput}
           onKeyUp={updateSelectedFromWindow}
           onMouseUp={updateSelectedFromWindow}
-          style={{ 
-            direction: 'ltr', 
+          style={{
+            direction: 'ltr',
             unicodeBidi: 'normal',
             textAlign: 'left',
             writingMode: 'horizontal-tb'
           }}
-          className="min-h-[60vh] rounded-md border border-slate-200 bg-white p-4 focus:outline-none focus:ring-2 focus:ring-ring"
+          className="min-h-[60vh] rounded-xl border border-white/[0.06] bg-white p-4 text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500/30"
         />
       </section>
     </div>

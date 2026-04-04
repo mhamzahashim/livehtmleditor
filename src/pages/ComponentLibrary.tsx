@@ -689,19 +689,19 @@ const ComponentLibrary = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+    <div className="min-h-screen ambient-bg dot-grid">
       {/* Header */}
-      <header className="bg-white/80 backdrop-blur-md border-b border-slate-200/60 shadow-sm sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-6 py-4">
+      <header className="glass border-b border-white/[0.06] sticky top-0 z-50">
+        <div className="max-w-[1600px] mx-auto px-6 py-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <Button variant="ghost" onClick={() => navigate('/')}>
+              <Button variant="ghost" onClick={() => navigate('/')} className="toolbar-btn">
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back to Editor
               </Button>
               <div>
-                <h1 className="text-2xl font-semibold text-slate-800 tracking-tight">Component Library</h1>
-                <p className="text-sm text-slate-500 mt-0.5">100+ HTML, CSS & JavaScript components ready to use</p>
+                <h1 className="text-2xl font-semibold text-white tracking-tight">Component Library</h1>
+                <p className="text-sm text-[#7A7F94] mt-0.5">100+ HTML, CSS & JavaScript components ready to use</p>
               </div>
             </div>
             <Badge variant="secondary" className="font-mono">
@@ -711,16 +711,16 @@ const ComponentLibrary = () => {
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-6 py-8">
+      <div className="relative z-10 max-w-[1600px] mx-auto px-6 py-8">
         {/* Search and Filter */}
         <div className="mb-8 space-y-4">
           <div className="relative max-w-md">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-[#5C6178]" />
             <Input
               placeholder="Search components..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10"
+              className="pl-10 bg-surface border-white/[0.08] text-white placeholder-[#5C6178]"
             />
           </div>
           
@@ -742,11 +742,11 @@ const ComponentLibrary = () => {
               <div className="p-6">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600">
+                    <div className="w-8 h-8 bg-indigo-500/10 rounded-lg flex items-center justify-center text-indigo-400">
                       {component.icon}
                     </div>
                     <div>
-                      <h3 className="font-semibold text-slate-800">{component.name}</h3>
+                      <h3 className="font-semibold text-white">{component.name}</h3>
                       <Badge variant="outline" className="text-xs capitalize mt-1">
                         {component.category}
                       </Badge>
@@ -767,8 +767,8 @@ const ComponentLibrary = () => {
                 </div>
                 
                 {/* Code Preview */}
-                <div className="bg-slate-50 rounded-lg p-4 mb-4 max-h-32 overflow-hidden">
-                  <pre className="text-xs text-slate-600 font-mono">
+                <div className="bg-surface-0 rounded-lg p-4 mb-4 max-h-32 overflow-hidden border border-white/[0.04]">
+                  <pre className="text-xs text-[#5C6178] font-mono">
                     {component.code.length > 150 
                       ? component.code.substring(0, 150) + '...'
                       : component.code
@@ -800,43 +800,43 @@ const ComponentLibrary = () => {
 
         {filteredComponents.length === 0 && (
           <div className="text-center py-12">
-            <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-content-center mx-auto mb-4">
-              <Search className="w-8 h-8 text-slate-400" />
+            <div className="w-16 h-16 bg-surface-2 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Search className="w-8 h-8 text-[#5C6178]" />
             </div>
-            <h3 className="text-lg font-semibold text-slate-800 mb-2">No components found</h3>
-            <p className="text-slate-500">Try adjusting your search terms or category filter.</p>
+            <h3 className="text-lg font-semibold text-white mb-2">No components found</h3>
+            <p className="text-[#7A7F94]">Try adjusting your search terms or category filter.</p>
           </div>
         )}
       </div>
 
       {/* Footer */}
-      <footer className="bg-white/80 backdrop-blur-md border-t border-slate-200/60 mt-auto">
-        <div className="max-w-7xl mx-auto px-6 py-6">
+      <footer className="relative z-10 border-t border-white/[0.04] bg-[hsl(225,22%,5%)]/60 mt-auto">
+        <div className="max-w-[1600px] mx-auto px-6 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <div className="flex items-center space-x-6 text-sm text-slate-600">
+            <div className="flex items-center space-x-6 text-sm text-[#3A3F52]">
               <span className="flex items-center">
-                Made with <Heart className="w-4 h-4 mx-1 text-red-400" fill="currentColor" /> for developers
+                Made with <Heart className="w-4 h-4 mx-1 text-rose-500/60" fill="currentColor" /> for developers
               </span>
-              <span>•</span>
+              <span>&middot;</span>
               <span>100+ HTML, CSS & JavaScript components</span>
             </div>
             <div className="flex items-center space-x-4">
-              <div className="text-xs text-slate-500">
-                <span>Copy components • Paste in your HTML editor</span>
+              <div className="text-xs text-[#2E3345]">
+                <span>Copy components &middot; Paste in your HTML editor</span>
               </div>
               <Button
                 variant="ghost"
                 size="sm"
-                className="text-slate-500 hover:text-slate-700"
-                onClick={() => window.open('https://github.com', '_blank')}
+                className="text-[#3A3F52] hover:text-[#7A7F94]"
+                onClick={() => window.open('https://github.com/mhamzahashim', '_blank')}
               >
                 <Github className="w-4 h-4" />
               </Button>
             </div>
           </div>
-          <div className="mt-4 pt-4 border-t border-slate-200/60">
-            <p className="text-xs text-slate-500 text-center">
-              © 2024 HTML Editor. Built with React, TypeScript, and Tailwind CSS.
+          <div className="mt-4 pt-4 border-t border-white/[0.04]">
+            <p className="text-xs text-[#2E3345] text-center">
+              &copy; {new Date().getFullYear()} LiveHTML Editor. Built with React, TypeScript & Tailwind CSS.
             </p>
           </div>
         </div>

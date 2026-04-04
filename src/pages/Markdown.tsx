@@ -30,7 +30,6 @@ const MarkdownPage = () => {
       "Free Markdown editor with HTML to Markdown converter. Paste HTML or text and get clean Markdown with live preview."
     );
 
-    // Structured data (SoftwareApplication)
     const ldJsonId = "ld-json-markdown-editor";
     let ld = document.getElementById(ldJsonId);
     if (ld) ld.remove();
@@ -51,17 +50,19 @@ const MarkdownPage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-indigo-50">
-      <section className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-semibold tracking-tight">Markdown Editor and HTML to Markdown Converter</h1>
-        <p className="mt-2 text-muted-foreground max-w-2xl">
-          Paste HTML or plain text, convert it to clean Markdown, and preview the
-          result instantly.
-        </p>
-      </section>
-      <section className="container mx-auto px-4 pb-12">
-        <MarkdownEditor />
-      </section>
+    <div className="min-h-screen ambient-bg dot-grid">
+      <div className="relative z-10">
+        <section className="container mx-auto px-4 py-8">
+          <h1 className="text-3xl font-semibold tracking-tight text-white">Markdown Editor and HTML to Markdown Converter</h1>
+          <p className="mt-2 text-[#7A7F94] max-w-2xl">
+            Paste HTML or plain text, convert it to clean Markdown, and preview the
+            result instantly.
+          </p>
+        </section>
+        <section className="container mx-auto px-4 pb-12">
+          <MarkdownEditor />
+        </section>
+      </div>
     </div>
   );
 };
