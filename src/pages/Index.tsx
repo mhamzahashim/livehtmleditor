@@ -1,6 +1,7 @@
 
 import Hero from '@/components/landing/Hero';
 import HtmlEditor from '@/components/HtmlEditor';
+import Features from '@/components/landing/Features';
 import TrustBar from '@/components/landing/TrustBar';
 import UseCases from '@/components/landing/UseCases';
 import Comparison from '@/components/landing/Comparison';
@@ -17,6 +18,8 @@ const Index = () => {
         <HtmlEditor />
       </div>
 
+      <Divider />
+      <Features />
       <Divider />
       <TrustBar />
       <Divider />

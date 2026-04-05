@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Plus, Minus } from 'lucide-react';
 
 const faqs = [
   {
@@ -48,25 +48,41 @@ const faqs = [
   },
 ];
 
-const FaqItem = ({ q, a }: { q: string; a: string }) => {
+const FaqItem = ({ q, a, index }: { q: string; a: string; index: number }) => {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="border-b border-border last:border-b-0">
+    <div className={`${index < faqs.length - 1 ? 'border-b border-border/60' : ''}`}>
       <button
         onClick={() => setOpen(!open)}
-        className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left transition-colors hover:bg-background"
+        className="flex w-full items-center justify-between gap-6 px-7 py-5 text-left transition-colors hover:bg-amber-50/30"
       >
-        <span className="text-sm font-semibold text-foreground">{q}</span>
-        <ChevronDown
-          className={`h-4 w-4 shrink-0 text-muted-foreground transition-transform ${open ? 'rotate-180' : ''}`}
-        />
-      </button>
-      {open && (
-        <div className="px-6 pb-5 pt-0">
-          <p className="text-[13px] leading-relaxed text-muted-foreground">{a}</p>
+        <div className="flex items-center gap-4">
+          <span className="hidden font-mono text-[11px] text-muted-foreground/50 sm:inline">
+            {String(index + 1).padStart(2, '0')}
+          </span>
+          <span className="text-[14px] font-semibold text-foreground">{q}</span>
         </div>
-      )}
+        <div className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full border transition-all duration-200 ${open ? 'border-amber-300 bg-amber-50' : 'border-border bg-white'}`}>
+          {open ? (
+            <Minus className="h-3 w-3 text-amber-600" strokeWidth={2} />
+          ) : (
+            <Plus className="h-3 w-3 text-muted-foreground" strokeWidth={2} />
+          )}
+        </div>
+      </button>
+      <div
+        className="grid transition-all duration-200 ease-out"
+        style={{ gridTemplateRows: open ? '1fr' : '0fr' }}
+      >
+        <div className="overflow-hidden">
+          <div className="px-7 pb-6 pt-0 sm:pl-[4.25rem]">
+            <p className="text-[13px] leading-[1.8] text-muted-foreground">
+              {a}
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
@@ -86,25 +102,28 @@ const faqSchema = {
 
 const Faq = () => {
   return (
-    <section className="py-16 md:py-24">
+    <section className="py-24 md:py-32">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
       <div className="mx-auto max-w-5xl px-6">
-        <div className="mx-auto max-w-xl space-y-3 text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl" style={{ letterSpacing: '-0.02em' }}>
+        <div className="mx-auto max-w-2xl text-center">
+          <span className="inline-block font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-amber-600/80">
+            FAQ
+          </span>
+          <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-foreground md:text-[2.75rem] md:leading-[1.15]" style={{ letterSpacing: '-0.025em' }}>
             Frequently asked questions
           </h2>
-          <p className="text-base text-muted-foreground">
+          <p className="mt-4 text-[15px] leading-relaxed text-muted-foreground md:text-base">
             Everything you need to know about Live HTML Editor.
           </p>
         </div>
 
-        <div className="mx-auto mt-12 max-w-3xl overflow-hidden rounded-2xl border border-border bg-white shadow-warm-sm">
-          {faqs.map((faq) => (
-            <FaqItem key={faq.q} q={faq.q} a={faq.a} />
+        <div className="mx-auto mt-16 max-w-3xl overflow-hidden rounded-2xl border border-border bg-white shadow-warm-sm">
+          {faqs.map((faq, i) => (
+            <FaqItem key={faq.q} q={faq.q} a={faq.a} index={i} />
           ))}
         </div>
       </div>

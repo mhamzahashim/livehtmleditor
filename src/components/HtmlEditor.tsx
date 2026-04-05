@@ -140,7 +140,6 @@ document.addEventListener('DOMContentLoaded', function() {
           onCssChange={handleCssChange} onJsChange={handleJsChange} getPreviewWidth={getPreviewWidth}
         />
       </main>
-      <EditorFooter />
     </div>
   );
 };

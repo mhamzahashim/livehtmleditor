@@ -7,7 +7,8 @@ const testimonials = [
     text: 'This replaced my entire local dev setup for quick prototyping. The component library alone saves me hours every week.',
     rating: 5,
     initials: 'SC',
-    color: 'bg-sky-100 text-sky-700',
+    gradient: 'from-sky-400 to-blue-500',
+    featured: true,
   },
   {
     name: 'Marcus Rodriguez',
@@ -15,7 +16,8 @@ const testimonials = [
     text: 'I use this for all my web dev assignments. No setup, no installs, just open and code. My professor even recommends it now.',
     rating: 5,
     initials: 'MR',
-    color: 'bg-violet-100 text-violet-700',
+    gradient: 'from-violet-400 to-purple-500',
+    featured: false,
   },
   {
     name: 'Emily Watson',
@@ -23,7 +25,8 @@ const testimonials = [
     text: 'Finally an HTML editor that shows my email templates exactly how they will look. The responsive preview is a game changer.',
     rating: 5,
     initials: 'EW',
-    color: 'bg-rose-100 text-rose-700',
+    gradient: 'from-rose-400 to-pink-500',
+    featured: false,
   },
   {
     name: 'James Park',
@@ -31,7 +34,8 @@ const testimonials = [
     text: 'I send live demos to clients in seconds. No CodePen account needed, no friction. Just paste and share.',
     rating: 4,
     initials: 'JP',
-    color: 'bg-amber-100 text-amber-700',
+    gradient: 'from-amber-400 to-orange-500',
+    featured: false,
   },
   {
     name: 'Priya Sharma',
@@ -39,7 +43,8 @@ const testimonials = [
     text: 'The built-in HTML validator catches my mistakes before they go live. The dev tools panel is surprisingly powerful for a free tool.',
     rating: 5,
     initials: 'PS',
-    color: 'bg-emerald-100 text-emerald-700',
+    gradient: 'from-emerald-400 to-teal-500',
+    featured: true,
   },
   {
     name: 'Alex Petrov',
@@ -47,7 +52,8 @@ const testimonials = [
     text: 'I switched my entire curriculum to use this editor. Students can focus on learning HTML instead of fighting with tooling.',
     rating: 5,
     initials: 'AP',
-    color: 'bg-orange-100 text-orange-700',
+    gradient: 'from-orange-400 to-red-500',
+    featured: false,
   },
 ];
 
@@ -64,49 +70,50 @@ const Stars = ({ count }: { count: number }) => (
 
 const Testimonials = () => {
   return (
-    <section className="py-20 md:py-28">
+    <section className="py-24 md:py-32">
       <div className="mx-auto max-w-5xl px-6">
-        <div className="mx-auto max-w-xl space-y-3 text-center">
-          <div className="inline-flex items-center gap-2 rounded-full border border-border bg-white px-4 py-1.5 text-xs font-medium text-muted-foreground shadow-warm-sm">
+        <div className="mx-auto max-w-2xl text-center">
+          <span className="inline-block font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-amber-600/80">
             Testimonials
-          </div>
-          <h2 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl" style={{ letterSpacing: '-0.02em' }}>
+          </span>
+          <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-foreground md:text-[2.75rem] md:leading-[1.15]" style={{ letterSpacing: '-0.025em' }}>
             Loved by developers
           </h2>
-          <p className="text-base text-muted-foreground">
+          <p className="mt-4 text-[15px] leading-relaxed text-muted-foreground md:text-base">
             Join thousands of developers, students, and creators who build with Live HTML Editor.
           </p>
         </div>
 
-        {/* Masonry-style staggered grid */}
-        <div className="mx-auto mt-14 max-w-4xl columns-1 gap-5 space-y-5 sm:columns-2 lg:columns-3">
-          {testimonials.map((t, i) => (
+        {/* Masonry-style grid */}
+        <div className="mx-auto mt-16 max-w-4xl columns-1 gap-5 space-y-5 sm:columns-2 lg:columns-3">
+          {testimonials.map((t) => (
             <div
               key={t.name}
-              className="group relative break-inside-avoid overflow-hidden rounded-2xl border border-border bg-white shadow-warm-sm transition-all hover:shadow-warm-md hover:-translate-y-0.5"
+              className="group relative break-inside-avoid overflow-hidden rounded-2xl border border-border bg-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-warm-lg"
             >
-              <div className="p-6">
-                {/* Quote icon */}
-                <Quote className="h-5 w-5 text-amber-200" />
+              {/* Top gradient line */}
+              <div className={`h-px w-full bg-gradient-to-r ${t.gradient} opacity-60`} />
 
-                {/* Stars */}
-                <div className="mt-3">
+              <div className={`p-6 ${t.featured ? 'pb-8' : ''}`}>
+                {/* Quote */}
+                <div className="flex items-start justify-between">
+                  <Quote className="h-6 w-6 text-amber-100" strokeWidth={1.5} />
                   <Stars count={t.rating} />
                 </div>
 
                 {/* Text */}
-                <p className="mt-4 text-sm leading-relaxed text-foreground/80">
-                  {t.text}
+                <p className={`mt-4 leading-[1.75] text-foreground/75 ${t.featured ? 'text-[15px]' : 'text-[13px]'}`}>
+                  "{t.text}"
                 </p>
 
                 {/* Author */}
                 <div className="mt-6 flex items-center gap-3">
-                  <div className={`flex h-10 w-10 items-center justify-center rounded-full text-xs font-bold ${t.color}`}>
+                  <div className={`flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br ${t.gradient} text-[11px] font-bold text-white shadow-sm`}>
                     {t.initials}
                   </div>
                   <div>
                     <p className="text-sm font-semibold text-foreground">{t.name}</p>
-                    <p className="text-xs text-muted-foreground">{t.role}</p>
+                    <p className="text-[11px] text-muted-foreground">{t.role}</p>
                   </div>
                 </div>
               </div>
