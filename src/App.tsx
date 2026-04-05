@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import ComponentLibrary from "./pages/ComponentLibrary";
 import Notepad from "./pages/Notepad";
+import NoteView from "./pages/NoteView";
 import Markdown from "./pages/Markdown";
 import PdfConverter from "./pages/PdfConverter";
 import NotFound from "./pages/NotFound";
@@ -26,6 +27,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/components" element={<ComponentLibrary />} />
             <Route path="/notepad" element={<Notepad />} />
+            <Route path="/notepad/:id" element={<NoteView />} />
             <Route path="/markdown" element={<Markdown />} />
             <Route path="/pdf-converter" element={<PdfConverter />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
