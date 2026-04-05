@@ -1,4 +1,4 @@
-import { Star } from 'lucide-react';
+import { Star, Quote } from 'lucide-react';
 
 const testimonials = [
   {
@@ -6,36 +6,48 @@ const testimonials = [
     role: 'Frontend Developer',
     text: 'This replaced my entire local dev setup for quick prototyping. The component library alone saves me hours every week.',
     rating: 5,
+    initials: 'SC',
+    color: 'bg-sky-100 text-sky-700',
   },
   {
     name: 'Marcus Rodriguez',
     role: 'CS Student',
     text: 'I use this for all my web dev assignments. No setup, no installs, just open and code. My professor even recommends it now.',
     rating: 5,
+    initials: 'MR',
+    color: 'bg-violet-100 text-violet-700',
   },
   {
     name: 'Emily Watson',
     role: 'Email Marketing Manager',
     text: 'Finally an HTML editor that shows my email templates exactly how they will look. The responsive preview is a game changer.',
     rating: 5,
+    initials: 'EW',
+    color: 'bg-rose-100 text-rose-700',
   },
   {
     name: 'James Park',
     role: 'Freelance Designer',
     text: 'I send live demos to clients in seconds. No CodePen account needed, no friction. Just paste and share.',
     rating: 4,
+    initials: 'JP',
+    color: 'bg-amber-100 text-amber-700',
   },
   {
     name: 'Priya Sharma',
     role: 'Technical Writer',
     text: 'The built-in HTML validator catches my mistakes before they go live. The dev tools panel is surprisingly powerful for a free tool.',
     rating: 5,
+    initials: 'PS',
+    color: 'bg-emerald-100 text-emerald-700',
   },
   {
     name: 'Alex Petrov',
     role: 'Bootcamp Instructor',
     text: 'I switched my entire curriculum to use this editor. Students can focus on learning HTML instead of fighting with tooling.',
     rating: 5,
+    initials: 'AP',
+    color: 'bg-orange-100 text-orange-700',
   },
 ];
 
@@ -44,7 +56,7 @@ const Stars = ({ count }: { count: number }) => (
     {Array.from({ length: 5 }).map((_, i) => (
       <Star
         key={i}
-        className={`h-3.5 w-3.5 ${i < count ? 'fill-amber-400 text-amber-400' : 'text-stone-200'}`}
+        className={`h-3.5 w-3.5 ${i < count ? 'fill-amber-400 text-amber-400' : 'fill-stone-100 text-stone-200'}`}
       />
     ))}
   </div>
@@ -52,9 +64,12 @@ const Stars = ({ count }: { count: number }) => (
 
 const Testimonials = () => {
   return (
-    <section className="py-16 md:py-24">
+    <section className="py-20 md:py-28">
       <div className="mx-auto max-w-5xl px-6">
         <div className="mx-auto max-w-xl space-y-3 text-center">
+          <div className="inline-flex items-center gap-2 rounded-full border border-border bg-white px-4 py-1.5 text-xs font-medium text-muted-foreground shadow-warm-sm">
+            Testimonials
+          </div>
           <h2 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl" style={{ letterSpacing: '-0.02em' }}>
             Loved by developers
           </h2>
@@ -63,19 +78,37 @@ const Testimonials = () => {
           </p>
         </div>
 
-        <div className="mx-auto mt-12 grid max-w-4xl grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {testimonials.map((t) => (
+        {/* Masonry-style staggered grid */}
+        <div className="mx-auto mt-14 max-w-4xl columns-1 gap-5 space-y-5 sm:columns-2 lg:columns-3">
+          {testimonials.map((t, i) => (
             <div
               key={t.name}
-              className="rounded-2xl border border-border bg-white p-6 shadow-warm-sm transition-colors hover:bg-background"
+              className="group relative break-inside-avoid overflow-hidden rounded-2xl border border-border bg-white shadow-warm-sm transition-all hover:shadow-warm-md hover:-translate-y-0.5"
             >
-              <Stars count={t.rating} />
-              <p className="mt-4 text-[13px] leading-relaxed text-muted-foreground">
-                "{t.text}"
-              </p>
-              <div className="mt-5 border-t border-border pt-4">
-                <p className="text-sm font-semibold text-foreground">{t.name}</p>
-                <p className="text-xs text-muted-foreground">{t.role}</p>
+              <div className="p-6">
+                {/* Quote icon */}
+                <Quote className="h-5 w-5 text-amber-200" />
+
+                {/* Stars */}
+                <div className="mt-3">
+                  <Stars count={t.rating} />
+                </div>
+
+                {/* Text */}
+                <p className="mt-4 text-sm leading-relaxed text-foreground/80">
+                  {t.text}
+                </p>
+
+                {/* Author */}
+                <div className="mt-6 flex items-center gap-3">
+                  <div className={`flex h-10 w-10 items-center justify-center rounded-full text-xs font-bold ${t.color}`}>
+                    {t.initials}
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-foreground">{t.name}</p>
+                    <p className="text-xs text-muted-foreground">{t.role}</p>
+                  </div>
+                </div>
               </div>
             </div>
           ))}
